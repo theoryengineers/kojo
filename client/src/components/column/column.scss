@@ -1,0 +1,8 @@
+.column {
+  background: darkblue;
+  height: calc(100% - 30px);
+  width: calc(25% - 20px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}

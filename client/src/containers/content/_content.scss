@@ -6,6 +6,6 @@
     100vh - (#{$nav-font-size} + 0.45rem + (2 * #{$nav-list-padding}))
   );
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
 }

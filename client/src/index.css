@@ -25,6 +25,13 @@
       background: orange;
       color: black; }
 
+.content {
+  background: lightblue;
+  height: calc( 100vh - (1.3rem + 0.45rem + (2 * 15px)));
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center; }
+
 .navbar {
   width: 100%;
   background-color: green;
@@ -46,12 +53,13 @@
       background: orange;
       color: black; }
 
-.content {
-  background: lightblue;
-  height: calc( 100vh - (1.3rem + 0.45rem + (2 * 15px)));
+.column {
+  background: darkblue;
+  height: calc(100% - 30px);
+  width: calc(25% - 20px);
   display: flex;
   justify-content: center;
-  align-items: center; }
+  align-items: flex-start; }
 
 html,
 body {
