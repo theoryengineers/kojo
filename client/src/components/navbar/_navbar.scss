@@ -1,0 +1,27 @@
+$nav-font-size: 1.3rem;
+$nav-list-padding: 15px;
+
+.navbar {
+  width: 100%;
+  background-color: green;
+  font-size: $nav-font-size;
+  font-weight: bold;
+  ul {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 0px;
+    padding: 0px;
+    color: white;
+    list-style: none;
+    li {
+      display: flex;
+      justify-content: center;
+      padding: $nav-list-padding;
+      width: 100%;
+    }
+    .active {
+      background: orange;
+      color: black;
+    }
+  }
+}

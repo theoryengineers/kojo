@@ -1,0 +1,9 @@
+@import "./containers/app";
+@import "./components/navbar/navbar";
+@import "./containers/content/content";
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}

@@ -1,0 +1,11 @@
+@import "../../components/navbar/navbar";
+
+.content {
+  background: lightblue;
+  height: calc(
+    100vh - (#{$nav-font-size} + 0.45rem + (2 * #{$nav-list-padding}))
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
