@@ -27,9 +27,9 @@ router.post('/login', (req, res) => {
   const { email, password } = req.body;
 
   if(email && password) {
-    res.sendStatus(200).send('200 - Sign-In Success')
+    res.sendStatus(200).send('200 - Login Success')
   } else {
-    res.sendStatus(400).send('400 - Bad Sign-In')
+    res.sendStatus(400).send('400 - Bad Login')
   }
 })
 
