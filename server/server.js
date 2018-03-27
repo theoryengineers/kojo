@@ -48,9 +48,9 @@ router.post('/register', (req, res) => {
 // USERS API //
 ///////////////
 
-const userString = '/user'
+const userString = '/users'
 
-// GET all userString
+// GET all users
 router.get(userString, (req, res) => {
   res.sendStatus(200)
 })
