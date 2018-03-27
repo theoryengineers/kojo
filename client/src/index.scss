@@ -1,10 +1,9 @@
-@import "./containers/app";
-@import "./containers/content/content";
-@import "./components/navbar/navbar";
-@import "./components/column/column";
+@import './containers/app';
+@import './containers/content/content';
+@import './components/navbar/navbar';
+@import './components/column/column';
 
-html,
-body {
+html, body {
   margin: 0;
   padding: 0;
 }
