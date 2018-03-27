@@ -1,2 +1,1 @@
-# kojo contributors
--name here-
+-[@theorye](https://github.com/theorye)
