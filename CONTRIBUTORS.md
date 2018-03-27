@@ -1,2 +1,2 @@
-# kojo contributors
--name here-
+# Kojo Contributors
+- [InzenDN](https://www.github.com/inzendn)
