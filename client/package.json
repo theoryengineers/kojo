@@ -23,9 +23,9 @@
       "build/*"
     ],
     "env": [
-       "jest",
-       "es6",
-       "browser"
+      "jest",
+      "es6",
+      "browser"
     ]
   }
 }
