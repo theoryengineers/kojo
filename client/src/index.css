@@ -1,58 +1,16 @@
-.app {
-  height: 100%;
-  width: 100%;
-  padding: 0;
-  margin: 0; }
+/**
+ * Set up a decent box model on the root element
+ */
+html {
+  margin: 0;
+  padding: 0; }
 
-.navbar {
-  width: 100%;
-  background-color: green;
-  font-size: 1.3rem;
-  font-weight: bold; }
-  .navbar ul {
-    display: flex;
-    justify-content: space-evenly;
-    margin: 0px;
-    padding: 0px;
-    color: white;
-    list-style: none; }
-    .navbar ul li {
-      display: flex;
-      justify-content: center;
-      padding: 15px;
-      width: 100%; }
-    .navbar ul .active {
-      background: orange;
-      color: black; }
-
-.content {
-  background: lightblue;
-  height: calc( 100vh - (1.3rem + 0.45rem + (2 * 15px)));
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center; }
-
-.navbar {
-  width: 100%;
-  background-color: green;
-  font-size: 1.3rem;
-  font-weight: bold; }
-  .navbar ul {
-    display: flex;
-    justify-content: space-evenly;
-    margin: 0px;
-    padding: 0px;
-    color: white;
-    list-style: none; }
-    .navbar ul li {
-      display: flex;
-      justify-content: center;
-      padding: 15px;
-      width: 100%; }
-    .navbar ul .active {
-      background: orange;
-      color: black; }
-
+/**
+ * Make all elements from the DOM inherit from the parent box-sizing
+ * Since `*` has a specificity of 0, it does not override the `html` value
+ * making all elements inheriting from the root box-sizing value
+ * See: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+ */
 .column {
   background: darkblue;
   height: calc(100% - 30px);
@@ -61,7 +19,23 @@
   justify-content: center;
   align-items: flex-start; }
 
-html,
-body {
-  margin: 0;
-  padding: 0; }
+.navbar {
+  width: 100%;
+  background-color: green;
+  font-size: 1.3rem;
+  font-weight: bold; }
+  .navbar ul {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 0px;
+    padding: 0px;
+    color: white;
+    list-style: none; }
+    .navbar ul li {
+      display: flex;
+      justify-content: center;
+      padding: 15px;
+      width: 100%; }
+    .navbar ul .active {
+      background: orange;
+      color: black; }

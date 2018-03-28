@@ -1,9 +1,43 @@
-@import './containers/app';
-@import './containers/content/content';
-@import './components/navbar/navbar';
-@import './components/column/column';
+@charset 'UTF-8';
 
-html, body {
-  margin: 0;
-  padding: 0;
-}
+// 1. Configuration and helpers
+// @import
+//   'abstracts/variables',
+//   'abstracts/functions',
+//   'abstracts/mixins';
+
+// // 2. Vendors
+// @import
+//   'vendor/normalize';
+
+// 3. Base stuff
+@import
+  'base/base';
+  // 'base/fonts',
+  // 'base/typography',
+  // 'base/helpers';
+
+// 4. Layout-related sections
+// @import
+//   'layout/header/header',
+//   'layout/footer/footer';
+
+// 5. Components
+@import
+  'components/column/column',
+  'components/navbar/navbar';
+//   'components/button';
+
+// // 6. Page-specific styles
+// @import
+//   'pages/home';
+
+// // 7. Themes
+// @import
+//   'themes/default';
+
+
+// html, body {
+//   margin: 0;
+//   padding: 0;
+// }
