@@ -2,8 +2,16 @@
 @import './containers/content/content';
 @import './components/navbar/navbar';
 @import './components/column/column';
+@import './containers/splash/splash';
+@import './components/login/login';
 
 html, body {
   margin: 0;
   padding: 0;
+}
+
+.link {
+  text-decoration: underline;
+  color: blue;
+  cursor: pointer;
 }

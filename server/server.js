@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const router = express.Router();
 const parser = require('body-parser')
+const cors = require('cors')
 const knex = require('knex')
 const bcrypt = require('bcrypt-nodejs')
 const saltRnds = 10;
@@ -15,6 +16,7 @@ const db = knex({
   useNullAsDefault: true
 })
 
+app.use(cors());
 app.use(parser.urlencoded({ extended: true }));
 app.use(parser.json());
 
@@ -34,6 +36,7 @@ router.get('/', (req, res) => {
 // LOGIN AND REGISTRATION //
 ////////////////////////////
 
+// Registration
 router.post('/register', (req, res) => {
   const { displayName, email, password } = req.body;
 
@@ -64,6 +67,7 @@ router.post('/register', (req, res) => {
   })
 })
 
+// Login
 router.post('/login', (req, res) => {
   const { email, password } = req.body;
 
@@ -76,10 +80,10 @@ router.post('/login', (req, res) => {
         db.select('*').from('users')
         .where('email', '=', req.body.email)
         .then(user => {
-          res.json(user[0])
+          res.status(200).json('Success')
         })
       } else {
-        res.status(400).json('wrong password')
+        res.status(400).json('Wrong password')
       }
     })
   })
