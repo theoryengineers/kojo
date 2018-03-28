@@ -58,7 +58,10 @@ class Login extends Component {
     return (
       <div className='login-container'>
         <div className='login-header'>
-          Kojo Kanban
+          Kojo Kanban 
+          {
+            // replace with Avatar later
+          }
         </div>
         <div>
           {
