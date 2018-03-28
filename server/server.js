@@ -57,7 +57,7 @@ router.post('/register', (req, res) => {
           })
           .into('users')
           .transacting(trx)
-          .then(status => res.status(200).json('Registration success'))
+          .then(status => res.status(200).json('Success'))
         })
         .then(trx.commit)
         .catch(trx.rollback)

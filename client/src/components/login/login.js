@@ -48,8 +48,9 @@ class Login extends Component {
           password: this.state.password
         })
       })
+      .then(res => res.json())
+      .then(res => res === 'Success' ? this.props.onLoggedInProp(true) : null)
     }
-
   }
 
   render () {
