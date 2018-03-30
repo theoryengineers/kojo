@@ -1,12 +1,16 @@
 const express = require('express')
 const app = express()
-const router = express.Router();
 const parser = require('body-parser')
 const cors = require('cors')
+const { hashPassword, comparePassword } = require('./utils/bcrypt')
 const knex = require('knex')
-const bcrypt = require('bcrypt-nodejs')
-const saltRnds = 10;
-const port = 8080;
+const { Knex } = require('./models/knex')
+const { orm } = require('./middleware/orm')
+
+const port = 8080
+
+const asyncMiddleware = controller => (req, res, next) =>
+  Promise.resolve(controller(req, res, next)).catch(next)
 
 const db = knex({
   client: 'sqlite3',
@@ -16,113 +20,52 @@ const db = knex({
   useNullAsDefault: true
 })
 
-app.use(cors());
-app.use(parser.urlencoded({ extended: true }));
-app.use(parser.json());
+app.use(cors())
+app.use(parser.urlencoded({ extended: true }))
+app.use(parser.json())
+app.use(orm(new Knex(db)))
 
 app.get('/', (req, res) => {
-  res.sendStatus(200);
+  res.sendStatus(200)
 })
 
-// API router (v1)
-app.use('/api/v1', router);
-
-router.get('/', (req, res) => {
-  res.sendStatus(200);
-})
-
-
-////////////////////////////
+/// /////////////////////////
 // LOGIN AND REGISTRATION //
-////////////////////////////
+/// /////////////////////////
+async function loginController (req, res) {
+  const { email, password } = req.body
+  const { User, Login } = req.orm
 
-// Registration
-router.post('/register', (req, res) => {
-  const { displayName, email, password } = req.body;
+  if (!email || !password) {
+    return res.status(400).json('incorrect form submission')
+  }
 
-  bcrypt.genSalt(saltRnds, (salt) => {
-    bcrypt.hash(password, salt, null, (err, hash) => {
-      db.transaction(trx => {
-        db.insert({
-          hash: hash,
-          email: email
-        })
-        .into('login')
-        .transacting(trx)
-        .then(() => {
-          return db.insert({
-            displayName: displayName,
-            email: email,
-            joined: new Date().toLocaleString('en-US', { timeZone: 'UTC' })
-          })
-          .into('users')
-          .transacting(trx)
-          .then(status => res.status(200).json('Success'))
-        })
-        .then(trx.commit)
-        .catch(trx.rollback)
-      })
-      .catch(err => res.status(400).json('Unable to register'))
-    })
-  })
-})
+  const hashData = await Login.getHash(email)
+  const isValid = await comparePassword(password, hashData[0].hash)
 
-// Login
-router.post('/login', (req, res) => {
-  const { email, password } = req.body;
+  if (!isValid) {
+    res.status(400).json('wrong credentials')
+  } else {
+    const user = await User.getUserByEmail(email)
+    if (user) {
+      // res.json(user[0])
+      res.status(200).json('Success')
+    }
+  }
+}
 
-  db.select('email', 'hash')
-  .from('login')
-  .where('email', '=', req.body.email)
-  .then(data => {
-    bcrypt.compare(password, data[0].hash, (err, callback) => {
-      if(callback) {
-        db.select('*').from('users')
-        .where('email', '=', req.body.email)
-        .then(user => {
-          res.status(200).json('Success')
-        })
-      } else {
-        res.status(400).json('Wrong password')
-      }
-    })
-  })
-  .catch(err => res.status(400).json('Unable to get user'))
-})
+async function registerController (req, res) {
+  try {
+    const { displayName, email, password } = req.body
+    const { Login } = req.orm
+    const hashData = await hashPassword(password)
+    Login.register(displayName, email, hashData)
+  } catch (err) {
+    console.log(err)
+  }
+}
 
-
-///////////////
-// USERS API //
-///////////////
-
-const userString = '/users'
-
-// GET all users
-router.get(userString, (req, res) => {
-  res.sendStatus(200)
-})
-
-// GET a specific user
-router.get(userString + '/:id', (req, res) => {
-  res.sendStatus(200)
-})
-
-// UPDATE a specific user
-router.put(userString + '/:id', (req, res) => {
-
-})
-
-// DELETE a specific user
-router.delete(userString + '/:id', (req, res) => {
-
-})
-
-
-///////////////
-// BOARD API //
-///////////////
-
-const boardString = '/board';
-
+app.use('/api/v1/login', asyncMiddleware(loginController))
+app.use('/api/v1/register', asyncMiddleware(registerController))
 
 app.listen(port)
