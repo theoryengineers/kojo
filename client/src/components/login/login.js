@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Route, Link, Redirect } from 'react-router-dom'
 
 // Let this component handle both Login and Registration
 
@@ -9,15 +10,9 @@ class Login extends Component {
       displayName: '',
       email: '',
       password: '',
-      isRegistering: false,
-      stayLoggedIn: false
+      stayLoggedIn: false,
+      loggedIn: false
     }
-  }
-
-  onHaveAccount = (registerBool) => {
-    this.setState({
-      isRegistering: registerBool
-    })
   }
 
   onFieldChange = (event) => {
@@ -38,6 +33,10 @@ class Login extends Component {
       })
       .then(res => res.json())
       .then(res => res === 'Success' ? this.props.onLoggedInProp(true) : null)
+      .then(() => this.setState({
+        loggedIn: true
+      }))
+      
     } else if (submission === 'register') {
       fetch('http://localhost:8080/api/v1/register', {
         method: 'post',
@@ -54,7 +53,9 @@ class Login extends Component {
   }
 
   render () {
-    const { isRegistering } = this.state
+    if(this.state.loggedIn) {
+      return <Redirect to='/'/>
+    }
     return (
       <div className='login-container'>
         <div className='login-header'>
@@ -64,36 +65,31 @@ class Login extends Component {
           }
         </div>
         <div>
-          {
-            isRegistering
-              ? <input className='input-field' onChange={this.onFieldChange} type='text' placeholder='Display Name' name='displayName' required />
-              : ''
-          }
-
+          <Route path='/auth/register' render={() => (<input className='input-field' onChange={this.onFieldChange} type='text' placeholder='Display Name' name='displayName' required />)} />
           <input className='input-field' onChange={this.onFieldChange} type='text' placeholder='Email' name='email' required />
           <input className='input-field' onChange={this.onFieldChange} type='password' placeholder='Password' name='password' required />
-
-          {
-            isRegistering
-              ? <button className='login-button' onClick={() => this.onSubmit('register')}>Register</button>
-              : <div>
-                <button className='login-button' onClick={() => this.onSubmit('login')}>Login</button>
-                <label><input type='checkbox' name='remember' readOnly /> Stay Logged In</label>
-              </div>
-          }
+          
+          <Route path='/auth/register' render={() => (<button className='login-button' onClick={() => this.onSubmit('register')}>Register</button>)} />
+          <Route path='/auth/login' render={() => (
+            <div>
+              <button className='login-button' onClick={() => this.onSubmit('login')}>Login</button>
+              <label><input type='checkbox' name='remember' readOnly /> Stay Logged In</label>
+            </div>
+          )} />
 
         </div>
-
-        {
-          isRegistering
-            ? <div className='login-footer'>
-              <span className='psw'>Already have an <span className='link' onClick={() => this.onHaveAccount(false)} href=''>account</span>?</span>
-            </div>
-            : <div className='login-footer'>
-              <span className='psw'>Forgot <a href=''>password</a>?</span><br />
-              <span className='psw'>Don't have an <span className='link' onClick={() => this.onHaveAccount(true)} href=''>account</span>?</span>
-            </div>
-        }
+        
+        <Route path='/auth/register' render={() => (
+          <div className='login-footer'>
+            <span className='psw'>Already have an <Link className='link' to={'login'}>account</Link>?</span>
+          </div>
+        )} />
+        <Route path='/auth/login' render={() => (
+          <div className='login-footer'>
+            <span className='psw'>Forgot <a href=''>password</a>?</span><br />
+            <span className='psw'>Don't have an <Link className='link' to={'register'}>account</Link>?</span>
+          </div>
+        )} />
       </div>
     )
   }
