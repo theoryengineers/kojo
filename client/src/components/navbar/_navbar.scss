@@ -1,23 +1,31 @@
 $nav-font-size: 1.3rem;
-$nav-list-padding: 15px;
+$nav-list-padding: 10px;
+$icon-size: 22px;
 
 .navbar {
-  width: 100%;
-  background-color: green;
+  background-color: #292929;
   font-size: $nav-font-size;
   font-weight: bold;
+
+  display: grid;
+  grid-template-rows: auto min-content;
   ul {
-    display: flex;
-    justify-content: space-evenly;
+    display: grid;
     margin: 0px;
     padding: 0px;
     color: white;
     list-style: none;
     li {
-      display: flex;
-      justify-content: center;
+      text-align: center;
       padding: $nav-list-padding;
-      width: 100%;
+      .icon {
+        width: $icon-size;
+        height: $icon-size;
+        padding: 0px 5px;
+      }
+    }
+    li:first-child {
+      padding-top: 17px;
     }
     .active {
       background: orange;

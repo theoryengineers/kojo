@@ -1,8 +1,20 @@
 .column {
-  background: darkblue;
-  height: calc(100% - 30px);
-  width: calc(25% - 20px);
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  background: transparent;
+  // height: calc(100% - 30px);
+  // width: calc(25% - 20px);
+  // display: flex;
+  // justify-content: center;
+  // align-items: flex-start;
+  .header {
+    background-color: darkgoldenrod;
+    padding: 15px;
+    font-size: 1.3rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+  }
+  display: grid;
+  grid-row-gap: 0.5em;
+  grid-auto-rows: min-content;
 }
