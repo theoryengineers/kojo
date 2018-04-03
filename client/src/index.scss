@@ -26,6 +26,9 @@
 @import
   'components/column/column',
   'components/navbar/navbar';
+  'components/login/login';
+  'components/card/card';
+
 //   'components/button';
 
 // // 6. Page-specific styles
@@ -40,3 +43,16 @@
 @import
   'containers/app',
   'containers/content/content';
+  'containers/splash/splash';
+  'containers/main/main';
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+.link {
+  text-decoration: underline;
+  color: blue;
+  cursor: pointer;
+}
