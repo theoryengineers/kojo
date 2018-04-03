@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
+import Navbar from 'components/navbar/navbar'
+import Content from 'containers/content'
+import Column from 'components/column'
 import Splash from 'containers/splash/splash'
 import Main from 'containers/main/main'
 import { BrowserRouter as Router, Route, Redirect, Switch} from 'react-router-dom'
+
 
 class App extends Component {
   constructor (props) {
