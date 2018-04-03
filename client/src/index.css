@@ -1,33 +1,22 @@
+/**
+ * Set up a decent box model on the root element
+ */
+html {
+  margin: 0;
+  padding: 0; }
+
+/**
+ * Make all elements from the DOM inherit from the parent box-sizing
+ * Since `*` has a specificity of 0, it does not override the `html` value
+ * making all elements inheriting from the root box-sizing value
+ * See: https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/
+ */
+
 .app {
   height: 100%;
   width: 100%;
   padding: 0;
   margin: 0; }
-
-.navbar {
-  background-color: #292929;
-  font-size: 1.3rem;
-  font-weight: bold;
-  display: grid;
-  grid-template-rows: auto min-content; }
-  .navbar ul {
-    display: grid;
-    margin: 0px;
-    padding: 0px;
-    color: white;
-    list-style: none; }
-    .navbar ul li {
-      text-align: center;
-      padding: 10px; }
-      .navbar ul li .icon {
-        width: 22px;
-        height: 22px;
-        padding: 0px 5px; }
-    .navbar ul li:first-child {
-      padding-top: 17px; }
-    .navbar ul .active {
-      background: orange;
-      color: black; }
 
 .content {
   background: lightblue;
@@ -163,3 +152,4 @@ html, body {
   text-decoration: underline;
   color: blue;
   cursor: pointer; }
+
