@@ -36,7 +36,7 @@ const config = {
         extensions: [ '.tsx', '.ts', '.js' ],
         alias: {
             // THIS APP'S CUSTOM PACKAGES:
-           'app_modules': path.resolve(__dirname, 'src'),
+           'view': path.resolve(__dirname, 'view'),
         }
     },
     output: {

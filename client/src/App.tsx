@@ -1,17 +1,35 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Route, /*Link, RouteComponentProps,*/ Switch, Redirect } from 'react-router-dom';
-import Main from 'app_modules/pages/main';
-import Splash from 'app_modules/layout/splash';
+import Main from 'view/pages/main';
+import Splash from 'view/layout/splash';
+
+interface Item {
+    id: number;
+    size: number;
+}
 
 interface Props {}
 
 interface State {
     isLoggedIn: boolean;
+    items: {
+        [key: string]: Item
+    };
 }
 
 export class App extends React.Component<Props, State> {
-    state = {
-        isLoggedIn: false
+    state: State = {
+        isLoggedIn: false,
+        items: {
+            'a': {
+                id: 1,
+                size: 10
+            },
+            'b': {
+                id: 2,
+                size: 34
+            }
+        }
     };
 
     onChangeLoggedInState = (isLoggedIn: boolean): void => {

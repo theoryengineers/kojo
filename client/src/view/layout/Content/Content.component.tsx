@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Column from 'app_modules/components/BoardColumn';
-import Card from 'app_modules/components/BoardCard';
+import Column from 'view/components/BoardColumn';
+import Card from 'view/components/BoardCard';
 
 export default () => (
     <div className="content">

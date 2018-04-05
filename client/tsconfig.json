@@ -17,8 +17,8 @@
       "noUnusedLocals": true,
       "baseUrl": ".",
       "paths": {
-        "app_modules/*": [
-          "src/*"
+        "view/*": [
+          "src/view/*"
         ]
       } 
     },

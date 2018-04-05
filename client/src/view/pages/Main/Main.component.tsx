@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Navbar from 'app_modules/layout/navigation';
-import Content from 'app_modules/layout/content';
+import Navbar from 'view/layout/navigation';
+import Content from 'view/layout/content';
 
 export default () => (
     <div className="main">
