@@ -1,25 +1,18 @@
-const fakeAuth = {
-    isAuthenticated: false,
-    authenticate(cb: () => void) {
+class Api {
+  public isAuthenticated: boolean = false;
 
-      this.isAuthenticated = true;
-      setTimeout(cb, 5000); // fake async
-    },
-    signout(cb: () => void) {
-      this.isAuthenticated = false;
-      setTimeout(cb, 100);
-    }
-};
+  authenticate(cb: () => void) {
+    this.isAuthenticated = true;
+    setTimeout(cb, 5000);
+  }
 
-export default fakeAuth;
-// type LoginReturnItem = {
+  signout(cb: () => void) {
+    this.isAuthenticated = false;
+    setTimeout(cb, 100);
+  }
+}
 
-// }
-
-// type LoginReturn {
-
-// }
-
+export default new Api();
 // export class OurApi {
 //     public isAuthenticated: boolean = false;
 //     async login(email: string, password: string) {
