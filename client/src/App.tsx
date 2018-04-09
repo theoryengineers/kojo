@@ -7,6 +7,9 @@ import OurApi from 'app_modules/api/OurApi';
 
 const initialState = { 
     redirectToReferrer: false,
+    displayName: '',
+    email: '',
+    password: '',
 };
 
 type State = Readonly<typeof initialState>;
@@ -42,6 +45,7 @@ export class App extends React.Component<{}, State> {
                         <LoginPage
                             {...props}
                             handleLogin={this.handleLogin}
+                            handleLoginFieldChange={this.handleLoginFieldChange}
                             redirectToReferrer={this.state.redirectToReferrer}
                         />                       
                     )}
@@ -52,22 +56,21 @@ export class App extends React.Component<{}, State> {
     }
 
     private handleLogin = (event: React.MouseEvent<HTMLElement>): void => {        
-        OurApi.authenticate(() => {
-            this.setState({ redirectToReferrer: true });
+        OurApi.authenticate(this.state.email, this.state.password, () => {
+            this.setState({
+                email: '',
+                password: '', 
+                redirectToReferrer: true 
+            });
         });
+    }
+
+    private handleLoginFieldChange = (event: React.FormEvent<HTMLInputElement>): void => {           
+        this.setState(updateField(event));
     }
 }
 
+const updateField = (event: React.FormEvent<HTMLInputElement>): (state: State) => void =>
+    (prevState: State) => ({[event.currentTarget.name]: event.currentTarget.value});
+
 export default App;
-
-// import { PageProps } from 'app_modules/types';
-
-// interface HomePageProps extends PageProps {
-//     handleSomething: (() => void);
-// }
-
-// const HomePage: React.SFC<HomePageProps> = props => (
-//     <div>
-//         <h1>Home</h1>
-//     </div>
-// );

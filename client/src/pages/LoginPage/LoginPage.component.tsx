@@ -4,6 +4,7 @@ import { PageProps } from 'app_modules/types';
 
 interface LoginPageProps extends PageProps {
     handleLogin: (e: React.MouseEvent<HTMLElement>) => void;
+    handleLoginFieldChange: (e: React.FormEvent<HTMLInputElement>) => void;
     redirectToReferrer: boolean;
 }
 
@@ -13,6 +14,8 @@ const LoginPage: React.SFC<LoginPageProps> = (props) => (
             {...props} 
             handleLogin={props.handleLogin}
             redirectToReferrer={props.redirectToReferrer}
+            handleLoginFieldChange={props.handleLoginFieldChange}
+
         />
     </div>
 );
