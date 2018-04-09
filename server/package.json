@@ -4,7 +4,8 @@
   "description": "Kojo server",
   "main": "src",
   "scripts": {
-    "start": "nodemon ."
+    "tsc": "tsc",
+    "start": "nodemon --exec ./node_modules/.bin/ts-node -- ./src/index.ts"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
@@ -15,17 +16,11 @@
     "knex": "^0.14.4"
   },
   "devDependencies": {
+    "@types/express": "^4.11.1",
+    "@types/knex": "^0.14.9",
     "nodemon": "^1.17.2",
     "sqlite3": "^4.0.0",
-    "standard": "^11.0.1"
-  },
-  "standard": {
-    "ignore": [
-      "build/*"
-    ],
-    "env": [
-      "jest",
-      "node"
-    ]
+    "ts-node": "^5.0.1",
+    "typescript": "^2.8.1"
   }
 }
