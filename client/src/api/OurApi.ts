@@ -3,17 +3,18 @@ class Api {
 
     authenticate(email: string, password: string, cb: () => void) {
         this.isAuthenticated = true;
-        fetch('http://localhost:8080/api/v1/login', {
-                method: 'post',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                email: email,
-                password: password
-            })
-        })    
-        .then(res => res.json())
-        .then(() => cb())
-        .catch(console.log);  // Make error handler
+        setTimeout(cb, 3000); // fake async
+        // fetch('http://localhost:8080/api/v1/login', {
+        //         method: 'post',
+        //         headers: {'Content-Type': 'application/json'},
+        //         body: JSON.stringify({
+        //         email: email,
+        //         password: password
+        //     })
+        // })    
+        // .then(res => res.json())
+        // .then(() => cb())
+        // .catch(console.log);  // Make error handler
     }
 
     register(displayName: string, email: string, password: string, cb: () => void) {
