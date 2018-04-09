@@ -23,7 +23,7 @@ export const db = {
             title: 'Create login',
             category: 'API',
             description: 'Create a javascript based login using the DB data structure provided in the FauxState.ts',
-            column: 'In Progress',
+            column: 'Complete',
             assignment: [2],
             board: 1,
         },
