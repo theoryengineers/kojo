@@ -5,16 +5,24 @@ import LoginPage from 'app_modules/pages/LoginPage';
 import MainPage from 'app_modules/pages/MainPage';
 import OurApi from 'app_modules/api/OurApi';
 
-const initialState = { 
+const initialState = {
+    isAuthenticated: false,
     redirectToReferrer: false,
     displayName: '',
     email: '',
     password: '',
+    remember: ''
 };
 
 type State = Readonly<typeof initialState>;
 
 export class App extends React.Component<{}, State> {
+    componentWillMount() {
+        let retrievedObject: string | null = localStorage.getItem('kojo');
+        if (retrievedObject) {            
+            this.setState(JSON.parse(retrievedObject));
+        } 
+    }
     readonly state: State = initialState;
     render() {
         return (
@@ -24,7 +32,7 @@ export class App extends React.Component<{}, State> {
                     path="/"
                     exact={true}
                     render={(props) => 
-                        OurApi.isAuthenticated ? (
+                        this.state.isAuthenticated ? (
                             <MainPage
                                 {...props} 
                                 // handleSomething={this.handleSomething}
@@ -56,21 +64,29 @@ export class App extends React.Component<{}, State> {
     }
 
     private handleLogin = (event: React.MouseEvent<HTMLElement>): void => {        
-        OurApi.authenticate(this.state.email, this.state.password, () => {
+        OurApi.authenticate(this.state.email, this.state.password, (displayName) => {
+            // Naive example for development purposes
+            window.localStorage.setItem('kojo', JSON.stringify({
+                displayName,
+                isAuthenticated: true,
+            }));
             this.setState({
                 email: '',
                 password: '', 
+                displayName,
+                isAuthenticated: true,
                 redirectToReferrer: true 
             });
         });
     }
 
     private handleLoginFieldChange = (event: React.FormEvent<HTMLInputElement>): void => {           
-        this.setState(updateField(event));
+        const { name, value } = event.currentTarget;
+        this.setState(updateField(name, value));
     }
 }
 
-const updateField = (event: React.FormEvent<HTMLInputElement>): (state: State) => void =>
-    (prevState: State) => ({[event.currentTarget.name]: event.currentTarget.value});
+const updateField = (name: string, value: string): (state: State) => void =>
+    (prevState: State) => ({[name]: value});
 
 export default App;
