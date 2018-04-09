@@ -66,10 +66,13 @@ export class App extends React.Component<{}, State> {
     private handleLogin = (event: React.MouseEvent<HTMLElement>): void => {        
         OurApi.authenticate(this.state.email, this.state.password, (displayName) => {
             // Naive example for development purposes
-            window.localStorage.setItem('kojo', JSON.stringify({
-                displayName,
-                isAuthenticated: true,
-            }));
+            if (this.state.remember) {
+                window.localStorage.setItem('kojo', JSON.stringify({
+                    displayName,
+                    isAuthenticated: true,
+                }));
+            }
+
             this.setState({
                 email: '',
                 password: '', 
