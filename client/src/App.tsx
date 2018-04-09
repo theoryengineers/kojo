@@ -1,51 +1,76 @@
 import * as React from 'react';
-import { BrowserRouter as Router, Route, /*Link, RouteComponentProps,*/ Switch, Redirect } from 'react-router-dom';
-import Main from 'app_modules/pages/main';
-import Splash from 'app_modules/layout/splash';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 
-interface Props {}
+import LoginPage from 'app_modules/pages/LoginPage';
+import MainPage from 'app_modules/pages/MainPage';
+import OurApi from 'app_modules/api/OurApi';
 
-interface State {
-    isLoggedIn: boolean;
-}
+const initialState = { 
+    redirectToReferrer: false,
+    displayName: '',
+    email: '',
+    password: '',
+};
 
-export class App extends React.Component<Props, State> {
-    state = {
-        isLoggedIn: false
-    };
+type State = Readonly<typeof initialState>;
 
-    onChangeLoggedInState = (isLoggedIn: boolean): void => {
-        this.setState({
-            isLoggedIn
-        });
-    }
-
+export class App extends React.Component<{}, State> {
+    readonly state: State = initialState;
     render() {
-        const { isLoggedIn } = this.state;
         return (
             <Router>
-                <Switch>
-                    <Route 
-                        exact={true} 
-                        path="/" 
-                        render={() => (
-                            isLoggedIn 
-                                ?   <Main />
-                                :   <Redirect to="/login" />
-                        )} 
-                    />
-                    <Route 
-                        path="/" 
-                        render={() => 
-                            <Splash 
-                                onLoggedInProp={this.onChangeLoggedInState}
+            <Switch>
+                <Route
+                    path="/"
+                    exact={true}
+                    render={(props) => 
+                        OurApi.isAuthenticated ? (
+                            <MainPage
+                                {...props} 
+                                // handleSomething={this.handleSomething}
                             />
-                        }
-                    />
-                </Switch>    
+                        ) : (
+                            <Redirect 
+                                to={{
+                                    pathname: '/auth/login',
+                                    state: { from: props.location }
+                                }}
+                            />
+                        )   
+                    }
+                />
+                <Route
+                    path="/auth"                  
+                    render={(props) => (                        
+                        <LoginPage
+                            {...props}
+                            handleLogin={this.handleLogin}
+                            handleLoginFieldChange={this.handleLoginFieldChange}
+                            redirectToReferrer={this.state.redirectToReferrer}
+                        />                       
+                    )}
+                />
+            </Switch>
             </Router>
         );
     }
+
+    private handleLogin = (event: React.MouseEvent<HTMLElement>): void => {        
+        OurApi.authenticate(this.state.email, this.state.password, () => {
+            this.setState({
+                email: '',
+                password: '', 
+                redirectToReferrer: true 
+            });
+        });
+    }
+
+    private handleLoginFieldChange = (event: React.FormEvent<HTMLInputElement>): void => {           
+        this.setState(updateField(event));
+    }
 }
+
+const updateField = (event: React.FormEvent<HTMLInputElement>): (state: State) => void =>
+    (prevState: State) => ({[event.currentTarget.name]: event.currentTarget.value});
 
 export default App;

@@ -7,7 +7,17 @@ const dev = {
     performance: {
      hints: false
     },
-    mode: 'development'
+    mode: 'development',
+    devServer: {
+        contentBase: false,  
+        publicPath: "/",
+        historyApiFallback: true,
+        // https: true,  // Turn back on for production testing
+        open: true,
+        port: 5000,
+        overlay: true,
+        host: 'localhost',
+    },
 }
 
 const config = {
@@ -42,16 +52,6 @@ const config = {
     output: {
         filename: 'bundle.js',
         path: path.resolve('build')
-    },
-    devServer: {
-        contentBase: false,  
-        publicPath: "/",
-        historyApiFallback: true,
-        https: true,
-        open: true,
-        port: 4000,
-        overlay: true,
-        host: 'localhost',
     },
     plugins: [
         new HtmlWebpackPlugin({  
