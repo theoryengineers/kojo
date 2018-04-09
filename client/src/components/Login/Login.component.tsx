@@ -73,7 +73,15 @@ const Login: React.SFC<Props> = (props) =>  {
                             >
                             Login
                             </button>
-                            <label><input type="checkbox" name="remember" readOnly={true} /> Stay Logged In</label>
+                            <label>
+                                <input
+                                    onChange={props.handleLoginFieldChange} 
+                                    type="checkbox" 
+                                    name="remember" 
+                                    readOnly={true} 
+                                />
+                                Stay Logged In
+                            </label>
                         </div>
                     )} 
                 />

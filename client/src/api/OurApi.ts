@@ -1,9 +1,17 @@
+import { db } from './TodoState';
+
 class Api {
     public isAuthenticated: boolean = false;
 
-    authenticate(email: string, password: string, cb: () => void) {
-        this.isAuthenticated = true;
-        setTimeout(cb, 3000); // fake async
+    authenticate(email: string, password: string, cb: (displayName: string) => void) {      
+        const Users = db.users;
+        const User = Users.filter(
+            user => (user.email === email) && (user.password === password)
+        );  
+        if (User.length > 0 ) {
+            this.isAuthenticated = true;
+            cb(User[0].displayName);   
+        }      
         // fetch('http://localhost:8080/api/v1/login', {
         //         method: 'post',
         //         headers: {'Content-Type': 'application/json'},
