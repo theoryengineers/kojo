@@ -19,51 +19,51 @@ type State = Readonly<typeof initialState>;
 export class App extends React.Component<{}, State> {
     componentWillMount() {
         let retrievedObject: string | null = localStorage.getItem('kojo');
-        if (retrievedObject) {            
+        if (retrievedObject) {
             this.setState(JSON.parse(retrievedObject));
-        } 
+        }
     }
     readonly state: State = initialState;
     render() {
         return (
             <Router>
-            <Switch>
-                <Route
-                    path="/"
-                    exact={true}
-                    render={(props) => 
-                        this.state.isAuthenticated ? (
-                            <MainPage
-                                {...props} 
+                <Switch>
+                    <Route
+                        path="/"
+                        exact={true}
+                        render={(props) =>
+                            this.state.isAuthenticated ? (
+                                <MainPage
+                                    {...props}
                                 // handleSomething={this.handleSomething}
+                                />
+                            ) : (
+                                    <Redirect
+                                        to={{
+                                            pathname: '/auth/login',
+                                            state: { from: props.location }
+                                        }}
+                                    />
+                                )
+                        }
+                    />
+                    <Route
+                        path="/auth"
+                        render={(props) => (
+                            <LoginPage
+                                {...props}
+                                handleLogin={this.handleLogin}
+                                handleLoginFieldChange={this.handleLoginFieldChange}
+                                redirectToReferrer={this.state.redirectToReferrer}
                             />
-                        ) : (
-                            <Redirect 
-                                to={{
-                                    pathname: '/auth/login',
-                                    state: { from: props.location }
-                                }}
-                            />
-                        )   
-                    }
-                />
-                <Route
-                    path="/auth"                  
-                    render={(props) => (                        
-                        <LoginPage
-                            {...props}
-                            handleLogin={this.handleLogin}
-                            handleLoginFieldChange={this.handleLoginFieldChange}
-                            redirectToReferrer={this.state.redirectToReferrer}
-                        />                       
-                    )}
-                />
-            </Switch>
+                        )}
+                    />
+                </Switch>
             </Router>
         );
     }
 
-    private handleLogin = (event: React.MouseEvent<HTMLElement>): void => {        
+    private handleLogin = (event: React.MouseEvent<HTMLElement>): void => {
         OurApi.authenticate(this.state.email, this.state.password, (displayName) => {
             // Naive example for development purposes
             if (this.state.remember) {
@@ -75,21 +75,21 @@ export class App extends React.Component<{}, State> {
 
             this.setState({
                 email: '',
-                password: '', 
+                password: '',
                 displayName,
                 isAuthenticated: true,
-                redirectToReferrer: true 
+                redirectToReferrer: true
             });
         });
     }
 
-    private handleLoginFieldChange = (event: React.FormEvent<HTMLInputElement>): void => {           
+    private handleLoginFieldChange = (event: React.FormEvent<HTMLInputElement>): void => {
         const { name, value } = event.currentTarget;
         this.setState(updateField(name, value));
     }
 }
 
 const updateField = (name: string, value: string): (state: State) => void =>
-    (prevState: State) => ({[name]: value});
+    (prevState: State) => ({ [name]: value });
 
 export default App;

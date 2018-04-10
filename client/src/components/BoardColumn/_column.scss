@@ -1,10 +1,9 @@
 .column {
   background: transparent;
-  // height: calc(100% - 30px);
-  // width: calc(25% - 20px);
-  // display: flex;
-  // justify-content: center;
-  // align-items: flex-start;
+  display: grid;
+  grid-row-gap: 0.5em;
+  grid-auto-rows: min-content;
+
   .header {
     background-color: darkgoldenrod;
     padding: 15px;
@@ -13,8 +12,18 @@
     font-weight: bold;
     text-align: center;
     color: white;
+
+    display: grid;
+    grid-template-columns: 27px auto 27px;
+
+    .alignment {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    button {
+      font-size: 0.9em;
+    }
   }
-  display: grid;
-  grid-row-gap: 0.5em;
-  grid-auto-rows: min-content;
 }
