@@ -2,24 +2,27 @@ import * as React from 'react';
 import Column from 'app_modules/components/BoardColumn';
 import Card from 'app_modules/components/BoardCard';
 import Modal from 'app_modules/components/Modal';
-import CardForm from 'app_modules/components/CardForm';
+import { CardProps } from 'app_modules/types';
 
 const initialState = {
-    openModal: false
+    currentModal: 'CLOSED'
 };
+
+interface Props extends CardProps { }
 
 type State = Readonly<typeof initialState>;
 
-export default class Content extends React.Component {
+export default class Content extends React.Component<Props, State> {
     readonly state: State = initialState;
     render() {
-        const { openModal } = this.state;
+        const { currentModal } = this.state;
+        const { handleGetCards } = this.props;
         return (
             <div className="content">
                 <Column
                     header={'Backlog'}
                     backgroundColor={'gray'}
-                    rightButton={<button onClick={() => this.handleOpenModal(true)}>+</button>}
+                    rightButton={<button onClick={() => this.handleModal('ADD_NEW_CARD')}>+</button>}
                 >
                     <Card
                         title={'Create Cards'}
@@ -38,7 +41,12 @@ export default class Content extends React.Component {
                         colorCode={'purple'}
                     />
                 </Column>
-                <Column header={'In Progress'} backgroundColor={'blue'}>
+                <Column
+                    header={'In Progress'}
+                    backgroundColor={'blue'}
+                    // tslint:disable-next-line:no-console
+                    rightButton={<button onClick={() => handleGetCards()}>+</button>}
+                >
                     <Card
                         title={'Navbar'}
                         category={'Frontend/Component'}
@@ -58,16 +66,17 @@ export default class Content extends React.Component {
                 </Column>
                 <Column header={'Testing'} backgroundColor={'red'} />
                 <Column header={'Complete'} backgroundColor={'green'} />
-                <Modal show={openModal}>
-                    <CardForm handleOpenModal={this.handleOpenModal} />
-                </Modal>
+                <Modal
+                    currentModal={currentModal}
+                    handleModal={this.handleModal}
+                />
             </div>
         );
     }
 
-    private handleOpenModal = (openClose: boolean): void => {
+    private handleModal = (selection: string): void => {
         this.setState({
-            openModal: openClose
+            currentModal: selection
         });
     }
 }

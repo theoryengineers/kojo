@@ -11,7 +11,8 @@ const initialState = {
     displayName: '',
     email: '',
     password: '',
-    remember: ''
+    remember: '',
+    cards: []
 };
 
 type State = Readonly<typeof initialState>;
@@ -35,6 +36,7 @@ export class App extends React.Component<{}, State> {
                             this.state.isAuthenticated ? (
                                 <MainPage
                                     {...props}
+                                    handleGetCards={this.handleGetCards}
                                 // handleSomething={this.handleSomething}
                                 />
                             ) : (
@@ -64,7 +66,7 @@ export class App extends React.Component<{}, State> {
     }
 
     private handleLogin = (event: React.MouseEvent<HTMLElement>): void => {
-        OurApi.authenticate(this.state.email, this.state.password, (displayName) => {
+        OurApi.authenticate(this.state.email, this.state.password, (displayName: string): void => {
             // Naive example for development purposes
             if (this.state.remember) {
                 window.localStorage.setItem('kojo', JSON.stringify({
@@ -87,9 +89,44 @@ export class App extends React.Component<{}, State> {
         const { name, value } = event.currentTarget;
         this.setState(updateField(name, value));
     }
+
+    private handleGetCards = (): void => {
+        let cards = OurApi.getCards();
+        // tslint:disable-next-line:no-console
+        this.setState(updateCards(cards), () => console.log(this.state.cards));
+    }
+
+    // private handleAddCards = (newCardObj: {
+    //     id: number,
+    //     title: string,
+    //     category: string,
+    //     description: string,
+    //     column: string,
+    //     assignment: Array<number>,
+    //     board: number
+    // }) => {
+    //     let newObj = this.state.cards;
+    //     newObj.push(newCardObj);
+    //     this.setState({
+    //         cards: newObj
+    //     });
+    // }
 }
 
 const updateField = (name: string, value: string): (state: State) => void =>
     (prevState: State) => ({ [name]: value });
+
+const updateCards = (cardObj: Array<
+    {
+        id: number;
+        title: string;
+        category: string;
+        description: string;
+        column: string;
+        assignment: Array<number>;
+        board: number
+    }
+    >): (state: State) => void =>
+    (prevState: State) => ({ cards: cardObj });
 
 export default App;

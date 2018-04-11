@@ -16,7 +16,7 @@ export const db = {
             description: 'THERE IS SHIT IN THERE THAT SHOULD NOT BE THERE..PLEASE FIX',
             column: 'Backlog',
             assignment: [2],
-            board: 1,            
+            board: 1,
         },
         {
             id: 2,
@@ -62,7 +62,7 @@ export const db = {
             column: 'Backlog',
             assignment: [2],
             board: 1,
-        }, 
+        },
         {
             id: 7,
             title: 'Add new card',
