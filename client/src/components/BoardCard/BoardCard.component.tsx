@@ -10,7 +10,7 @@ interface BoardCardProps {
 }
 
 const BoardCard: React.SFC<BoardCardProps> = (props) => (
-    <div className="card" draggable={true} style={{ borderLeft: '10px solid ' + props.colorCode }}>
+    <div className="card" style={{ borderLeft: '10px solid ' + props.colorCode }}>
         <div className="card-header">
             <div className="title">{props.card.title}</div>
             <div className="card-interface">

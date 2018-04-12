@@ -59,7 +59,7 @@ export const db = {
             title: 'Edit new card form',
             category: 'Front End Component',
             description: 'Add shit to shit',
-            column: 'Backlog',
+            column: 'Complete',
             assignment: [2],
             board: 1,
         },

@@ -2,6 +2,7 @@ import * as React from 'react';
 import Column from 'app_modules/components/BoardColumn';
 import Card from 'app_modules/components/BoardCard';
 import Modal from 'app_modules/components/Modal';
+import TopBar from 'app_modules/layout/TopBarNavigation';
 import { Cards, GetCards, ModalProps } from 'app_modules/types';
 
 const initialState = {
@@ -30,37 +31,42 @@ export default class Content extends React.Component<Props, State> {
         const { currentModal } = this.state;
         const { handleGetCards, cards, handleAddCard, handleSaveCard } = this.props;
         return (
-            <div className="content">
-                <Column
-                    header={'Backlog'}
-                    backgroundColor={'gray'}
-                    rightButton={<button onClick={() => this.handleModal('ADD_NEW_CARD')}>+</button>}
-                >
-                    {cards.map((card, i) => {
-                        return <Card
-                            key={i}
-                            card={card}
-                            index={i}
-                            colorCode={'red'}
-                            handleEditCard={this.handleEditCard}
-                        />;
-                    })}
-                </Column>
-                <Column
-                    header={'In Progress'}
-                    backgroundColor={'blue'}
-                    rightButton={<button onClick={() => handleGetCards()}>+</button>}
+            <div>
+                <TopBar
+                    displayName={'Partner'}
                 />
-                <Column header={'Testing'} backgroundColor={'red'} />
-                <Column header={'Complete'} backgroundColor={'green'} />
-                <Modal
-                    currentModal={currentModal}
-                    handleModal={this.handleModal}
-                    handleAddCard={handleAddCard}
-                    handleSaveCard={handleSaveCard}
-                    card={this.state.card}
-                    cardIndex={this.state.cardIndex}
-                />
+                <div className="content">
+                    <Column
+                        header={'Backlog'}
+                        backgroundColor={'gray'}
+                        rightButton={<button onClick={() => this.handleModal('ADD_NEW_CARD')}>+</button>}
+                    >
+                        {cards.map((card, i) => {
+                            return <Card
+                                key={i}
+                                card={card}
+                                index={i}
+                                colorCode={'red'}
+                                handleEditCard={this.handleEditCard}
+                            />;
+                        })}
+                    </Column>
+                    <Column
+                        header={'In Progress'}
+                        backgroundColor={'blue'}
+                        rightButton={<button onClick={() => handleGetCards()}>+</button>}
+                    />
+                    <Column header={'Testing'} backgroundColor={'red'} />
+                    <Column header={'Complete'} backgroundColor={'green'} />
+                    <Modal
+                        currentModal={currentModal}
+                        handleModal={this.handleModal}
+                        handleAddCard={handleAddCard}
+                        handleSaveCard={handleSaveCard}
+                        card={this.state.card}
+                        cardIndex={this.state.cardIndex}
+                    />
+                </div>
             </div>
         );
     }

@@ -10,17 +10,18 @@
 // // @import
 // //   'vendor/normalize';
 
-// // 3. Base stuff
-// @import
-//   'base/base';
-//   // 'base/fonts',
-//   // 'base/typography',
-//   // 'base/helpers';
+// 3. Base stuff
+@import
+  'base/base';
+  // 'base/fonts',
+  // 'base/typography',
+  // 'base/helpers';
 
 // 4. Layout-related sections
 @import
   'layout/Navigation/navigation',
-  'layout/Content/content';
+  'layout/Content/content',
+  'layout/TopBarNavigation/topbarnav';
   
 
 // 5. Components
@@ -39,14 +40,3 @@
 // 7. Themes
 @import
   'themes/splash';
-
-html, body {
-  margin: 0;
-  padding: 0;
-}
-
-.link {
-  text-decoration: underline;
-  color: blue;
-  cursor: pointer;
-}
