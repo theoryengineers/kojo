@@ -1,18 +1,21 @@
 import * as React from 'react';
 import ModalAddNewCard from './modalcontents/addnewcard';
-// import ModalEditCard from './modalcontents/editcard';
+import ModalEditCard from './modalcontents/editcard';
+import { CardAddProps, Cards } from 'app_modules/types';
 
-interface Props {
+interface Props extends CardAddProps {
     currentModal: string;
+    cardIndex: number;
+    card: Cards;
     handleModal: (selection: string) => void;
 }
 
 const ModalConductor: React.SFC<Props> = (props) => {
     switch (props.currentModal) {
         case 'ADD_NEW_CARD':
-            return <ModalAddNewCard {...props} />;
-        // case 'EDIT_CARD':
-        //     return <ModalEditCard {...props} />;
+            return <ModalAddNewCard {...props} handleAddCard={props.handleAddCard} />;
+        case 'EDIT_CARD':
+            return <ModalEditCard {...props} handleSaveCard={props.handleSaveCard} cardIndex={props.cardIndex} />;
         default:
             return null;
     }

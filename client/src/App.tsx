@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import LoginPage from 'app_modules/pages/LoginPage';
 import MainPage from 'app_modules/pages/MainPage';
 import OurApi from 'app_modules/api/OurApi';
+import { Cards } from 'app_modules/types';
 
 const initialState = {
     isAuthenticated: false,
@@ -37,6 +38,9 @@ export class App extends React.Component<{}, State> {
                                 <MainPage
                                     {...props}
                                     handleGetCards={this.handleGetCards}
+                                    handleAddCard={this.handleAddCard}
+                                    handleSaveCard={this.handleSaveCard}
+                                    cards={this.state.cards}
                                 // handleSomething={this.handleSomething}
                                 />
                             ) : (
@@ -92,41 +96,31 @@ export class App extends React.Component<{}, State> {
 
     private handleGetCards = (): void => {
         let cards = OurApi.getCards();
-        // tslint:disable-next-line:no-console
         this.setState(updateCards(cards), () => console.log(this.state.cards));
     }
 
-    // private handleAddCards = (newCardObj: {
-    //     id: number,
-    //     title: string,
-    //     category: string,
-    //     description: string,
-    //     column: string,
-    //     assignment: Array<number>,
-    //     board: number
-    // }) => {
-    //     let newObj = this.state.cards;
-    //     newObj.push(newCardObj);
-    //     this.setState({
-    //         cards: newObj
-    //     });
-    // }
+    private handleAddCard = (newCardObj: Cards): void => {
+        this.setState(addCards(newCardObj), () => console.log(this.state.cards));
+    }
+
+    private handleSaveCard = (cardObj: Cards, cardIndex: number): void => {
+        let newCardsArr =
+            this.state.cards.slice(0, cardIndex).concat(
+                ([cardObj] as Array<never>).concat(
+                    this.state.cards.slice(cardIndex + 1, this.state.cards.length)
+                )
+            );
+        this.setState(updateCards(newCardsArr));
+    }
 }
 
 const updateField = (name: string, value: string): (state: State) => void =>
     (prevState: State) => ({ [name]: value });
 
-const updateCards = (cardObj: Array<
-    {
-        id: number;
-        title: string;
-        category: string;
-        description: string;
-        column: string;
-        assignment: Array<number>;
-        board: number
-    }
-    >): (state: State) => void =>
-    (prevState: State) => ({ cards: cardObj });
+const addCards = (newCardObj: Cards): (state: State) => void =>
+    (prevState: State) => ({ cards: ([newCardObj] as Array<never>).concat(prevState.cards) });
+
+const updateCards = (cardsArr: Array<Cards>): (state: State) => void =>
+    (prevState: State) => ({ cards: cardsArr });
 
 export default App;

@@ -1,9 +1,11 @@
 import * as React from 'react';
 import ModalConductor from './modal.conductor';
-import { PageProps } from 'app_modules/types';
+import { PageProps, CardAddProps, Cards } from 'app_modules/types';
 
-interface Props extends PageProps {
+interface Props extends PageProps, CardAddProps {
+    card: Cards;
     currentModal: string;
+    cardIndex: number;
     handleModal: (selection: string) => void;
 }
 

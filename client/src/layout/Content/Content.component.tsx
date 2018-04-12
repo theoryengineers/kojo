@@ -2,13 +2,23 @@ import * as React from 'react';
 import Column from 'app_modules/components/BoardColumn';
 import Card from 'app_modules/components/BoardCard';
 import Modal from 'app_modules/components/Modal';
-import { CardProps } from 'app_modules/types';
+import { CardProps, CardAddProps, Cards } from 'app_modules/types';
 
 const initialState = {
-    currentModal: 'CLOSED'
+    currentModal: 'CLOSED',
+    card: {
+        id: 0,
+        title: '',
+        category: '',
+        description: '',
+        column: '',
+        assignment: [0],
+        board: 0
+    },
+    cardIndex: 0
 };
 
-interface Props extends CardProps { }
+interface Props extends CardProps, CardAddProps { }
 
 type State = Readonly<typeof initialState>;
 
@@ -16,7 +26,7 @@ export default class Content extends React.Component<Props, State> {
     readonly state: State = initialState;
     render() {
         const { currentModal } = this.state;
-        const { handleGetCards } = this.props;
+        const { handleGetCards, cards, handleAddCard, handleSaveCard } = this.props;
         return (
             <div className="content">
                 <Column
@@ -24,51 +34,30 @@ export default class Content extends React.Component<Props, State> {
                     backgroundColor={'gray'}
                     rightButton={<button onClick={() => this.handleModal('ADD_NEW_CARD')}>+</button>}
                 >
-                    <Card
-                        title={'Create Cards'}
-                        category={'Frontend/Component'}
-                        // tslint:disable-next-line:max-line-length
-                        description={'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'}
-                        assignment={'Paul Allen'}
-                        colorCode={'darkred'}
-                    />
-                    <Card
-                        title={'Create User API'}
-                        category={'Backend/API'}
-                        // tslint:disable-next-line:max-line-length
-                        description={'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'}
-                        assignment={'Steve Wozniak'}
-                        colorCode={'purple'}
-                    />
+                    {cards.map((card, i) => {
+                        return <Card
+                            key={i}
+                            card={card}
+                            index={i}
+                            colorCode={'red'}
+                            handleEditCard={this.handleEditCard}
+                        />;
+                    })}
                 </Column>
                 <Column
                     header={'In Progress'}
                     backgroundColor={'blue'}
-                    // tslint:disable-next-line:no-console
                     rightButton={<button onClick={() => handleGetCards()}>+</button>}
-                >
-                    <Card
-                        title={'Navbar'}
-                        category={'Frontend/Component'}
-                        // tslint:disable-next-line:max-line-length
-                        description={'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'}
-                        assignment={'Patrick Bateman'}
-                        colorCode={'darkred'}
-                    />
-                    <Card
-                        title={'Bake Chicken'}
-                        category={'Kitchen/Oven'}
-                        // tslint:disable-next-line:max-line-length
-                        description={'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'}
-                        assignment={'P.F. Chang'}
-                        colorCode={'yellow'}
-                    />
-                </Column>
+                />
                 <Column header={'Testing'} backgroundColor={'red'} />
                 <Column header={'Complete'} backgroundColor={'green'} />
                 <Modal
                     currentModal={currentModal}
                     handleModal={this.handleModal}
+                    handleAddCard={handleAddCard}
+                    handleSaveCard={handleSaveCard}
+                    card={this.state.card}
+                    cardIndex={this.state.cardIndex}
                 />
             </div>
         );
@@ -78,5 +67,13 @@ export default class Content extends React.Component<Props, State> {
         this.setState({
             currentModal: selection
         });
+    }
+
+    private handleEditCard = (selection: string = 'EDIT_CARD', cardObj: Cards, index: number): void => {
+        this.setState({
+            currentModal: selection,
+            card: cardObj,
+            cardIndex: index
+        }, () => console.log(this.state.card));
     }
 }

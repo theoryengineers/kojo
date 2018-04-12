@@ -1,20 +1,34 @@
 import * as React from 'react';
-import { CardAddProps } from 'app_modules/types';
+import { CardAddProps, Cards } from 'app_modules/types';
 
 interface Props extends CardAddProps {
     handleModal: (selection: string) => void;
+    cardIndex: number;
+    card: Cards;
 }
 
 const initialState = {
     title: '',
     category: '',
     description: '',
-    assignment: [0]
+    assignment: [0],
+    cardIndex: 0
 };
 
 type State = Readonly<typeof initialState>;
 
-class AddNewCard extends React.Component<Props, State> {
+class EditCard extends React.Component<Props, State> {
+
+    static getDerivedStateFromProps(nextProp: Props, prevState: State) {
+        return {
+            title: nextProp.card.title,
+            category: nextProp.card.category,
+            description: nextProp.card.description,
+            assignment: nextProp.card.assignment,
+            cardIndex: nextProp.cardIndex
+        };
+    }
+
     readonly state: State = initialState;
     render() {
         return (
@@ -50,7 +64,7 @@ class AddNewCard extends React.Component<Props, State> {
                 <div>
                     <button
                         onClick={() => {
-                            this.props.handleAddCard({
+                            this.props.handleSaveCard({
                                 id: 1,
                                 title: this.state.title,
                                 category: this.state.category,
@@ -58,18 +72,17 @@ class AddNewCard extends React.Component<Props, State> {
                                 column: 'Backlog',
                                 assignment: this.state.assignment,
                                 board: 1
-                            });
+                            }, this.state.cardIndex);
                             this.props.handleModal('CLOSED');
                         }}
                     >
-                        Add
+                        Save
                     </button>
                     <button onClick={() => this.props.handleModal('CLOSED')}>Cancel</button>
                 </div>
             </div>
         );
     }
-
     private handleFieldInput = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
         const { name, value } = event.currentTarget;
         this.setState(updateField(name, value));
@@ -81,4 +94,4 @@ const updateField = (name: string, value: string): (state: State) => void =>
         [name]: value
     });
 
-export default AddNewCard;
+export default EditCard;
