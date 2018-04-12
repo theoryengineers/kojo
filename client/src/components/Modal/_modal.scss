@@ -1,26 +1,24 @@
 .modal-container {
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0,0,0,0.7);
   position: absolute;
   width: calc(100% - 52px);
-  height: 0vh;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  opacity: 0;
-  transition: 0.5s;
   .modal {
     padding: 20px;
     width: 500px;
     background-color: yellow;
+    box-shadow: 0px 5px 20px rgba(0,0,0,0.7);
                
     input {
-        width: calc(100% - 0.7em);
+        width: calc(100% - 0.65em);
         font-size: 1.1em;
         padding: .2em;
     }
     textarea {
-        width: calc(100% - 0.625em);
+        width: calc(100% - 0.55em);
         font-size: 1em;
         padding: .2em;
         resize: none;
@@ -29,6 +27,22 @@
   }
 }
 .modal-show {
-  height: 100vh;
-  opacity: 1;
+  animation: modal-show 0.5s;
+  animation-fill-mode: forwards;
+}
+.modal-hide {
+  animation: modal-hide 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes modal-hide {
+  0%{height: 100vh; opacity: 1}
+  99%{height: 100vh}
+  100%{height: 0vh; opacity: 0}
+}
+
+@keyframes modal-show {
+  0%{height: 0vh; opacity: 0}
+  1%{height: 100vh}
+  100%{height: 100vh; opacity: 1}
 }

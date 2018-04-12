@@ -99,8 +99,9 @@ export class App extends React.Component<{}, State> {
         this.setState(updateCards(cards), () => console.log(this.state.cards));
     }
 
-    private handleAddCard = (newCardObj: Cards): void => {
-        this.setState(addCards(newCardObj), () => console.log(this.state.cards));
+    private handleAddCard = (CardObj: Cards): void => {
+        let newCardArr = ([CardObj] as Array<never>).concat(this.state.cards);
+        this.setState(updateCards(newCardArr), () => console.log(this.state.cards));
     }
 
     private handleSaveCard = (cardObj: Cards, cardIndex: number): void => {
@@ -110,15 +111,12 @@ export class App extends React.Component<{}, State> {
                     this.state.cards.slice(cardIndex + 1, this.state.cards.length)
                 )
             );
-        this.setState(updateCards(newCardsArr));
+        this.setState(updateCards(newCardsArr), () => console.log(this.state.cards));
     }
 }
 
 const updateField = (name: string, value: string): (state: State) => void =>
     (prevState: State) => ({ [name]: value });
-
-const addCards = (newCardObj: Cards): (state: State) => void =>
-    (prevState: State) => ({ cards: ([newCardObj] as Array<never>).concat(prevState.cards) });
 
 const updateCards = (cardsArr: Array<Cards>): (state: State) => void =>
     (prevState: State) => ({ cards: cardsArr });

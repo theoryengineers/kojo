@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { CardAddProps } from 'app_modules/types';
+import { Cards } from 'app_modules/types';
 
-interface Props extends CardAddProps {
+interface Props {
     handleModal: (selection: string) => void;
+    handleAddCard: (newCardObj: Cards) => void;
 }
 
 const initialState = {

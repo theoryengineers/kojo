@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { CardAddProps, Cards } from 'app_modules/types';
+import { Cards } from 'app_modules/types';
 
-interface Props extends CardAddProps {
-    handleModal: (selection: string) => void;
+interface Props {
     cardIndex: number;
     card: Cards;
+    handleModal: (selection: string) => void;
+    handleSaveCard: (newCardObj: Cards, cardIndex: number) => void;
 }
 
 const initialState = {
@@ -30,6 +31,7 @@ class EditCard extends React.Component<Props, State> {
     }
 
     readonly state: State = initialState;
+
     render() {
         return (
             <div className="modal">
@@ -72,6 +74,7 @@ class EditCard extends React.Component<Props, State> {
                                 column: 'Backlog',
                                 assignment: this.state.assignment,
                                 board: 1
+                                // tslint:disable-next-line:align
                             }, this.state.cardIndex);
                             this.props.handleModal('CLOSED');
                         }}

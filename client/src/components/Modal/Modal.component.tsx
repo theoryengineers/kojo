@@ -1,8 +1,8 @@
 import * as React from 'react';
 import ModalConductor from './modal.conductor';
-import { PageProps, CardAddProps, Cards } from 'app_modules/types';
+import { PageProps, ModalProps, Cards } from 'app_modules/types';
 
-interface Props extends PageProps, CardAddProps {
+interface Props extends PageProps, ModalProps {
     card: Cards;
     currentModal: string;
     cardIndex: number;
@@ -11,8 +11,13 @@ interface Props extends PageProps, CardAddProps {
 
 // Modal Wrapper
 const Modal: React.SFC<Props> = (props) => (
-    <div className={'modal-container ' + (props.currentModal !== 'CLOSED' ? 'modal-show' : null)} >
-        <ModalConductor {...props} />
+    <div
+        className={'modal-container ' + (props.currentModal !== 'CLOSED' ? 'modal-show' : 'modal-hide')}
+        onClick={() => props.handleModal('CLOSED')}
+    >
+        <div onClick={(e) => e.stopPropagation()} >
+            <ModalConductor {...props} />
+        </div>
     </div>
 );
 

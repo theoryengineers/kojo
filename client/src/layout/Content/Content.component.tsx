@@ -2,7 +2,7 @@ import * as React from 'react';
 import Column from 'app_modules/components/BoardColumn';
 import Card from 'app_modules/components/BoardCard';
 import Modal from 'app_modules/components/Modal';
-import { CardProps, CardAddProps, Cards } from 'app_modules/types';
+import { Cards, GetCards, ModalProps } from 'app_modules/types';
 
 const initialState = {
     currentModal: 'CLOSED',
@@ -18,7 +18,9 @@ const initialState = {
     cardIndex: 0
 };
 
-interface Props extends CardProps, CardAddProps { }
+interface Props extends GetCards, ModalProps {
+    cards: Array<Cards>;
+}
 
 type State = Readonly<typeof initialState>;
 
@@ -74,6 +76,7 @@ export default class Content extends React.Component<Props, State> {
             currentModal: selection,
             card: cardObj,
             cardIndex: index
+            // tslint:disable-next-line:align
         }, () => console.log(this.state.card));
     }
 }
