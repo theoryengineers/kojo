@@ -10,7 +10,7 @@ interface BoardCardProps {
 }
 
 const BoardCard: React.SFC<BoardCardProps> = (props) => (
-    <div className="card" style={{ borderLeft: '10px solid ' + props.colorCode }}>
+    <div className="card" tabIndex={props.index} style={{ borderLeft: '10px solid ' + props.colorCode }}>
         <div className="card__header">
             <div className="card__title">{props.card.title}</div>
             <div className="card__interface">

@@ -2,7 +2,7 @@
   background: transparent;
   display: grid;
   grid-row-gap: 0.5em;
-  grid-auto-rows: min-content;
+  grid-auto-rows: min-content auto;
 
   &__header {
     background-color: darkgoldenrod;
@@ -24,5 +24,11 @@
     button {
       font-size: 0.9em;
     }
+  }
+
+  &__content {
+    display: grid;
+    grid-row-gap: 10px;
+    grid-auto-rows: max-content;
   }
 }

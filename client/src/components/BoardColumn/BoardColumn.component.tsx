@@ -14,8 +14,18 @@ const BoardColumn: React.SFC<BoardColumnProps> = (props) => (
             <div className="column__header__alignment">{props.header}</div>
             <div className="column__header__alignment">{props.rightButton}</div>
         </div>
-        {props.children}
-    </div>
+        <div
+            // Turn this into a DropZone Component later
+            id={props.header}
+            className="column__content"
+            style={{ backgroundColor: 'blue' }}
+            onDragEnter={() => null}
+            onDragOver={e => e.preventDefault()}
+            onDrop={(e) => console.log(e.dataTransfer.getData('text'), e.currentTarget.id)}
+        >
+            {props.children}
+        </div>
+    </div >
 );
 
 export default BoardColumn;

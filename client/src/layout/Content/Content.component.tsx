@@ -3,6 +3,7 @@ import Column from 'app_modules/components/BoardColumn';
 import Card from 'app_modules/components/BoardCard';
 import Modal from 'app_modules/components/Modal';
 import TopBar from 'app_modules/layout/TopBarNavigation';
+import DragAndDrop from 'app_modules/layout/DragAndDrop';
 import { Cards, GetCards, ModalProps } from 'app_modules/types';
 
 const initialState = {
@@ -40,22 +41,76 @@ export default class Content extends React.Component<Props, State> {
                         rightButton={<button onClick={() => this.handleModal('ADD_NEW_CARD')}>+</button>}
                     >
                         {cards.map((card, i) => {
-                            return <Card
-                                key={i}
-                                card={card}
-                                index={i}
-                                colorCode={'red'}
-                                handleEditCard={this.handleEditCard}
-                            />;
+                            if (card.column === 'Backlog') {
+                                return <DragAndDrop key={i}>
+                                    <Card
+                                        key={i}
+                                        index={i}
+                                        card={card}
+                                        colorCode={'red'}
+                                        handleEditCard={this.handleEditCard}
+                                    />
+                                </DragAndDrop>;
+                            } else {
+                                return null;
+                            }
                         })}
                     </Column>
                     <Column
                         header={'In Progress'}
                         backgroundColor={'blue'}
                         rightButton={<button onClick={() => handleGetCards()}>+</button>}
-                    />
-                    <Column header={'Testing'} backgroundColor={'red'} />
-                    <Column header={'Complete'} backgroundColor={'green'} />
+                    >
+                        {cards.map((card, i) => {
+                            if (card.column === 'In Progress') {
+                                return <DragAndDrop key={i}>
+                                    <Card
+                                        key={i}
+                                        index={i}
+                                        card={card}
+                                        colorCode={'red'}
+                                        handleEditCard={this.handleEditCard}
+                                    />
+                                </DragAndDrop>;
+                            } else {
+                                return null;
+                            }
+                        })}
+                    </Column>
+                    <Column header={'Testing'} backgroundColor={'red'} >
+                        {cards.map((card, i) => {
+                            if (card.column === 'Testing') {
+                                return <DragAndDrop key={i}>
+                                    <Card
+                                        key={i}
+                                        index={i}
+                                        card={card}
+                                        colorCode={'red'}
+                                        handleEditCard={this.handleEditCard}
+                                    />
+                                </DragAndDrop>;
+                            } else {
+                                return null;
+                            }
+                        })}
+                    </Column>
+                    <Column header={'Complete'} backgroundColor={'green'} >
+                        {cards.map((card, i) => {
+                            if (card.column === 'Complete') {
+                                return <DragAndDrop key={i}>
+                                    <Card
+                                        key={i}
+                                        index={i}
+                                        card={card}
+                                        colorCode={'red'}
+                                        handleEditCard={this.handleEditCard}
+                                    />
+                                </DragAndDrop>;
+                            } else {
+                                return null;
+                            }
+                        })}
+                    </Column>
                 </div>
                 <Modal
                     currentModal={currentModal}
