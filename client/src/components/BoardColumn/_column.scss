@@ -4,7 +4,7 @@
   grid-row-gap: 0.5em;
   grid-auto-rows: min-content;
 
-  .header {
+  &__header {
     background-color: darkgoldenrod;
     padding: 15px;
     font-size: 1.3rem;
@@ -12,11 +12,10 @@
     font-weight: bold;
     text-align: center;
     color: white;
-
     display: grid;
     grid-template-columns: 27px auto 27px;
 
-    .alignment {
+    &__alignment {
       display: flex;
       align-items: center;
       justify-content: center;

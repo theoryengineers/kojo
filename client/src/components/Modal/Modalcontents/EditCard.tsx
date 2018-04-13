@@ -34,7 +34,7 @@ class EditCard extends React.Component<Props, State> {
 
     render() {
         return (
-            <div className="modal">
+            <div className="modal__form">
                 <input
                     className="input-field"
                     onChange={this.handleFieldInput}

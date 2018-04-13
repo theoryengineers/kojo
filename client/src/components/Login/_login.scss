@@ -1,4 +1,4 @@
-.login-container {
+.login {
   width: 220px;
   background: white;
   padding: 40px;
@@ -7,10 +7,7 @@
   position: relative;
   border: 13px solid darkred;
   border-radius: 10px;
-  label {
-    font-weight: normal;
-  }
-  .input-field {
+  &__input-field {
     background-color: #F8F8F8;
     border: 1px solid #DADADA !important;
     color: #6A6A6A;
@@ -23,15 +20,15 @@
     -moz-border-radius: 4px;
     border-radius: 4px;
   }
-  .login-button {
+  &__button {
     width: 100%;
     font-size: 1.3em;
     padding: 5px 0px;
   }
-  .login-footer {
+  &__footer {
     margin-top: 20px;
   }
-  .login-header {
+  &__header {
     position: absolute;
     top: -45px;
     left: 50%;
@@ -45,5 +42,8 @@
     text-align: center;
     font-size: 1.3em;
     font-weight: bold;
+  }
+  label {
+    font-weight: normal;
   }
 }

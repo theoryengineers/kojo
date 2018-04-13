@@ -12,7 +12,7 @@ interface Props extends PageProps, ModalProps {
 // Modal Wrapper
 const Modal: React.SFC<Props> = (props) => (
     <div
-        className={'modal-container ' + (props.currentModal !== 'CLOSED' ? 'modal-show' : 'modal-hide')}
+        className={'modal ' + (props.currentModal !== 'CLOSED' ? 'modal-show' : 'modal-hide')}
         onClick={() => props.handleModal('CLOSED')}
     >
         <div onClick={(e) => e.stopPropagation()} >

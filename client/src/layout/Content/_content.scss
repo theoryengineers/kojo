@@ -1,8 +1,5 @@
 .content {
   background: floralwhite;
-  // height: calc(
-  //   100vh - (#{$nav-font-size} + 1.2rem + (2 * #{$nav-list-padding}))
-  // );
   height: calc(100vh - (2.4em + 1em));
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
