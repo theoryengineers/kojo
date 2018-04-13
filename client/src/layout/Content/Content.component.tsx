@@ -32,9 +32,7 @@ export default class Content extends React.Component<Props, State> {
         const { handleGetCards, cards, handleAddCard, handleSaveCard } = this.props;
         return (
             <div>
-                <TopBar
-                    displayName={'Partner'}
-                />
+                <TopBar displayName={'Partner'} />
                 <div className="content">
                     <Column
                         header={'Backlog'}
@@ -58,15 +56,15 @@ export default class Content extends React.Component<Props, State> {
                     />
                     <Column header={'Testing'} backgroundColor={'red'} />
                     <Column header={'Complete'} backgroundColor={'green'} />
-                    <Modal
-                        currentModal={currentModal}
-                        handleModal={this.handleModal}
-                        handleAddCard={handleAddCard}
-                        handleSaveCard={handleSaveCard}
-                        card={this.state.card}
-                        cardIndex={this.state.cardIndex}
-                    />
                 </div>
+                <Modal
+                    currentModal={currentModal}
+                    handleModal={this.handleModal}
+                    handleAddCard={handleAddCard}
+                    handleSaveCard={handleSaveCard}
+                    card={this.state.card}
+                    cardIndex={this.state.cardIndex}
+                />
             </div>
         );
     }

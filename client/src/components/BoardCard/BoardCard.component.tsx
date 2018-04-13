@@ -11,9 +11,9 @@ interface BoardCardProps {
 
 const BoardCard: React.SFC<BoardCardProps> = (props) => (
     <div className="card" style={{ borderLeft: '10px solid ' + props.colorCode }}>
-        <div className="card-header">
-            <div className="title">{props.card.title}</div>
-            <div className="card-interface">
+        <div className="card__header">
+            <div className="card__title">{props.card.title}</div>
+            <div className="card__interface">
                 <button
                     onClick={() => props.handleEditCard('EDIT_CARD', props.card, props.index)}
                 >
@@ -21,9 +21,9 @@ const BoardCard: React.SFC<BoardCardProps> = (props) => (
                 </button>
             </div>
         </div>
-        <div className="category">{props.card.category}</div>
-        <div className="description">{props.card.description}</div>
-        <div className="assignment">{props.card.assignment}</div>
+        <div className="card__category">{props.card.category}</div>
+        <div className="card__description">{props.card.description}</div>
+        <div className="card__assignment">{props.card.assignment}</div>
     </div>
 );
 

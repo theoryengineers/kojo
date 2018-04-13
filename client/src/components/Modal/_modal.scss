@@ -1,6 +1,8 @@
 .modal-container {
   background-color: rgba(0,0,0,0.7);
   position: absolute;
+  top: 0;
+  right: 0;
   width: calc(100% - 52px);
   display: flex;
   justify-content: center;
@@ -36,7 +38,7 @@
   animation-fill-mode: forwards;
 }
 
-$modal-height: calc(100vh - 41.5px);
+$modal-height: 100vh;
 
 @keyframes modal-hide {
   0%{height: $modal-height; opacity: 1}
