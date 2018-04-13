@@ -4,7 +4,7 @@ import Card from 'app_modules/components/BoardCard';
 import Modal from 'app_modules/components/Modal';
 import TopBar from 'app_modules/layout/TopBarNavigation';
 import DragAndDrop from 'app_modules/layout/DragAndDrop';
-import { Cards, GetCards, ModalProps } from 'app_modules/types';
+import { Cards, GetCards, ModalProps, DragDropCards } from 'app_modules/types';
 
 const initialState = {
     currentModal: 'CLOSED',
@@ -20,7 +20,7 @@ const initialState = {
     cardIndex: 0
 };
 
-interface Props extends GetCards, ModalProps {
+interface Props extends GetCards, ModalProps, DragDropCards {
     cards: Array<Cards>;
 }
 
@@ -30,7 +30,7 @@ export default class Content extends React.Component<Props, State> {
     readonly state: State = initialState;
     render() {
         const { currentModal } = this.state;
-        const { handleGetCards, cards, handleAddCard, handleSaveCard } = this.props;
+        const { handleGetCards, cards, handleAddCard, handleSaveCard, handleDragDropCard } = this.props;
         return (
             <div>
                 <TopBar displayName={'Partner'} />
@@ -39,6 +39,7 @@ export default class Content extends React.Component<Props, State> {
                         header={'Backlog'}
                         backgroundColor={'gray'}
                         rightButton={<button onClick={() => this.handleModal('ADD_NEW_CARD')}>+</button>}
+                        handleDragDropCard={handleDragDropCard}
                     >
                         {cards.map((card, i) => {
                             if (card.column === 'Backlog') {
@@ -60,6 +61,7 @@ export default class Content extends React.Component<Props, State> {
                         header={'In Progress'}
                         backgroundColor={'blue'}
                         rightButton={<button onClick={() => handleGetCards()}>+</button>}
+                        handleDragDropCard={handleDragDropCard}
                     >
                         {cards.map((card, i) => {
                             if (card.column === 'In Progress') {
@@ -77,7 +79,7 @@ export default class Content extends React.Component<Props, State> {
                             }
                         })}
                     </Column>
-                    <Column header={'Testing'} backgroundColor={'red'} >
+                    <Column header={'Testing'} backgroundColor={'red'} handleDragDropCard={handleDragDropCard}>
                         {cards.map((card, i) => {
                             if (card.column === 'Testing') {
                                 return <DragAndDrop key={i}>
@@ -94,7 +96,7 @@ export default class Content extends React.Component<Props, State> {
                             }
                         })}
                     </Column>
-                    <Column header={'Complete'} backgroundColor={'green'} >
+                    <Column header={'Complete'} backgroundColor={'green'} handleDragDropCard={handleDragDropCard}>
                         {cards.map((card, i) => {
                             if (card.column === 'Complete') {
                                 return <DragAndDrop key={i}>

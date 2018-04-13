@@ -40,6 +40,7 @@ export class App extends React.Component<{}, State> {
                                     handleGetCards={this.handleGetCards}
                                     handleAddCard={this.handleAddCard}
                                     handleSaveCard={this.handleSaveCard}
+                                    handleDragDropCard={this.handleDragDropCard}
                                     cards={this.state.cards}
                                 // handleSomething={this.handleSomething}
                                 />
@@ -112,6 +113,11 @@ export class App extends React.Component<{}, State> {
                 )
             );
         this.setState(updateCards(newCardsArr), () => console.log(this.state.cards));
+    }
+
+    private handleDragDropCard = (cardIndex: number, cardColumn: string): void => {
+        let newCardObj = { ...this.state.cards[cardIndex] as Cards, column: cardColumn };
+        this.handleSaveCard(newCardObj, cardIndex);
     }
 }
 

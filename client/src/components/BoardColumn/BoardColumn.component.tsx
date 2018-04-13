@@ -1,6 +1,7 @@
 import * as React from 'react';
+import { DragDropCards } from 'app_modules/types';
 
-interface BoardColumnProps {
+interface BoardColumnProps extends DragDropCards {
     header: string;
     backgroundColor: string;
     leftButton?: JSX.Element;
@@ -21,11 +22,15 @@ const BoardColumn: React.SFC<BoardColumnProps> = (props) => (
             style={{ backgroundColor: 'blue' }}
             onDragEnter={() => null}
             onDragOver={e => e.preventDefault()}
-            onDrop={(e) => console.log(e.dataTransfer.getData('text'), e.currentTarget.id)}
+            onDrop={(e) => onDrop(e.dataTransfer.getData('text'), e.currentTarget.id, props)}
         >
             {props.children}
         </div>
     </div >
 );
+
+const onDrop = (cardIndex: string, column: string, props: BoardColumnProps) => {
+    props.handleDragDropCard(parseInt(cardIndex, 10), column);
+};
 
 export default BoardColumn;

@@ -21,6 +21,10 @@ export interface GetCards {
     handleGetCards: () => void;
 }
 
+export interface DragDropCards {
+    handleDragDropCard: (cardIndex: number, cardColumn: string) => void;
+}
+
 // export interface CardProps {
 //     cards?: Array<Cards>;
 //     handleAddCard: (newCardObj: Cards) => void;
