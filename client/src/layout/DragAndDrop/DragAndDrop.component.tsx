@@ -16,6 +16,7 @@ class DragAndDrop extends React.Component<Props, State> {
         const { children, handleDragDropCard } = this.props;
         return (
             <div
+                className="drag-and-drop"
                 style={{
                     cursor: 'pointer',
                     // CONVERT THESE TO CLASSES LATER
