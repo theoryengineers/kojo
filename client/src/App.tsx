@@ -149,15 +149,11 @@ export class App extends React.Component<{}, State> {
             );
 
         // Delete old Card object from Array
-        let newCardsArr2 = [{} as never];
-        for (let i = 0; i < newCardsArr.length; i++) {
-            if (newCardsArr[i] === cards[oldCardIndex]) {
-                newCardsArr2 =
-                    newCardsArr.slice(0, i).concat(
-                        newCardsArr.slice(i + 1, newCardsArr.length)
-                    );
-            }
-        }
+        let deleteIndex = newCardsArr.findIndex(obj => obj === cards[oldCardIndex]);
+        let newCardsArr2 =
+            newCardsArr.slice(0, deleteIndex).concat(
+                newCardsArr.slice(deleteIndex + 1, newCardsArr.length)
+            );
 
         console.log(
             'old index:', oldCardIndex,
