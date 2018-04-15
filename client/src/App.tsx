@@ -43,6 +43,7 @@ export class App extends React.Component<{}, State> {
                                     handleSaveCard={this.handleSaveCard}
                                     handleDragDropCard={this.handleDragDropCard}
                                     cards={this.state.cards}
+                                    displayName={this.state.displayName}
                                 // handleSomething={this.handleSomething}
                                 />
                             ) : (

@@ -4,7 +4,7 @@ import Card from 'app_modules/components/BoardCard';
 import Modal from 'app_modules/components/Modal';
 import TopBar from 'app_modules/layout/TopBarNavigation';
 import DragAndDrop from 'app_modules/layout/DragAndDrop';
-import { Cards, GetCards, ModalProps, DragDropCards } from 'app_modules/types';
+import { Cards, GetCards, ModalProps, DragDropCards, DisplayName } from 'app_modules/types';
 
 const initialState = {
     currentModal: 'CLOSED',
@@ -20,7 +20,7 @@ const initialState = {
     cardIndex: 0
 };
 
-interface Props extends GetCards, ModalProps, DragDropCards {
+interface Props extends GetCards, ModalProps, DragDropCards, DisplayName {
     cards: Array<Cards>;
 }
 
@@ -35,12 +35,13 @@ export default class Content extends React.Component<Props, State> {
             handleGetCards,
             handleAddCard,
             handleSaveCard,
-            handleDragDropCard
+            handleDragDropCard,
+            displayName
         } = this.props;
 
         return (
             <div>
-                <TopBar displayName={'Partner'} />
+                <TopBar displayName={displayName} />
                 <div className="content">
                     <Column
                         header={'Backlog'}

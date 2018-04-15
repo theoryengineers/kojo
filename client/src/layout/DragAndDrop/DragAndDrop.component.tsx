@@ -30,7 +30,6 @@ class DragAndDrop extends React.Component<Props, State> {
                     e.dataTransfer.setData('text', (x as HTMLElement).tabIndex.toString());
                 }}
                 onDrag={e => {
-                    e.preventDefault();
                     this.setState({ isDragging: true });
                 }}
                 onDragEnd={e => {

@@ -24,3 +24,7 @@ export interface GetCards {
 export interface DragDropCards {
     handleDragDropCard: (oldCardIndex: number, dropCardIndex: number, cardColumn: string, action: string) => void;
 }
+
+export interface DisplayName {
+    displayName: string;
+}
