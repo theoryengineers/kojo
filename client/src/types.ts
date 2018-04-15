@@ -22,7 +22,7 @@ export interface GetCards {
 }
 
 export interface DragDropCards {
-    handleDragDropCard: (cardIndex: number, cardColumn: string) => void;
+    handleDragDropCard: (oldCardIndex: number, dropCardIndex: number, cardColumn: string, action: string) => void;
 }
 
 // export interface CardProps {

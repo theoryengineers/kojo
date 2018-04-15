@@ -24,6 +24,7 @@ export class App extends React.Component<{}, State> {
         if (retrievedObject) {
             this.setState(JSON.parse(retrievedObject));
         }
+        this.handleGetCards();
     }
     readonly state: State = initialState;
     render() {
@@ -92,17 +93,25 @@ export class App extends React.Component<{}, State> {
 
     private handleLoginFieldChange = (event: React.FormEvent<HTMLInputElement>): void => {
         const { name, value } = event.currentTarget;
-        this.setState(updateField(name, value));
+        this.setState(updateAction(name, value));
     }
 
     private handleGetCards = (): void => {
-        let cards = OurApi.getCards();
-        this.setState(updateCards(cards), () => console.log(this.state.cards));
+        let cards = OurApi.getCards().sort((a, b) => {
+            if (a.column > b.column) {
+                return 1;
+            } else if (a.column < b.column) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+        this.setState(updateAction('cards', cards));
     }
 
     private handleAddCard = (CardObj: Cards): void => {
         let newCardArr = ([CardObj] as Array<never>).concat(this.state.cards);
-        this.setState(updateCards(newCardArr), () => console.log(this.state.cards));
+        this.setState(updateAction('cards', newCardArr));
     }
 
     private handleSaveCard = (cardObj: Cards, cardIndex: number): void => {
@@ -112,19 +121,57 @@ export class App extends React.Component<{}, State> {
                     this.state.cards.slice(cardIndex + 1, this.state.cards.length)
                 )
             );
-        this.setState(updateCards(newCardsArr), () => console.log(this.state.cards));
+        this.setState(updateAction('cards', newCardsArr));
     }
 
-    private handleDragDropCard = (cardIndex: number, cardColumn: string): void => {
-        let newCardObj = { ...this.state.cards[cardIndex] as Cards, column: cardColumn };
-        this.handleSaveCard(newCardObj, cardIndex);
+    private handleDragDropCard = (
+        oldCardIndex: number, // the index of the card being dragged
+        dropCardIndex: number, // the index of the card being hovered over
+        cardColumn: string, // the drop zone column name
+        action: string // the action to place card above or below the drop target card
+    ): void => {
+        const { cards } = this.state;
+        let newCardObj = { ...cards[oldCardIndex] as Cards, column: cardColumn };
+
+        // If dropping into column directly, set drop card index to value +1 
+        // after the last item of the specific column
+        if (action === 'DROP_COLUMN') {
+            // Gotta mutate here to keep code clean
+            dropCardIndex = (cards as Array<Cards>).findIndex(obj => obj.column === cardColumn) + dropCardIndex;
+        }
+
+        // Insert new Card object into Array
+        let newCardsArr =
+            cards.slice(0, dropCardIndex + (action === 'DROP_DOWN' ? 1 : 0)).concat(
+                ([newCardObj] as Array<never>).concat(
+                    cards.slice(dropCardIndex + (action === 'DROP_DOWN' ? 1 : 0), cards.length)
+                )
+            );
+
+        // Delete old Card object from Array
+        let newCardsArr2 = [{} as never];
+        for (let i = 0; i < newCardsArr.length; i++) {
+            if (newCardsArr[i] === cards[oldCardIndex]) {
+                newCardsArr2 =
+                    newCardsArr.slice(0, i).concat(
+                        newCardsArr.slice(i + 1, newCardsArr.length)
+                    );
+            }
+        }
+
+        console.log(
+            'old index:', oldCardIndex,
+            'drop index:', dropCardIndex,
+            'column:', cardColumn,
+            'action:', action
+        );
+
+        this.setState(updateAction('cards', newCardsArr2));
     }
+
 }
 
-const updateField = (name: string, value: string): (state: State) => void =>
-    (prevState: State) => ({ [name]: value });
-
-const updateCards = (cardsArr: Array<Cards>): (state: State) => void =>
-    (prevState: State) => ({ cards: cardsArr });
+const updateAction = (state: string, value: (string | number | Array<Cards>)): ((state: State) => void) =>
+    (prevState: State) => ({ [state]: value });
 
 export default App;

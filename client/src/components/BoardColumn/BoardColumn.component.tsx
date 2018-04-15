@@ -19,18 +19,27 @@ const BoardColumn: React.SFC<BoardColumnProps> = (props) => (
             // Turn this into a DropZone Component later
             id={props.header}
             className="column__content"
-            style={{ backgroundColor: 'blue' }}
-            onDragEnter={() => null}
+            style={{ backgroundColor: 'gray', padding: '10px' }}
+            onDragEnter={e => e.preventDefault()}
             onDragOver={e => e.preventDefault()}
-            onDrop={(e) => onDrop(e.dataTransfer.getData('text'), e.currentTarget.id, props)}
+            onDrop={(e) => onDrop(e, props)}
         >
             {props.children}
         </div>
     </div >
 );
 
-const onDrop = (cardIndex: string, column: string, props: BoardColumnProps) => {
-    props.handleDragDropCard(parseInt(cardIndex, 10), column);
+const onDrop = (e: React.DragEvent<HTMLElement>, props: BoardColumnProps) => {
+    let oldCardIndex = parseInt(e.dataTransfer.getData('text'), 10);
+    let column = e.currentTarget.id;
+    let action = 'DROP_COLUMN';
+    let newCardIndex = 0;
+
+    if (e.currentTarget.children !== null) {
+        newCardIndex = e.currentTarget.children.length;
+    }
+
+    props.handleDragDropCard(oldCardIndex, newCardIndex, column, action);
 };
 
 export default BoardColumn;
