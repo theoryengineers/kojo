@@ -31,8 +31,8 @@ export default class Content extends React.Component<Props, State> {
     render() {
         const { currentModal } = this.state;
         const {
-            handleGetCards,
             cards,
+            handleGetCards,
             handleAddCard,
             handleSaveCard,
             handleDragDropCard

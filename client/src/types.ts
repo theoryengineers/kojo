@@ -24,10 +24,3 @@ export interface GetCards {
 export interface DragDropCards {
     handleDragDropCard: (oldCardIndex: number, dropCardIndex: number, cardColumn: string, action: string) => void;
 }
-
-// export interface CardProps {
-//     cards?: Array<Cards>;
-//     handleAddCard: (newCardObj: Cards) => void;
-//     handleSaveCard: (newCardObj: Cards, cardIndex: number) => void;
-//     handleGetCards: () => void;
-// }

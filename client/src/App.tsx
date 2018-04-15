@@ -133,7 +133,7 @@ export class App extends React.Component<{}, State> {
         const { cards } = this.state;
         let newCardObj = { ...cards[oldCardIndex] as Cards, column: cardColumn };
 
-        // If dropping into column directly, set drop card index to value +1 
+        // If dropping into column directly, set drop card index to +1 value 
         // after the last item of the specific column
         if (action === 'DROP_COLUMN') {
             // Gotta mutate here to keep code clean

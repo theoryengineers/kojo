@@ -17,12 +17,21 @@ const BoardColumn: React.SFC<BoardColumnProps> = (props) => (
         </div>
         <div
             // Turn this into a DropZone Component later
+            // Turn the color changes into classes later
             id={props.header}
             className="column__content"
-            style={{ backgroundColor: 'gray', padding: '10px' }}
-            onDragEnter={e => e.preventDefault()}
+            onDragEnter={e => {
+                e.preventDefault();
+                e.currentTarget.style.backgroundColor = 'orange';
+            }}
+            onDragLeave={e => {
+                e.currentTarget.style.backgroundColor = 'lightgray';
+            }}
             onDragOver={e => e.preventDefault()}
-            onDrop={(e) => onDrop(e, props)}
+            onDrop={(e) => {
+                onDrop(e, props);
+                e.currentTarget.style.backgroundColor = 'lightgray';
+            }}
         >
             {props.children}
         </div>
@@ -30,16 +39,18 @@ const BoardColumn: React.SFC<BoardColumnProps> = (props) => (
 );
 
 const onDrop = (e: React.DragEvent<HTMLElement>, props: BoardColumnProps) => {
-    let oldCardIndex = parseInt(e.dataTransfer.getData('text'), 10);
-    let column = e.currentTarget.id;
-    let action = 'DROP_COLUMN';
-    let newCardIndex = 0;
+    if (!isNaN(parseInt(e.dataTransfer.getData('text'), 10))) {
+        let oldCardIndex = parseInt(e.dataTransfer.getData('text'), 10);
+        let column = e.currentTarget.id;
+        let action = 'DROP_COLUMN';
+        let newCardIndex = 0;
 
-    if (e.currentTarget.children !== null) {
-        newCardIndex = e.currentTarget.children.length;
+        if (e.currentTarget.children !== null) {
+            newCardIndex = e.currentTarget.children.length;
+        }
+
+        props.handleDragDropCard(oldCardIndex, newCardIndex, column, action);
     }
-
-    props.handleDragDropCard(oldCardIndex, newCardIndex, column, action);
 };
 
 export default BoardColumn;

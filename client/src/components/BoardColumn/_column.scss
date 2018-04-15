@@ -28,7 +28,21 @@
 
   &__content {
     display: grid;
-    grid-row-gap: 10px;
+    grid-row-gap: 0.5em;
     grid-auto-rows: max-content;
+    overflow-y: scroll;
+    height: calc(100vh - (7.7em + 1em));
+    background-color: lightgray;
+    padding: 10px;
+  }
+  &__content::-webkit-scrollbar {
+    width: 0.4em;
+  }
+  &__content::-webkit-scrollbar-thumb {
+    background-color: rgba(33,33,33,0);
+    border-radius: 20px;
+  }
+  &__content:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(33,33,33,0.3);
   }
 }
