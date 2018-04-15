@@ -34,8 +34,8 @@ const {
 login.testLoginsMethod()
 
 const app = Express();
+app.use(cors());
 app.use(bodyParser.json());
-
 
 app.use('/welcome', (req, res) => {
     res.send('hello world')

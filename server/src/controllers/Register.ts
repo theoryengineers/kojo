@@ -8,7 +8,7 @@ class Register {
     testRegisterMethod = () => {
         console.log('testRegisterMethod from Log');
     }
-    handleRegister = (bcrypt) => (res, req) => {
+    handleRegister = (bcrypt) => (req, res) => {
         const {email, username, name, password} = req.body;
 
         const usernameCheck = /^[a-zA-Z0-9]*$/i.test(username);
@@ -18,7 +18,7 @@ class Register {
             return res.status(400).json('incorrect form submission');
         }
         const hash = bcrypt.hashSync(password)
-        //temp
+
         this.db.transaction(trx => {
             trx('login').insert({
                 hash,
@@ -26,7 +26,7 @@ class Register {
                 username
             }, 'email')
             .then( ([loginEmail]) => {
-                console.log(loginEmail);
+                // console.log(loginEmail);
                 return trx('user_account')
                     .insert({
                         email: loginEmail,
@@ -34,9 +34,16 @@ class Register {
                         username,
                         created_on: new Date()
                     }, '*')
-                    .then( ([user]) => {
-                        console.log(user);
-                        res.json(user);
+                    .then( ([user_account]) => {
+                        // console.log(user_account);
+                        res.json(user_account);
+                        const {user_account_id, created_on} = user_account;
+                        return trx('project')
+                            .insert({
+                                user_account_id,
+                                project_name: 'initial project',
+                                created_on,
+                            })
                     })
             })
             .then(trx.commit)
