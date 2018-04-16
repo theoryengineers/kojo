@@ -27,7 +27,7 @@ const BoardColumn: React.SFC<BoardColumnProps> = (props) => (
             onDragLeave={e => {
                 e.currentTarget.style.backgroundColor = 'lightgray';
             }}
-            onDragOver={e => e.preventDefault()}
+            onDragOver={e => { e.preventDefault(); e.currentTarget.style.backgroundColor = 'orange'; }}
             onDrop={(e) => {
                 onDrop(e, props);
                 e.currentTarget.style.backgroundColor = 'lightgray';

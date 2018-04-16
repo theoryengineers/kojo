@@ -38,6 +38,7 @@ class DragAndDrop extends React.Component<Props, State> {
                 }}
                 onDragOver={(e) => {
                     e.preventDefault();
+                    e.stopPropagation();
                     // THIS BLOCK CREATES STATES FOR DETERMINING DROP ZONE INDICATORS
 
                     // Grab Bounding values of the Card being hovered over.

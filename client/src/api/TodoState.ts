@@ -80,10 +80,51 @@ export const db = {
                 'Set up the cardIndex and dropIndex at the content level. ' +
                 'Create method at App.tsx level to slice array and add at new index point. ' +
                 'Create method that iterates through array based on obj prop, but ignores drop index',
+            column: 'Complete',
+            assignment: [1],
+            board: 1,
+        },
+        {
+            id: 9,
+            title: 'Profile page',
+            category: 'Front End Component',
+            description:
+                '',
+            column: 'In Progress',
+            assignment: [1],
+            board: 1,
+        },
+        {
+            id: 10,
+            title: 'Members list page',
+            category: 'Front End Component',
+            description:
+                '',
+            column: 'In Progress',
+            assignment: [1],
+            board: 1,
+        },
+        {
+            id: 11,
+            title: 'Admin page',
+            category: 'Front End Component',
+            description:
+                '',
+            column: 'In Progress',
+            assignment: [1],
+            board: 1,
+        },
+        {
+            id: 12,
+            title: 'Products list page',
+            category: 'Front End Component',
+            description:
+                '',
             column: 'In Progress',
             assignment: [1],
             board: 1,
         }
+
     ],
     users: [
         {
