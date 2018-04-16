@@ -41,10 +41,11 @@ app.use('/welcome', (req, res) => {
     res.send('hello world')
 });
 
-app.post('/register', register.handleRegister(bcrypt));
-app.post('/login', login.handleLogin(bcrypt));
+app.post('/v1/register', register.handleRegister(bcrypt));
+app.post('/v1/login', login.handleLogin(bcrypt));
 
-app.get('/projects', project.getProjects);
+app.get('/v1/projects', project.getAllProjects);
+app.get('/v1/projects/:userId', project.getProject);
 
 app.listen(port, () => console.log('Listening at port', port));
 
