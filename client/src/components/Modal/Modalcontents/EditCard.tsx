@@ -66,16 +66,19 @@ class EditCard extends React.Component<Props, State> {
                 <div>
                     <button
                         onClick={() => {
-                            this.props.handleSaveCard({
-                                id: 1,
-                                title: this.state.title,
-                                category: this.state.category,
-                                description: this.state.description,
-                                column: 'Backlog',
-                                assignment: this.state.assignment,
-                                board: 1
-                                // tslint:disable-next-line:align
-                            }, this.state.cardIndex);
+                            this.props.handleSaveCard(
+                                {
+                                    id: 1,
+                                    title: this.state.title,
+                                    category: this.state.category,
+                                    description: this.state.description,
+                                    column: 'Backlog',
+                                    assignment: this.state.assignment,
+                                    board: 1
+                                
+                                }, 
+                                this.state.cardIndex
+                            );
                             this.props.handleModal('CLOSED');
                         }}
                     >
