@@ -167,7 +167,7 @@ export class App extends React.Component<{}, State> {
 
 }
 
-const updateAction = (state: string, value: (string | number | Array<Cards>)): ((state: State) => void) =>
+export const updateAction = (state: string, value: (string | number | Array<Cards>)): ((state: State) => void) =>
     (prevState: State) => ({ [state]: value });
 
 export default App;
