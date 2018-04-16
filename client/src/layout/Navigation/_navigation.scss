@@ -6,7 +6,7 @@ $icon-size: 22px;
   background-color: #292929;
   font-size: $nav-font-size;
   font-weight: bold;
-
+  height: 100vh;
   display: grid;
   grid-template-rows: auto min-content;
   ul {

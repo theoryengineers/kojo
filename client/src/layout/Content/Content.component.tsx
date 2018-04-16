@@ -2,7 +2,6 @@ import * as React from 'react';
 import Column from 'app_modules/components/BoardColumn';
 import Card from 'app_modules/components/BoardCard';
 import Modal from 'app_modules/components/Modal';
-import TopBar from 'app_modules/layout/TopBarNavigation';
 import DragAndDrop from 'app_modules/layout/DragAndDrop';
 import { Cards, GetCards, ModalProps, DragDropCards, DisplayName } from 'app_modules/types';
 
@@ -35,13 +34,11 @@ export default class Content extends React.Component<Props, State> {
             handleGetCards,
             handleAddCard,
             handleSaveCard,
-            handleDragDropCard,
-            displayName
+            handleDragDropCard
         } = this.props;
 
         return (
             <div>
-                <TopBar displayName={displayName} />
                 <div className="content">
                     <Column
                         header={'Backlog'}

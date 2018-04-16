@@ -33,7 +33,7 @@ export class App extends React.Component<{}, State> {
                 <Switch>
                     <Route
                         path="/"
-                        exact={true}
+                        exact={false}
                         render={(props) =>
                             this.state.isAuthenticated ? (
                                 <MainPage
