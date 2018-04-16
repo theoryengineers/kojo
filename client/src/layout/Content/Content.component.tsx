@@ -2,72 +2,150 @@ import * as React from 'react';
 import Column from 'app_modules/components/BoardColumn';
 import Card from 'app_modules/components/BoardCard';
 import Modal from 'app_modules/components/Modal';
-import CardForm from 'app_modules/components/CardForm';
+import TopBar from 'app_modules/layout/TopBarNavigation';
+import DragAndDrop from 'app_modules/layout/DragAndDrop';
+import { Cards, GetCards, ModalProps, DragDropCards, DisplayName } from 'app_modules/types';
 
 const initialState = {
-    openModal: false
+    currentModal: 'CLOSED',
+    card: {
+        id: 0,
+        title: '',
+        category: '',
+        description: '',
+        column: '',
+        assignment: [0],
+        board: 0
+    },
+    cardIndex: 0
 };
+
+interface Props extends GetCards, ModalProps, DragDropCards, DisplayName {
+    cards: Array<Cards>;
+}
 
 type State = Readonly<typeof initialState>;
 
-export default class Content extends React.Component {
+export default class Content extends React.Component<Props, State> {
     readonly state: State = initialState;
     render() {
-        const { openModal } = this.state;
+        const { currentModal } = this.state;
+        const {
+            cards,
+            handleGetCards,
+            handleAddCard,
+            handleSaveCard,
+            handleDragDropCard,
+            displayName
+        } = this.props;
+
         return (
-            <div className="content">
-                <Column
-                    header={'Backlog'}
-                    backgroundColor={'gray'}
-                    rightButton={<button onClick={() => this.handleOpenModal(true)}>+</button>}
-                >
-                    <Card
-                        title={'Create Cards'}
-                        category={'Frontend/Component'}
-                        // tslint:disable-next-line:max-line-length
-                        description={'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'}
-                        assignment={'Paul Allen'}
-                        colorCode={'darkred'}
-                    />
-                    <Card
-                        title={'Create User API'}
-                        category={'Backend/API'}
-                        // tslint:disable-next-line:max-line-length
-                        description={'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'}
-                        assignment={'Steve Wozniak'}
-                        colorCode={'purple'}
-                    />
-                </Column>
-                <Column header={'In Progress'} backgroundColor={'blue'}>
-                    <Card
-                        title={'Navbar'}
-                        category={'Frontend/Component'}
-                        // tslint:disable-next-line:max-line-length
-                        description={'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'}
-                        assignment={'Patrick Bateman'}
-                        colorCode={'darkred'}
-                    />
-                    <Card
-                        title={'Bake Chicken'}
-                        category={'Kitchen/Oven'}
-                        // tslint:disable-next-line:max-line-length
-                        description={'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'}
-                        assignment={'P.F. Chang'}
-                        colorCode={'yellow'}
-                    />
-                </Column>
-                <Column header={'Testing'} backgroundColor={'red'} />
-                <Column header={'Complete'} backgroundColor={'green'} />
-                <Modal show={openModal}>
-                    <CardForm handleOpenModal={this.handleOpenModal} />
-                </Modal>
+            <div>
+                <TopBar displayName={displayName} />
+                <div className="content">
+                    <Column
+                        header={'Backlog'}
+                        backgroundColor={'gray'}
+                        rightButton={<button onClick={() => this.handleModal('ADD_NEW_CARD')}>+</button>}
+                        handleDragDropCard={handleDragDropCard}
+                    >
+                        {cards.map((card, i) => {
+                            if (card.column === 'Backlog') {
+                                return <DragAndDrop key={i} handleDragDropCard={handleDragDropCard}>
+                                    <Card
+                                        key={i}
+                                        index={i}
+                                        card={card}
+                                        colorCode={'red'}
+                                        handleEditCard={this.handleEditCard}
+                                    />
+                                </DragAndDrop>;
+                            } else {
+                                return null;
+                            }
+                        })}
+                    </Column>
+                    <Column
+                        header={'In Progress'}
+                        backgroundColor={'blue'}
+                        rightButton={<button onClick={() => handleGetCards()}>+</button>}
+                        handleDragDropCard={handleDragDropCard}
+                    >
+                        {cards.map((card, i) => {
+                            if (card.column === 'In Progress') {
+                                return <DragAndDrop key={i} handleDragDropCard={handleDragDropCard}>
+                                    <Card
+                                        key={i}
+                                        index={i}
+                                        card={card}
+                                        colorCode={'red'}
+                                        handleEditCard={this.handleEditCard}
+                                    />
+                                </DragAndDrop>;
+                            } else {
+                                return null;
+                            }
+                        })}
+                    </Column>
+                    <Column header={'Testing'} backgroundColor={'red'} handleDragDropCard={handleDragDropCard}>
+                        {cards.map((card, i) => {
+                            if (card.column === 'Testing') {
+                                return <DragAndDrop key={i} handleDragDropCard={handleDragDropCard}>
+                                    <Card
+                                        key={i}
+                                        index={i}
+                                        card={card}
+                                        colorCode={'red'}
+                                        handleEditCard={this.handleEditCard}
+                                    />
+                                </DragAndDrop>;
+                            } else {
+                                return null;
+                            }
+                        })}
+                    </Column>
+                    <Column header={'Complete'} backgroundColor={'green'} handleDragDropCard={handleDragDropCard}>
+                        {cards.map((card, i) => {
+                            if (card.column === 'Complete') {
+                                return <DragAndDrop key={i} handleDragDropCard={handleDragDropCard}>
+                                    <Card
+                                        key={i}
+                                        index={i}
+                                        card={card}
+                                        colorCode={'red'}
+                                        handleEditCard={this.handleEditCard}
+                                    />
+                                </DragAndDrop>;
+                            } else {
+                                return null;
+                            }
+                        })}
+                    </Column>
+                </div>
+                <Modal
+                    currentModal={currentModal}
+                    handleModal={this.handleModal}
+                    handleAddCard={handleAddCard}
+                    handleSaveCard={handleSaveCard}
+                    card={this.state.card}
+                    cardIndex={this.state.cardIndex}
+                />
             </div>
         );
     }
 
-    private handleOpenModal = (openClose: boolean): void => {
+    private handleModal = (selection: string): void => {
         this.setState({
-            openModal: openClose
+            currentModal: selection
         });
+    }
+
+    private handleEditCard = (selection: string = 'EDIT_CARD', cardObj: Cards, index: number): void => {
+        this.setState({
+            currentModal: selection,
+            card: cardObj,
+            cardIndex: index
+            // tslint:disable-next-line:align
+        }, () => console.log(this.state.card));
     }
 }

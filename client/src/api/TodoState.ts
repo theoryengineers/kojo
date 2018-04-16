@@ -14,9 +14,9 @@ export const db = {
             title: 'Move CSS items from styles.scss',
             category: 'CSS',
             description: 'THERE IS SHIT IN THERE THAT SHOULD NOT BE THERE..PLEASE FIX',
-            column: 'Backlog',
+            column: 'Complete',
             assignment: [2],
-            board: 1,            
+            board: 1,
         },
         {
             id: 2,
@@ -32,7 +32,7 @@ export const db = {
             title: 'Format SCSS to &__ selectors',
             category: 'CSS',
             description: 'All items that belong only to one selector must use &__',
-            column: 'Backlog',
+            column: 'Complete',
             assignment: [2],
             board: 1,
         },
@@ -41,7 +41,7 @@ export const db = {
             title: 'Add new card form',
             category: 'Front End Component',
             description: 'Adds shit to shit',
-            column: 'In Progress',
+            column: 'Complete',
             assignment: [1],
             board: 1,
         },
@@ -50,7 +50,7 @@ export const db = {
             title: 'Add Header Bar with Logout',
             category: 'Front End Component',
             description: 'Add shit tos hit',
-            column: 'Backlog',
+            column: 'Complete',
             assignment: [1],
             board: 1,
         },
@@ -59,10 +59,10 @@ export const db = {
             title: 'Edit new card form',
             category: 'Front End Component',
             description: 'Add shit to shit',
-            column: 'Backlog',
+            column: 'Complete',
             assignment: [2],
             board: 1,
-        }, 
+        },
         {
             id: 7,
             title: 'Add new card',
@@ -71,7 +71,60 @@ export const db = {
             column: 'Backlog',
             assignment: [1],
             board: 1,
+        },
+        {
+            id: 8,
+            title: 'Move state from column level to content level',
+            category: 'Front End Component',
+            description:
+                'Set up the cardIndex and dropIndex at the content level. ' +
+                'Create method at App.tsx level to slice array and add at new index point. ' +
+                'Create method that iterates through array based on obj prop, but ignores drop index',
+            column: 'Complete',
+            assignment: [1],
+            board: 1,
+        },
+        {
+            id: 9,
+            title: 'Profile page',
+            category: 'Front End Component',
+            description:
+                '',
+            column: 'In Progress',
+            assignment: [1],
+            board: 1,
+        },
+        {
+            id: 10,
+            title: 'Members list page',
+            category: 'Front End Component',
+            description:
+                '',
+            column: 'In Progress',
+            assignment: [1],
+            board: 1,
+        },
+        {
+            id: 11,
+            title: 'Admin page',
+            category: 'Front End Component',
+            description:
+                '',
+            column: 'In Progress',
+            assignment: [1],
+            board: 1,
+        },
+        {
+            id: 12,
+            title: 'Products list page',
+            category: 'Front End Component',
+            description:
+                '',
+            column: 'In Progress',
+            assignment: [1],
+            board: 1,
         }
+
     ],
     users: [
         {

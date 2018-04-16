@@ -2,9 +2,9 @@
   background: transparent;
   display: grid;
   grid-row-gap: 0.5em;
-  grid-auto-rows: min-content;
+  grid-auto-rows: min-content auto;
 
-  .header {
+  &__header {
     background-color: darkgoldenrod;
     padding: 15px;
     font-size: 1.3rem;
@@ -12,11 +12,10 @@
     font-weight: bold;
     text-align: center;
     color: white;
-
     display: grid;
     grid-template-columns: 27px auto 27px;
 
-    .alignment {
+    &__alignment {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -25,5 +24,25 @@
     button {
       font-size: 0.9em;
     }
+  }
+
+  &__content {
+    display: grid;
+    grid-row-gap: 0.5em;
+    grid-auto-rows: max-content;
+    overflow-y: scroll;
+    height: calc(100vh - (7.8em + 1em));
+    background-color: lightgray;
+    padding: 0.6em 0.3em 0.6em 0.6em;
+  }
+  &__content::-webkit-scrollbar {
+    width: 0.4em;
+  }
+  &__content::-webkit-scrollbar-thumb {
+    background-color: rgba(33,33,33,0);
+    border-radius: 20px;
+  }
+  &__content:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(33,33,33,0.3);
   }
 }
