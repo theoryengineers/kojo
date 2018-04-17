@@ -44,8 +44,12 @@ app.use('/welcome', (req, res) => {
 app.post('/v1/register', register.handleRegister(bcrypt));
 app.post('/v1/login', login.handleLogin(bcrypt));
 
+app.get('/v1/users', user.getAllUsers);
+app.get('/v1/users/:userId', user.getUser);
+
 app.get('/v1/projects', project.getAllProjects);
 app.get('/v1/projects/:userId', project.getProject);
+
 
 app.listen(port, () => console.log('Listening at port', port));
 
