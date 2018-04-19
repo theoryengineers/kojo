@@ -110,19 +110,18 @@ export class App extends React.Component<{}, State> {
         this.setState(updateAction('cards', cards));
     }
 
-    private handleAddCard = (CardObj: Cards): void => {
-        let newCardArr = ([CardObj] as Array<never>).concat(this.state.cards);
-        this.setState(updateAction('cards', newCardArr));
+    private handleAddCard = (cardObj: Cards): void => {
+        this.setState(updateAction('cards', [cardObj].concat(this.state.cards)));
     }
 
     private handleSaveCard = (cardObj: Cards, cardIndex: number): void => {
-        let newCardsArr =
-            this.state.cards.slice(0, cardIndex).concat(
-                ([cardObj] as Array<never>).concat(
-                    this.state.cards.slice(cardIndex + 1, this.state.cards.length)
-                )
-            );
-        this.setState(updateAction('cards', newCardsArr));
+        const cards = this.state.cards;
+        
+        this.setState(updateAction('cards', [
+            ...cards.slice(0, cardIndex),
+            ...[cardObj],
+            ...cards.slice(cardIndex + 1)
+        ]));
     }
 
     private handleDragDropCard = (
@@ -168,7 +167,7 @@ export class App extends React.Component<{}, State> {
 
 }
 
-const updateAction = (state: string, value: (string | number | Array<Cards>)): ((state: State) => void) =>
+export const updateAction = (state: string, value: (string | number | Array<Cards>)): ((state: State) => void) =>
     (prevState: State) => ({ [state]: value });
 
 export default App;
