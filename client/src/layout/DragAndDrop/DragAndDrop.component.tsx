@@ -75,7 +75,6 @@ class DragAndDrop extends React.Component<Props, State> {
 
                             // Grab the drop index
                             let dropCardIndex: number = (e.currentTarget.children[0] as HTMLElement).tabIndex;
-                            console.log(e.currentTarget.children.namedItem.name);
 
                             // Grab the old Card index
                             let oldCardIndex: number = parseInt(e.dataTransfer.getData('text'), 10);

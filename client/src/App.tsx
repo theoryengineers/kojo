@@ -13,7 +13,10 @@ const initialState = {
     email: '',
     password: '',
     remember: '',
+    boardlist: [],
+    memberslist: [],
     cards: []
+
 };
 
 type State = Readonly<typeof initialState>;
@@ -24,7 +27,7 @@ export class App extends React.Component<{}, State> {
         if (retrievedObject) {
             this.setState(JSON.parse(retrievedObject));
         }
-        this.handleGetCards();
+        this.handleGetDatabase();
     }
     readonly state: State = initialState;
     render() {
@@ -38,12 +41,12 @@ export class App extends React.Component<{}, State> {
                             this.state.isAuthenticated ? (
                                 <MainPage
                                     {...props}
-                                    handleGetCards={this.handleGetCards}
                                     handleAddCard={this.handleAddCard}
                                     handleSaveCard={this.handleSaveCard}
                                     handleDragDropCard={this.handleDragDropCard}
                                     cards={this.state.cards}
                                     displayName={this.state.displayName}
+                                    memberslist={this.state.}
                                 // handleSomething={this.handleSomething}
                                 />
                             ) : (
@@ -97,8 +100,12 @@ export class App extends React.Component<{}, State> {
         this.setState(updateAction(name, value));
     }
 
-    private handleGetCards = (): void => {
-        let cards = OurApi.getCards().sort((a, b) => {
+    private handleGetDatabase = (): void => {
+        const db = OurApi.getDatabase();
+
+        const boardlist = db.boards;
+        const memberslist = db.users;
+        const cards = db.cards.sort((a, b) => {
             if (a.column > b.column) {
                 return 1;
             } else if (a.column < b.column) {
@@ -107,6 +114,9 @@ export class App extends React.Component<{}, State> {
                 return 0;
             }
         });
+
+        this.setState(updateAction('boards', boardlist));
+        this.setState(updateAction('members', memberslist));
         this.setState(updateAction('cards', cards));
     }
 

@@ -3,10 +3,10 @@ import Column from 'app_modules/components/BoardColumn';
 import Card from 'app_modules/components/BoardCard';
 import Modal from 'app_modules/components/Modal';
 import DragAndDrop from 'app_modules/layout/DragAndDrop';
-import { Cards, GetCards, ModalProps, DragDropCards, DisplayName } from 'app_modules/types';
+import { Cards, ModalProps, DragDropCards, DisplayName } from 'app_modules/types';
 
 const initialState = {
-    currentModal: 'CLOSED',
+    currentModal: '',
     card: {
         id: 0,
         title: '',
@@ -19,7 +19,7 @@ const initialState = {
     cardIndex: 0
 };
 
-interface Props extends GetCards, ModalProps, DragDropCards, DisplayName {
+interface Props extends ModalProps, DragDropCards, DisplayName {
     cards: Array<Cards>;
 }
 
@@ -31,7 +31,6 @@ export default class Content extends React.Component<Props, State> {
         const { currentModal } = this.state;
         const {
             cards,
-            handleGetCards,
             handleAddCard,
             handleSaveCard,
             handleDragDropCard
@@ -65,7 +64,6 @@ export default class Content extends React.Component<Props, State> {
                     <Column
                         header={'In Progress'}
                         backgroundColor={'blue'}
-                        rightButton={<button onClick={() => handleGetCards()}>+</button>}
                         handleDragDropCard={handleDragDropCard}
                     >
                         {cards.map((card, i) => {

@@ -13,6 +13,7 @@ interface Props extends ModalProps {
 const ModalConductor: React.SFC<Props> = (props) => {
     switch (props.currentModal) {
         case 'ADD_NEW_CARD':
+
             return <ModalAddNewCard {...props} handleAddCard={props.handleAddCard} />;
         case 'EDIT_CARD':
             return <ModalEditCard {...props} handleSaveCard={props.handleSaveCard} cardIndex={props.cardIndex} />;

@@ -1,5 +1,30 @@
 import { db } from './TodoState';
 
+interface Database {
+    boards: {
+        id: number;
+        title: string;
+        members: number[];
+        cards: number[];
+        columns: string[];
+    }[];
+    cards: {
+        id: number;
+        title: string;
+        category: string;
+        description: string;
+        column: string;
+        assignment: number[];
+        board: number;
+    }[];
+    users: {
+        id: number;
+        displayName: string;
+        password: string;
+        email: string;
+    }[];
+}
+
 class Api {
     public isAuthenticated: boolean = false;
 
@@ -45,16 +70,8 @@ class Api {
         setTimeout(cb, 100);
     }
 
-    getCards(): Array<{
-        id: number;
-        title: string;
-        category: string;
-        description: string;
-        column: string;
-        assignment: Array<number>;
-        board: number
-    }> {
-        return db.cards;
+    getDatabase(): Database {
+        return db;
     }
 }
 

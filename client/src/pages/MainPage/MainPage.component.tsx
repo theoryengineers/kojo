@@ -4,9 +4,13 @@ import Navbar from 'app_modules/layout/Navigation';
 import Content from 'app_modules/layout/Content';
 import MembersList from 'app_modules/pages/memberslist';
 import TopBar from 'app_modules/layout/TopBarNavigation';
-import { PageProps, ModalProps, GetCards, DragDropCards, Cards, DisplayName } from 'app_modules/types';
+import { PageProps, ModalProps, DragDropCards, Cards, DisplayName } from 'app_modules/types';
 
-interface MainPageProps extends PageProps, ModalProps, GetCards, DragDropCards, DisplayName {
+interface MainPageProps extends
+    PageProps,
+    ModalProps,
+    DragDropCards,
+    DisplayName {
     cards: Array<Cards>;
 }
 
