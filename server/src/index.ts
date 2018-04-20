@@ -29,11 +29,7 @@ const {
     task,
     sprint,
     assignment,
-    // initialize,
 } = controllers;
-
-// initialize.createUserTableIfDoesntExist();
-// initialize.dropTableIfExists('users');
 
 const app = Express();
 app.use(cors());

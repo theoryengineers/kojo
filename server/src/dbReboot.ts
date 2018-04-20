@@ -15,5 +15,7 @@ const db = knex({
 const controllers = new Controllers(db);
 const { initialize } = controllers;
 
-initialize.createUserTableIfDoesntExist();
+// initialize.createUserTable();
 // initialize.dropTableIfExists('user');
+// initialize.dropAllTables();
+initialize.initDatabase()
