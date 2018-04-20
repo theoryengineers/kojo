@@ -29,9 +29,11 @@ const {
     task,
     sprint,
     assignment,
+    // initialize,
 } = controllers;
 
-login.testLoginsMethod()
+// initialize.createUserTableIfDoesntExist();
+// initialize.dropTableIfExists('users');
 
 const app = Express();
 app.use(cors());
