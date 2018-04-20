@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Cards } from 'app_modules/types';
+import { updateAction } from 'app_modules/App';
 
 interface Props {
     cardIndex: number;
@@ -66,16 +67,19 @@ class EditCard extends React.Component<Props, State> {
                 <div>
                     <button
                         onClick={() => {
-                            this.props.handleSaveCard({
-                                id: 1,
-                                title: this.state.title,
-                                category: this.state.category,
-                                description: this.state.description,
-                                column: 'Backlog',
-                                assignment: this.state.assignment,
-                                board: 1
-                                // tslint:disable-next-line:align
-                            }, this.state.cardIndex);
+                            this.props.handleSaveCard(
+                                {
+                                    id: 1,
+                                    title: this.state.title,
+                                    category: this.state.category,
+                                    description: this.state.description,
+                                    column: 'Backlog',
+                                    assignment: this.state.assignment,
+                                    board: 1
+                                
+                                }, 
+                                this.state.cardIndex
+                            );
                             this.props.handleModal('CLOSED');
                         }}
                     >
@@ -88,13 +92,8 @@ class EditCard extends React.Component<Props, State> {
     }
     private handleFieldInput = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
         const { name, value } = event.currentTarget;
-        this.setState(updateField(name, value));
+        this.setState(updateAction(name, value));
     }
 }
-
-const updateField = (name: string, value: string): (state: State) => void =>
-    (prevState: State) => ({
-        [name]: value
-    });
 
 export default EditCard;

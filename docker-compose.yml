@@ -1,0 +1,28 @@
+version: '3'
+# docker-compose up -d -- Starts in deattached NOTE MUST BE IN DIRECTORY OF docker-compose.yaml
+# docker-compose ps -- Shows processes
+# docker-compose down -- NOTE MUST BE IN DIRECTORY OF docker-compose.yaml
+services:
+  # mongo:
+  #   image: 'mongo:3.4.1'
+  #   ports:
+  #     - '27017:27017'
+  pgdb:
+    image: postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: blogapp
+    ports:
+      - "5432:5432"
+  # mysql-dev:
+  #   image: mysql:8.0.2
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: password
+  #     MYSQL_DATABASE: blogapp
+  #   ports:
+  #     - "3308:3306"
+  admin:
+    image: adminer
+    ports:
+      - 8080:8080
