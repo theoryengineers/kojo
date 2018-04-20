@@ -4,7 +4,7 @@ import Navbar from 'app_modules/layout/Navigation';
 import Content from 'app_modules/layout/Content';
 import MembersList from 'app_modules/pages/memberslist';
 import TopBar from 'app_modules/layout/TopBarNavigation';
-import { PageProps, ModalProps, DragDropCards, Cards, DisplayName } from 'app_modules/types';
+import { PageProps, ModalProps, DragDropCards, Boards, Memberslist, Cards, DisplayName } from 'app_modules/types';
 
 interface MainPageProps extends
     PageProps,
@@ -12,6 +12,8 @@ interface MainPageProps extends
     DragDropCards,
     DisplayName {
     cards: Array<Cards>;
+    boardlist: Array<Boards>;
+    memberslist: Array<Memberslist>;
 }
 
 const MainPage: React.SFC<MainPageProps> = (props) => (

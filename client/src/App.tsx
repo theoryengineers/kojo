@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import LoginPage from 'app_modules/pages/LoginPage';
 import MainPage from 'app_modules/pages/MainPage';
 import OurApi from 'app_modules/api/OurApi';
-import { Cards } from 'app_modules/types';
+import { Cards, Database } from 'app_modules/types';
 
 const initialState = {
     isAuthenticated: false,
@@ -40,13 +40,15 @@ export class App extends React.Component<{}, State> {
                         render={(props) =>
                             this.state.isAuthenticated ? (
                                 <MainPage
+                                    cards={this.state.cards}
+                                    memberslist={this.state.memberslist}
+                                    boardlist={this.state.boardlist}
                                     {...props}
                                     handleAddCard={this.handleAddCard}
                                     handleSaveCard={this.handleSaveCard}
                                     handleDragDropCard={this.handleDragDropCard}
-                                    cards={this.state.cards}
                                     displayName={this.state.displayName}
-                                    memberslist={this.state.}
+
                                 // handleSomething={this.handleSomething}
                                 />
                             ) : (
@@ -115,9 +117,13 @@ export class App extends React.Component<{}, State> {
             }
         });
 
-        this.setState(updateAction('boards', boardlist));
-        this.setState(updateAction('members', memberslist));
-        this.setState(updateAction('cards', cards));
+        this.setState(updateDatabase(
+            {
+                boards: boardlist,
+                cards: cards,
+                users: memberslist
+            }
+        ));
     }
 
     private handleAddCard = (cardObj: Cards): void => {
@@ -126,7 +132,7 @@ export class App extends React.Component<{}, State> {
 
     private handleSaveCard = (cardObj: Cards, cardIndex: number): void => {
         const cards = this.state.cards;
-        
+
         this.setState(updateAction('cards', [
             ...cards.slice(0, cardIndex),
             ...[cardObj],
@@ -179,5 +185,12 @@ export class App extends React.Component<{}, State> {
 
 export const updateAction = (state: string, value: (string | number | Array<Cards>)): ((state: State) => void) =>
     (prevState: State) => ({ [state]: value });
+
+export const updateDatabase = (object: Database): ((state: State) => void) =>
+    (prevState: State) => ({
+        boardlist: object.boards,
+        memberslist: object.users,
+        cards: object.cards
+    });
 
 export default App;
