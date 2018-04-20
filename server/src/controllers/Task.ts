@@ -1,4 +1,6 @@
 class Task {
+    db;
+    parent;
     constructor(parent) {
         this.db = parent.db;
         this.parent = parent;
