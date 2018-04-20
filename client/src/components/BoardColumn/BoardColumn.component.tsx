@@ -38,7 +38,7 @@ const BoardColumn: React.SFC<BoardColumnProps> = (props) => (
     </div >
 );
 
-const onDrop = (e: React.DragEvent<HTMLElement>, props: BoardColumnProps) => {
+const onDrop = (e: React.DragEvent<HTMLElement>, props: BoardColumnProps): void => {
     if (!isNaN(parseInt(e.dataTransfer.getData('text'), 10))) {
         let oldCardIndex = parseInt(e.dataTransfer.getData('text'), 10);
         let column = e.currentTarget.id;

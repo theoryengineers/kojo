@@ -10,10 +10,14 @@ html, body {
   padding: 0;
 }
 
-.link {
+a.link {
   text-decoration: underline;
-  color: blue;
+  color: white;
   cursor: pointer;
+}
+
+a.link:visited {
+  color: white;
 }
 
 

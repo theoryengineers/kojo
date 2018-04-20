@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import LoginPage from 'app_modules/pages/LoginPage';
 import MainPage from 'app_modules/pages/MainPage';
 import OurApi from 'app_modules/api/OurApi';
-import { Cards } from 'app_modules/types';
+import { Cards, Database } from 'app_modules/types';
 
 const initialState = {
     isAuthenticated: false,
@@ -13,6 +13,8 @@ const initialState = {
     email: '',
     password: '',
     remember: '',
+    boardlist: [],
+    memberslist: [],
     cards: []
 };
 
@@ -24,7 +26,7 @@ export class App extends React.Component<{}, State> {
         if (retrievedObject) {
             this.setState(JSON.parse(retrievedObject));
         }
-        this.handleGetCards();
+        this.handleGetDatabase();
     }
     readonly state: State = initialState;
     render() {
@@ -36,15 +38,10 @@ export class App extends React.Component<{}, State> {
                         exact={true}
                         render={(props) =>
                             this.state.isAuthenticated ? (
-                                <MainPage
-                                    {...props}
-                                    handleGetCards={this.handleGetCards}
-                                    handleAddCard={this.handleAddCard}
-                                    handleSaveCard={this.handleSaveCard}
-                                    handleDragDropCard={this.handleDragDropCard}
-                                    cards={this.state.cards}
-                                    displayName={this.state.displayName}
-                                // handleSomething={this.handleSomething}
+                                <Redirect
+                                    to={{
+                                        pathname: '/main'
+                                    }}
                                 />
                             ) : (
                                     <Redirect
@@ -55,6 +52,24 @@ export class App extends React.Component<{}, State> {
                                     />
                                 )
                         }
+                    />
+                    <Route
+                        path="/main"
+                        render={(props) => (
+                            <MainPage
+                                cards={this.state.cards}
+                                memberslist={this.state.memberslist}
+                                boardlist={this.state.boardlist}
+                                {...props}
+                                handleAddCard={this.handleAddCard}
+                                handleSaveCard={this.handleSaveCard}
+                                handleDragDropCard={this.handleDragDropCard}
+                                handleLogOut={this.handleLogOut}
+                                displayName={this.state.displayName}
+
+                            // handleSomething={this.handleSomething}
+                            />
+                        )}
                     />
                     <Route
                         path="/auth"
@@ -74,21 +89,23 @@ export class App extends React.Component<{}, State> {
 
     private handleLogin = (event: React.MouseEvent<HTMLElement>): void => {
         OurApi.authenticate(this.state.email, this.state.password, (displayName: string): void => {
-            // Naive example for development purposes
-            if (this.state.remember) {
-                window.localStorage.setItem('kojo', JSON.stringify({
+            if (displayName) {
+                // Naive example for development purposes
+                if (this.state.remember) {
+                    window.localStorage.setItem('kojo', JSON.stringify({
+                        displayName,
+                        isAuthenticated: true,
+                    }));
+                }
+
+                this.setState({
+                    email: '',
+                    password: '',
                     displayName,
                     isAuthenticated: true,
-                }));
+                    redirectToReferrer: true
+                });
             }
-
-            this.setState({
-                email: '',
-                password: '',
-                displayName,
-                isAuthenticated: true,
-                redirectToReferrer: true
-            });
         });
     }
 
@@ -97,8 +114,23 @@ export class App extends React.Component<{}, State> {
         this.setState(updateAction(name, value));
     }
 
-    private handleGetCards = (): void => {
-        let cards = OurApi.getCards().sort((a, b) => {
+    private handleLogOut = (): void => {
+        const { displayName } = this.state;
+        window.localStorage.setItem('kojo', JSON.stringify({
+            displayName,
+            isAuthenticated: false,
+        }));
+        this.setState({
+            isAuthenticated: false
+        });
+    }
+
+    private handleGetDatabase = (): void => {
+        const db = OurApi.getDatabase();
+
+        const boardlist = db.boards;
+        const memberslist = db.users;
+        const cards = db.cards.sort((a, b) => {
             if (a.column > b.column) {
                 return 1;
             } else if (a.column < b.column) {
@@ -107,22 +139,28 @@ export class App extends React.Component<{}, State> {
                 return 0;
             }
         });
-        this.setState(updateAction('cards', cards));
+
+        this.setState(updateDatabase(
+            {
+                boards: boardlist,
+                cards: cards,
+                users: memberslist
+            }
+        ));
     }
 
-    private handleAddCard = (CardObj: Cards): void => {
-        let newCardArr = ([CardObj] as Array<never>).concat(this.state.cards);
-        this.setState(updateAction('cards', newCardArr));
+    private handleAddCard = (cardObj: Cards): void => {
+        this.setState(updateAction('cards', [cardObj].concat(this.state.cards)));
     }
 
     private handleSaveCard = (cardObj: Cards, cardIndex: number): void => {
-        let newCardsArr =
-            this.state.cards.slice(0, cardIndex).concat(
-                ([cardObj] as Array<never>).concat(
-                    this.state.cards.slice(cardIndex + 1, this.state.cards.length)
-                )
-            );
-        this.setState(updateAction('cards', newCardsArr));
+        const cards = this.state.cards;
+
+        this.setState(updateAction('cards', [
+            ...cards.slice(0, cardIndex),
+            ...[cardObj],
+            ...cards.slice(cardIndex + 1)
+        ]));
     }
 
     private handleDragDropCard = (
@@ -132,43 +170,51 @@ export class App extends React.Component<{}, State> {
         action: string // the action to place card above or below the drop target card
     ): void => {
         const { cards } = this.state;
-        let newCardObj = { ...cards[oldCardIndex] as Cards, column: cardColumn };
+        const newCardObj = { ...cards[oldCardIndex] as Cards, column: cardColumn };
 
         // If dropping into column directly, set drop card index to +1 value 
         // after the last item of the specific column
-        if (action === 'DROP_COLUMN') {
-            // Gotta mutate here to keep code clean
-            dropCardIndex = (cards as Array<Cards>).findIndex(obj => obj.column === cardColumn) + dropCardIndex;
+        switch (action) {
+            case 'DROP_COLUMN':
+                dropCardIndex = dropCardIndex + (cards as Array<Cards>).findIndex(obj => obj.column === cardColumn);
+                break;
+            case 'DROP_DOWN':
+                dropCardIndex++;
+                break;
+            default:
         }
 
         // Insert new Card object into Array
-        let newCardsArr =
-            cards.slice(0, dropCardIndex + (action === 'DROP_DOWN' ? 1 : 0)).concat(
-                ([newCardObj] as Array<never>).concat(
-                    cards.slice(dropCardIndex + (action === 'DROP_DOWN' ? 1 : 0), cards.length)
-                )
-            );
+        const newCardsArr =
+            cards
+                .slice(0, dropCardIndex)
+                .concat(
+                    ([newCardObj] as Array<never>),
+                    cards.slice(dropCardIndex, cards.length)
+                );
 
         // Delete old Card object from Array
-        let deleteIndex = newCardsArr.findIndex(obj => obj === cards[oldCardIndex]);
-        let newCardsArr2 =
-            newCardsArr.slice(0, deleteIndex).concat(
-                newCardsArr.slice(deleteIndex + 1, newCardsArr.length)
-            );
-
-        console.log(
-            'old index:', oldCardIndex,
-            'drop index:', dropCardIndex,
-            'column:', cardColumn,
-            'action:', action
-        );
+        const deleteIndex = newCardsArr.findIndex(obj => obj === cards[oldCardIndex]);
+        const newCardsArr2 =
+            newCardsArr
+                .slice(0, deleteIndex)
+                .concat(
+                    newCardsArr.slice(deleteIndex + 1, newCardsArr.length)
+                );
 
         this.setState(updateAction('cards', newCardsArr2));
     }
 
 }
 
-const updateAction = (state: string, value: (string | number | Array<Cards>)): ((state: State) => void) =>
+export const updateAction = (state: string, value: (string | number | Array<Cards>)): ((state: State) => void) =>
     (prevState: State) => ({ [state]: value });
+
+export const updateDatabase = (object: Database): ((state: State) => void) =>
+    (prevState: State) => ({
+        boardlist: object.boards,
+        memberslist: object.users,
+        cards: object.cards
+    });
 
 export default App;
