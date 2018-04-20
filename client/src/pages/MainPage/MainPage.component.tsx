@@ -14,24 +14,25 @@ interface MainPageProps extends
     cards: Array<Cards>;
     boardlist: Array<Boards>;
     memberslist: Array<Memberslist>;
+    handleLogOut: () => void;
 }
 
 const MainPage: React.SFC<MainPageProps> = (props) => (
     <div className="main">
-        <Route path="/">
+        <Route path="/main">
             <Navbar />
         </Route>
         <div>
-            <Route path="/">
-                <TopBar displayName={props.displayName} />
+            <Route path="/main">
+                <TopBar displayName={props.displayName} handleLogOut={props.handleLogOut} />
             </Route>
             <Switch>
-                <Route exact={true} path="/">
+                <Route exact={true} path="/main">
                     <Content
                         {...props}
                     />
                 </Route>
-                <Route path="/memberslist">
+                <Route path="/main/memberslist">
                     <MembersList
                         {...props}
                     />

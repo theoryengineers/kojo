@@ -16,7 +16,6 @@ const initialState = {
     boardlist: [],
     memberslist: [],
     cards: []
-
 };
 
 type State = Readonly<typeof initialState>;
@@ -36,20 +35,13 @@ export class App extends React.Component<{}, State> {
                 <Switch>
                     <Route
                         path="/"
-                        exact={false}
+                        exact={true}
                         render={(props) =>
                             this.state.isAuthenticated ? (
-                                <MainPage
-                                    cards={this.state.cards}
-                                    memberslist={this.state.memberslist}
-                                    boardlist={this.state.boardlist}
-                                    {...props}
-                                    handleAddCard={this.handleAddCard}
-                                    handleSaveCard={this.handleSaveCard}
-                                    handleDragDropCard={this.handleDragDropCard}
-                                    displayName={this.state.displayName}
-
-                                // handleSomething={this.handleSomething}
+                                <Redirect
+                                    to={{
+                                        pathname: '/main'
+                                    }}
                                 />
                             ) : (
                                     <Redirect
@@ -60,6 +52,24 @@ export class App extends React.Component<{}, State> {
                                     />
                                 )
                         }
+                    />
+                    <Route
+                        path="/main"
+                        render={(props) => (
+                            <MainPage
+                                cards={this.state.cards}
+                                memberslist={this.state.memberslist}
+                                boardlist={this.state.boardlist}
+                                {...props}
+                                handleAddCard={this.handleAddCard}
+                                handleSaveCard={this.handleSaveCard}
+                                handleDragDropCard={this.handleDragDropCard}
+                                handleLogOut={this.handleLogOut}
+                                displayName={this.state.displayName}
+
+                            // handleSomething={this.handleSomething}
+                            />
+                        )}
                     />
                     <Route
                         path="/auth"
@@ -79,27 +89,40 @@ export class App extends React.Component<{}, State> {
 
     private handleLogin = (event: React.MouseEvent<HTMLElement>): void => {
         OurApi.authenticate(this.state.email, this.state.password, (displayName: string): void => {
-            // Naive example for development purposes
-            if (this.state.remember) {
-                window.localStorage.setItem('kojo', JSON.stringify({
+            if (displayName) {
+                // Naive example for development purposes
+                if (this.state.remember) {
+                    window.localStorage.setItem('kojo', JSON.stringify({
+                        displayName,
+                        isAuthenticated: true,
+                    }));
+                }
+
+                this.setState({
+                    email: '',
+                    password: '',
                     displayName,
                     isAuthenticated: true,
-                }));
+                    redirectToReferrer: true
+                });
             }
-
-            this.setState({
-                email: '',
-                password: '',
-                displayName,
-                isAuthenticated: true,
-                redirectToReferrer: true
-            });
         });
     }
 
     private handleLoginFieldChange = (event: React.FormEvent<HTMLInputElement>): void => {
         const { name, value } = event.currentTarget;
         this.setState(updateAction(name, value));
+    }
+
+    private handleLogOut = (): void => {
+        const { displayName } = this.state;
+        window.localStorage.setItem('kojo', JSON.stringify({
+            displayName,
+            isAuthenticated: false,
+        }));
+        this.setState({
+            isAuthenticated: false
+        });
     }
 
     private handleGetDatabase = (): void => {
@@ -147,36 +170,37 @@ export class App extends React.Component<{}, State> {
         action: string // the action to place card above or below the drop target card
     ): void => {
         const { cards } = this.state;
-        let newCardObj = { ...cards[oldCardIndex] as Cards, column: cardColumn };
+        const newCardObj = { ...cards[oldCardIndex] as Cards, column: cardColumn };
 
         // If dropping into column directly, set drop card index to +1 value 
         // after the last item of the specific column
-        if (action === 'DROP_COLUMN') {
-            // Gotta mutate here to keep code clean
-            dropCardIndex = (cards as Array<Cards>).findIndex(obj => obj.column === cardColumn) + dropCardIndex;
+        switch (action) {
+            case 'DROP_COLUMN':
+                dropCardIndex = dropCardIndex + (cards as Array<Cards>).findIndex(obj => obj.column === cardColumn);
+                break;
+            case 'DROP_DOWN':
+                dropCardIndex++;
+                break;
+            default:
         }
 
         // Insert new Card object into Array
-        let newCardsArr =
-            cards.slice(0, dropCardIndex + (action === 'DROP_DOWN' ? 1 : 0)).concat(
-                ([newCardObj] as Array<never>).concat(
-                    cards.slice(dropCardIndex + (action === 'DROP_DOWN' ? 1 : 0), cards.length)
-                )
-            );
+        const newCardsArr =
+            cards
+                .slice(0, dropCardIndex)
+                .concat(
+                    ([newCardObj] as Array<never>),
+                    cards.slice(dropCardIndex, cards.length)
+                );
 
         // Delete old Card object from Array
-        let deleteIndex = newCardsArr.findIndex(obj => obj === cards[oldCardIndex]);
-        let newCardsArr2 =
-            newCardsArr.slice(0, deleteIndex).concat(
-                newCardsArr.slice(deleteIndex + 1, newCardsArr.length)
-            );
-
-        console.log(
-            'old index:', oldCardIndex,
-            'drop index:', dropCardIndex,
-            'column:', cardColumn,
-            'action:', action
-        );
+        const deleteIndex = newCardsArr.findIndex(obj => obj === cards[oldCardIndex]);
+        const newCardsArr2 =
+            newCardsArr
+                .slice(0, deleteIndex)
+                .concat(
+                    newCardsArr.slice(deleteIndex + 1, newCardsArr.length)
+                );
 
         this.setState(updateAction('cards', newCardsArr2));
     }

@@ -26,8 +26,8 @@ class Login {
       .where(loginMethod, '=', usernameOrEmail)
       .then(data => {
         bcrypt.compare(password, data[0].hash)
-          .then(cb => {
-            if (cb) {
+          .then(isValid => {
+            if (isValid) {
               return this.db.select('*').from('user_account')
                 .where(loginMethod, '=', usernameOrEmail)
                 .then((user) => {
