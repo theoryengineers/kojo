@@ -17,20 +17,26 @@ export default class MembersList extends React.Component<Props, State> {
         const { memberslist } = this.props;
         return (
             <div className="memberslist">
-                <div className="memberslist__row">
-                    <div className="memberslist__row__header">#</div>
-                    <div className="memberslist__row__header">User</div>
-                    <div className="memberslist__row__header">Email</div>
-                    {
-                        memberslist.map((x, i) => {
-                            return <>
-                                <div key={i}>{i + 1}</div>
-                                <div key={i}>{x.displayName}</div>
-                                <div key={i}>{x.email}</div>
-                            </>;
-                        })
-                    }
-                </div>
+                <table className="memberslist__table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>User</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            memberslist.map((x, i) => {
+                                return <tr key={i}>
+                                    <td>{i + 1}</td>
+                                    <td>{x.displayName}</td>
+                                    <td>{x.email}</td>
+                                </tr>;
+                            })
+                        }
+                    </tbody>
+                </table>
             </div>
         );
     }

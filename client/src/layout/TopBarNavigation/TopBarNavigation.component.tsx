@@ -9,7 +9,7 @@ const TopBarNavigation: React.SFC<Props> = (props) => (
     <div className="topbarnav">
         <div>&nbsp;</div>
         <div>Howdy, {props.displayName}!</div>
-        <a href="/" onClick={() => props.handleLogOut()}>Sign Out</a>
+        <div><a href="/" onClick={() => props.handleLogOut()}><button>Sign Out</button></a></div>
     </div>
 );
 

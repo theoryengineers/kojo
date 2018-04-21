@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Navbar from 'app_modules/layout/Navigation';
 import Content from 'app_modules/layout/Content';
 import MembersList from 'app_modules/pages/memberslist';
+import Projects from 'app_modules/pages/ProjectsPage';
 import TopBar from 'app_modules/layout/TopBarNavigation';
 import { PageProps, ModalProps, DragDropCards, Boards, Memberslist, Cards, DisplayName } from 'app_modules/types';
 
@@ -27,13 +28,18 @@ const MainPage: React.SFC<MainPageProps> = (props) => (
                 <TopBar displayName={props.displayName} handleLogOut={props.handleLogOut} />
             </Route>
             <Switch>
-                <Route exact={true} path="/main">
+                <Route path="/main/board">
                     <Content
                         {...props}
                     />
                 </Route>
                 <Route path="/main/memberslist">
                     <MembersList
+                        {...props}
+                    />
+                </Route>
+                <Route path="/main/projects">
+                    <Projects
                         {...props}
                     />
                 </Route>

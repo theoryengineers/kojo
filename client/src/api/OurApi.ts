@@ -1,10 +1,10 @@
 import { db } from './TodoState';
-import { Database } from 'app_modules/types';
+import { Database, ResponseObject } from 'app_modules/types';
 
 class Api {
     public isAuthenticated: boolean = false;
 
-    authenticate(email: string, password: string, cb: (displayName: string) => void) {
+    authenticate(email: string, password: string, cb: (res: ResponseObject) => void) {
         // const Users = db.users;
         // const User = Users.filter(
         //     user => (user.email === email) && (user.password === password)
@@ -22,22 +22,23 @@ class Api {
             })
         })
             .then(res => res.json())
-            .then(res => cb(res.name))
+            .then(res => cb((res as ResponseObject)))
             .catch(console.log);  // Make error handler
     }
 
-    register(displayName: string, email: string, password: string, cb: () => void) {
-        fetch('http://localhost:8080/api/v1/register', {
+    register(name: string, username: string, email: string, password: string, cb: (res: ResponseObject) => void) {
+        fetch('http://localhost:1337/v1/register', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                displayName: displayName,
+                name: name,
+                username: username,
                 email: email,
                 password: password
             })
         })
             .then(res => res.json())
-            .then(() => cb())
+            .then(res => cb((res as ResponseObject)))
             .catch(console.log);
     }
 

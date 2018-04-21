@@ -5,7 +5,7 @@ export default () => (
     <div className="navbar">
         <div>
             <ul>
-                <NavLink to="/main" exact={true} className="link" activeClassName="active">
+                <NavLink to="/main/board" exact={true} className="link" activeClassName="active">
                     <li>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -21,6 +21,26 @@ export default () => (
                                 fill="currentColor"
                                 // tslint:disable-next-line:max-line-length 
                                 d="M3.043,8.532 L3.043,14.222 C3.043,14.616 3.26102394,15.0078125 3.61002394,15.0078125 L5.88702394,15.0078125 L5.95099996,11.0147705 L10.0249632,11.0147705 L10.0230128,15.0078125 L12.3260496,15.0078125 C12.6750496,15.0078125 12.958,14.617 12.958,14.222 L12.958,8.531 L8,3.625 L3.043,8.532 L3.043,8.532 Z"
+                            />
+                        </svg>
+                    </li>
+                </NavLink>
+                <NavLink to="/main/projects" className="link" activeClassName="active">
+                    <li>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 17 16"
+                            className="icon"
+                        >
+                            <path
+                                fill="currentColor"
+                                // tslint:disable-next-line:max-line-length
+                                d="M7.35,3 L5.788,0.042 L2.021,0.042 L2.021,1.063 L0.023,1.063 L0.023,10.976 L1.043,10.976 L1.045,11.976 L15.947,11.976 L15.968,3 L7.35,3 L7.35,3 Z"
+                            />
+                            <path
+                                fill="currentColor"
+                                // tslint:disable-next-line:max-line-length 
+                                d="M13.964,1.982 L8.354,1.982 L8.024,1.042 L13.964,1.042 L13.964,1.982 Z"
                             />
                         </svg>
                     </li>
@@ -85,26 +105,6 @@ export default () => (
                             />
                         </svg>
 
-                    </li>
-                </NavLink>
-                <NavLink to="/main/projects" className="link" activeClassName="active">
-                    <li>
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 17 16"
-                            className="icon"
-                        >
-                            <path
-                                fill="currentColor"
-                                // tslint:disable-next-line:max-line-length
-                                d="M7.35,3 L5.788,0.042 L2.021,0.042 L2.021,1.063 L0.023,1.063 L0.023,10.976 L1.043,10.976 L1.045,11.976 L15.947,11.976 L15.968,3 L7.35,3 L7.35,3 Z"
-                            />
-                            <path
-                                fill="currentColor"
-                                // tslint:disable-next-line:max-line-length 
-                                d="M13.964,1.982 L8.354,1.982 L8.024,1.042 L13.964,1.042 L13.964,1.982 Z"
-                            />
-                        </svg>
                     </li>
                 </NavLink>
             </ul>

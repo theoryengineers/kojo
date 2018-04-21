@@ -4,6 +4,7 @@ import { PageProps } from 'app_modules/types';
 
 interface Props extends PageProps {
     handleLogin: (e: React.MouseEvent<HTMLElement>) => void;
+    handleRegister: (e: React.MouseEvent<HTMLElement>) => void;
     redirectToReferrer: boolean;
     handleLoginFieldChange: (e: React.FormEvent<HTMLInputElement>) => void;
 }
@@ -27,14 +28,24 @@ const Login: React.SFC<Props> = (props) => {
                 <Route
                     path="/auth/register"
                     render={() => (
-                        <input
-                            className="login__input-field"
-                            onChange={props.handleLoginFieldChange}
-                            type="text"
-                            placeholder="Display Name"
-                            name="displayName"
-                            required={true}
-                        />)}
+                        <>
+                            <input
+                                className="login__input-field"
+                                onChange={props.handleLoginFieldChange}
+                                type="text"
+                                placeholder="Name"
+                                name="name"
+                                required={true}
+                            />
+                            <input
+                                className="login__input-field"
+                                onChange={props.handleLoginFieldChange}
+                                type="text"
+                                placeholder="Username"
+                                name="displayName"
+                                required={true}
+                            />
+                        </>)}
                 />
                 <input
                     className="login__input-field"
@@ -58,7 +69,7 @@ const Login: React.SFC<Props> = (props) => {
                     render={() => (
                         <button
                             className="login__button"
-                        // onClick={() => this.onSubmit('register')}
+                            onClick={props.handleRegister}
                         >
                             Register
                         </button>)}
