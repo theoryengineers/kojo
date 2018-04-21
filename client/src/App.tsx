@@ -4,11 +4,13 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import LoginPage from 'app_modules/pages/LoginPage';
 import MainPage from 'app_modules/pages/MainPage';
 import OurApi from 'app_modules/api/OurApi';
-import { Cards, Database } from 'app_modules/types';
+import { Cards, Database, ResponseObject } from 'app_modules/types';
 
 const initialState = {
     isAuthenticated: false,
     redirectToReferrer: false,
+    userid: 0,
+    name: '',
     displayName: '',
     email: '',
     password: '',
@@ -37,13 +39,15 @@ export class App extends React.Component<{}, State> {
                         path="/"
                         exact={true}
                         render={(props) =>
-                            this.state.isAuthenticated ? (
-                                <Redirect
-                                    to={{
-                                        pathname: '/main'
-                                    }}
-                                />
-                            ) : (
+                            this.state.isAuthenticated
+                                ? (
+                                    <Redirect
+                                        to={{
+                                            pathname: '/main/board',
+                                            state: { from: props.location }
+                                        }}
+                                    />
+                                ) : (
                                     <Redirect
                                         to={{
                                             pathname: '/auth/login',
@@ -77,6 +81,7 @@ export class App extends React.Component<{}, State> {
                             <LoginPage
                                 {...props}
                                 handleLogin={this.handleLogin}
+                                handleRegister={this.handleRegister}
                                 handleLoginFieldChange={this.handleLoginFieldChange}
                                 redirectToReferrer={this.state.redirectToReferrer}
                             />
@@ -88,12 +93,13 @@ export class App extends React.Component<{}, State> {
     }
 
     private handleLogin = (event: React.MouseEvent<HTMLElement>): void => {
-        OurApi.authenticate(this.state.email, this.state.password, (displayName: string): void => {
-            if (displayName) {
+        OurApi.authenticate(this.state.email, this.state.password, (res: ResponseObject): void => {
+            console.log(res);
+            if (res.name) {
                 // Naive example for development purposes
                 if (this.state.remember) {
                     window.localStorage.setItem('kojo', JSON.stringify({
-                        displayName,
+                        displayName: res.username,
                         isAuthenticated: true,
                     }));
                 }
@@ -101,7 +107,24 @@ export class App extends React.Component<{}, State> {
                 this.setState({
                     email: '',
                     password: '',
-                    displayName,
+                    displayName: res.username,
+                    userid: res.user_account_id,
+                    isAuthenticated: true,
+                    redirectToReferrer: true
+                });
+            }
+        });
+    }
+
+    private handleRegister = (event: React.MouseEvent<HTMLElement>): void => {
+        const { name, displayName, email, password } = this.state;
+        OurApi.register(name, displayName, email, password, (res: ResponseObject): void => {
+            console.log(res);
+            if (res.name) {
+                this.setState({
+                    email: '',
+                    password: '',
+                    userid: res.user_account_id,
                     isAuthenticated: true,
                     redirectToReferrer: true
                 });

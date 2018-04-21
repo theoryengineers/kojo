@@ -27,6 +27,14 @@ export interface Database {
     }[];
 }
 
+export interface ResponseObject {
+    created_on: Date;
+    email: string;
+    name: string;
+    user_account_id: number;
+    username: string;
+}
+
 export interface Boards {
     id: number;
     title: string;

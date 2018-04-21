@@ -8,15 +8,9 @@
     justify-content: center;
     align-items: center;
 
-    &__row {
-        outline: 1px solid black;
-        display: grid;
-        grid-template-columns: repeat(3, max-content);
-        grid-gap: 0.5em;
-        padding: 1em;
-        
-        &__header {
-            font-weight: bold;
+    &__table {
+        td {
+            padding: 0.5em;
         }
     }
 }
