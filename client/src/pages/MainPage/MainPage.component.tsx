@@ -5,17 +5,23 @@ import Content from 'app_modules/layout/Content';
 import MembersList from 'app_modules/pages/memberslist';
 import Projects from 'app_modules/pages/ProjectsPage';
 import TopBar from 'app_modules/layout/TopBarNavigation';
-import { PageProps, ModalProps, DragDropCards, Boards, Memberslist, Cards, DisplayName } from 'app_modules/types';
+import {
+    PageProps, ModalProps, DragDropCards, Boards, Memberslist, Cards, DisplayName,
+    ResObjProjectsById
+} from 'app_modules/types';
 
 interface MainPageProps extends
     PageProps,
     ModalProps,
     DragDropCards,
     DisplayName {
+    userid: number;
     cards: Array<Cards>;
     boardlist: Array<Boards>;
     memberslist: Array<Memberslist>;
+    projectslist: Array<ResObjProjectsById>;
     handleLogOut: () => void;
+    handleProjectsById: () => void;
 }
 
 const MainPage: React.SFC<MainPageProps> = (props) => (
@@ -45,7 +51,6 @@ const MainPage: React.SFC<MainPageProps> = (props) => (
                 </Route>
             </Switch>
         </div>
-
     </div>
 );
 

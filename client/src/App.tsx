@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import LoginPage from 'app_modules/pages/LoginPage';
 import MainPage from 'app_modules/pages/MainPage';
 import OurApi from 'app_modules/api/OurApi';
-import { Cards, Database, ResponseObject } from 'app_modules/types';
+import { Cards, Database, ResponseObject, ResObjProjectsById } from 'app_modules/types';
 
 const initialState = {
     isAuthenticated: false,
@@ -17,7 +17,8 @@ const initialState = {
     remember: '',
     boardlist: [],
     memberslist: [],
-    cards: []
+    cards: [],
+    projectslist: []
 };
 
 type State = Readonly<typeof initialState>;
@@ -43,8 +44,7 @@ export class App extends React.Component<{}, State> {
                                 ? (
                                     <Redirect
                                         to={{
-                                            pathname: '/main/board',
-                                            state: { from: props.location }
+                                            pathname: '/main/board'
                                         }}
                                     />
                                 ) : (
@@ -61,15 +61,19 @@ export class App extends React.Component<{}, State> {
                         path="/main"
                         render={(props) => (
                             <MainPage
+                                userid={this.state.userid}
                                 cards={this.state.cards}
                                 memberslist={this.state.memberslist}
                                 boardlist={this.state.boardlist}
+                                projectslist={this.state.projectslist}
+                                displayName={this.state.displayName}
                                 {...props}
+                                // Handlers
                                 handleAddCard={this.handleAddCard}
                                 handleSaveCard={this.handleSaveCard}
                                 handleDragDropCard={this.handleDragDropCard}
                                 handleLogOut={this.handleLogOut}
-                                displayName={this.state.displayName}
+                                handleProjectsById={this.handleProjectsById}
 
                             // handleSomething={this.handleSomething}
                             />
@@ -92,6 +96,12 @@ export class App extends React.Component<{}, State> {
         );
     }
 
+    private handleProjectsById = (): void => {
+        OurApi.getProjectsById(this.state.userid, (res: Array<ResObjProjectsById>): void => {
+            this.setState(updateAction('projectslist', res), () => console.log(res));
+        });
+    }
+
     private handleLogin = (event: React.MouseEvent<HTMLElement>): void => {
         OurApi.authenticate(this.state.email, this.state.password, (res: ResponseObject): void => {
             console.log(res);
@@ -100,6 +110,7 @@ export class App extends React.Component<{}, State> {
                 if (this.state.remember) {
                     window.localStorage.setItem('kojo', JSON.stringify({
                         displayName: res.username,
+                        userid: res.user_account_id,
                         isAuthenticated: true,
                     }));
                 }
@@ -230,7 +241,10 @@ export class App extends React.Component<{}, State> {
 
 }
 
-export const updateAction = (state: string, value: (string | number | Array<Cards>)): ((state: State) => void) =>
+export const updateAction = (
+    state: string,
+    value: (string | number | Array<Cards> | Array<ResObjProjectsById>)
+): ((state: State) => void) =>
     (prevState: State) => ({ [state]: value });
 
 export const updateDatabase = (object: Database): ((state: State) => void) =>

@@ -35,6 +35,15 @@ export interface ResponseObject {
     username: string;
 }
 
+export interface ResObjProjectsById {
+    user_account_id: number;
+    project_name: string;
+    created_on: Date;
+    email: string;
+    name: string;
+    username: string;
+}
+
 export interface Boards {
     id: number;
     title: string;
