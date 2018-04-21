@@ -27,7 +27,7 @@ class Register {
       }, 'email')
         .then(([loginEmail]) => {
           // console.log(loginEmail);
-          return trx('user_account')
+          return trx('user')
             .insert({
               email: loginEmail,
               name,
@@ -49,10 +49,10 @@ class Register {
         .then(trx.commit)
         .catch(trx.rollback);
     })
-      .catch(err => res.status(400).json({
-        message: 'unable to register',
-        err
-      }))
+    .catch(err => res.status(400).json({
+      message: 'unable to register',
+      err
+    }))
   }
 }
 
