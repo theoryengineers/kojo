@@ -5,7 +5,8 @@
   "main": "src",
   "scripts": {
     "tsc": "tsc",
-    "start": "nodemon --exec ./node_modules/.bin/ts-node -- ./src/index.ts"
+    "start": "nodemon --exec ./node_modules/.bin/ts-node -- ./src/index.ts",
+    "db-reboot": "nodemon --exec ./node_modules/.bin/ts-node -- ./src/dbReboot.ts"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",

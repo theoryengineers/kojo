@@ -31,8 +31,6 @@ const {
     assignment,
 } = controllers;
 
-login.testLoginsMethod()
-
 const app = Express();
 app.use(cors());
 app.use(bodyParser.json());
