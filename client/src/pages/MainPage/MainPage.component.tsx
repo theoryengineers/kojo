@@ -31,7 +31,7 @@ const MainPage: React.SFC<MainPageProps> = (props) => (
         </Route>
         <div>
             <Route path="/main">
-                <TopBar displayName={props.displayName} handleLogOut={props.handleLogOut} />
+                <TopBar {...props} />
             </Route>
             <Switch>
                 <Route path="/main/board">

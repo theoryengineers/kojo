@@ -9,7 +9,7 @@ export default () => (
                     <li>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 17 16"
+                            viewBox="0 0 16 16"
                             className="icon"
                         >
                             <path
@@ -29,7 +29,7 @@ export default () => (
                     <li>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 17 16"
+                            viewBox="0 0 16 12"
                             className="icon"
                         >
                             <path
@@ -49,7 +49,7 @@ export default () => (
                     <li>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 17 16"
+                            viewBox="0 0 16 16"
                             className="icon"
                         >
                             <path
@@ -70,7 +70,7 @@ export default () => (
                     <li>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            viewBox="2 0 12 10"
+                            viewBox="0 0 16 10"
                             className="icon"
                         >
                             <path

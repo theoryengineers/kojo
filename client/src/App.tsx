@@ -27,7 +27,7 @@ export class App extends React.Component<{}, State> {
     componentWillMount() {
         let retrievedObject: string | null = localStorage.getItem('kojo');
         if (retrievedObject) {
-            this.setState(JSON.parse(retrievedObject));
+            this.setState(JSON.parse(retrievedObject), () => this.handleProjectsById());
         }
         this.handleGetDatabase();
     }

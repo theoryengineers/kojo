@@ -1,5 +1,5 @@
 .memberslist {
-    height: calc(100vh - (4.3em + 1em));
+    height: calc(100vh - (5.75em));
     padding: 2em;
     overflow-y: scroll;
     font-size: 2em;
@@ -9,8 +9,12 @@
     align-items: center;
 
     &__table {
+        th {
+            text-align: left;
+            padding: 0 0.5em;
+        }
         td {
-            padding: 0.5em;
+            padding: 0.25em 0.5em;
         }
     }
 }

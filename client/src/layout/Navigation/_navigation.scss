@@ -15,17 +15,24 @@ $icon-size: 22px;
     padding: 0px;
     color: white;
     list-style: none;
+
+    a.link {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
     li {
-      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       padding: $nav-list-padding;
       .icon {
         width: $icon-size;
-        height: $icon-size;
-        padding: 0px 5px;
+        padding: 0px;
       }
-    }
-    li:first-child {
-      padding-top: 17px;
     }
     .active {
       background: orange;

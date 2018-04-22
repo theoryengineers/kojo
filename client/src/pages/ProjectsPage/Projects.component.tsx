@@ -41,7 +41,6 @@ export default class ProjectsPage extends React.Component<Props, State> {
                         }
                     </tbody>
                 </table>
-
             </div>
         );
     }
