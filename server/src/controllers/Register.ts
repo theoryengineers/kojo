@@ -23,10 +23,10 @@ class Register {
       trx('login').insert({
         hash,
         email,
-        username
+        username,
       }, 'email')
         .then(([loginEmail]) => {
-          // console.log(loginEmail);
+          console.log('email',loginEmail );
           return trx('user')
             .insert({
               email: loginEmail,
@@ -34,13 +34,13 @@ class Register {
               username,
               created_on: new Date().toLocaleString('en-US', { timeZone: 'UTC' })
             }, '*')
-            .then(([user_account]) => {
-              // console.log(user_account);
-              res.json(user_account);
-              const { user_account_id, created_on } = user_account;
+            .then(([user]) => {
+              // console.log(user);
+              res.json(user);
+              const { user_id, created_on } = user;
               return trx('project')
                 .insert({
-                  user_account_id,
+                  user_id,
                   project_name: 'initial project',
                   created_on,
                 })
