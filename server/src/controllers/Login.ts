@@ -28,7 +28,7 @@ class Login {
         bcrypt.compare(password, data[0].hash)
           .then(isValid => {
             if (isValid) {
-              return this.db.select('*').from('user_account')
+              return this.db.select('*').from('user')
                 .where(loginMethod, '=', usernameOrEmail)
                 .then((user) => {
                   res.json(user[0])

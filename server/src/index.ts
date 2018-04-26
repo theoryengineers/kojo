@@ -27,7 +27,6 @@ const {
     project,
     backlog,
     task,
-    sprint,
     assignment,
 } = controllers;
 
@@ -44,11 +43,27 @@ app.post('/v1/login', login.handleLogin(bcrypt));
 
 app.get('/v1/users', user.getAllUsers);
 app.get('/v1/users/:userId', user.getUser);
+app.put('/v1/users/:userId', user.handleUpdateUser);
 
 app.get('/v1/projects', project.getAllProjects);
 app.get('/v1/projects/:userId', project.getProject);
+app.post('/v1/projects/:userId', project.handleAddProject);
+app.put('/v1/projects/:projectId', project.handleUpdateProject);
+app.delete('/v1/projects/:projectId', project.handleDeleteProject);
+// -- not done
+app.post('/v1/backlog/:projectId', backlog.handleAddBacklog);
+app.put('/v1/backlog/:backlogId', backlog.handleUpdateBacklog);
+app.delete('/v1/backlog/:backlogId', backlog.handleDeleteBacklog);
+// --
+app.post('/v1/tasks', task.handleAddTask);
+app.put('/v1/tasks/:taskId', task.handleUpdateTask);
+app.delete('/v1/tasks/:taskId', task.handleDeleteTask);
 
-
+// -- not done
+app.post('/v1/assignments', assignment.handleAddAssignment);
+app.put('/v1/assignments/:assignmentId', assignment.handleUpdateAssignment);
+app.delete('/v1/assignments/:assignmentId/delete', assignment.handleDeleteAssignment);
+// --
 app.listen(port, () => console.log('Listening at port', port));
 
 /*
