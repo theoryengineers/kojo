@@ -42,10 +42,22 @@ export class App extends React.Component<{}, State> {
                         render={(props) =>
                             this.state.isAuthenticated
                                 ? (
-                                    <Redirect
-                                        to={{
-                                            pathname: '/main/board'
-                                        }}
+                                    <MainPage
+                                        userid={this.state.userid}
+                                        cards={this.state.cards}
+                                        memberslist={this.state.memberslist}
+                                        boardlist={this.state.boardlist}
+                                        projectslist={this.state.projectslist}
+                                        displayName={this.state.displayName}
+                                        {...props}
+                                        // Handlers
+                                        handleAddCard={this.handleAddCard}
+                                        handleSaveCard={this.handleSaveCard}
+                                        handleDragDropCard={this.handleDragDropCard}
+                                        handleLogOut={this.handleLogOut}
+                                        handleProjectsById={this.handleProjectsById}
+
+                                    // handleSomething={this.handleSomething}
                                     />
                                 ) : (
                                     <Redirect
@@ -57,28 +69,7 @@ export class App extends React.Component<{}, State> {
                                 )
                         }
                     />
-                    <Route
-                        path="/main"
-                        render={(props) => (
-                            <MainPage
-                                userid={this.state.userid}
-                                cards={this.state.cards}
-                                memberslist={this.state.memberslist}
-                                boardlist={this.state.boardlist}
-                                projectslist={this.state.projectslist}
-                                displayName={this.state.displayName}
-                                {...props}
-                                // Handlers
-                                handleAddCard={this.handleAddCard}
-                                handleSaveCard={this.handleSaveCard}
-                                handleDragDropCard={this.handleDragDropCard}
-                                handleLogOut={this.handleLogOut}
-                                handleProjectsById={this.handleProjectsById}
 
-                            // handleSomething={this.handleSomething}
-                            />
-                        )}
-                    />
                     <Route
                         path="/auth"
                         render={(props) => (
@@ -149,13 +140,10 @@ export class App extends React.Component<{}, State> {
     }
 
     private handleLogOut = (): void => {
-        const { displayName } = this.state;
-        window.localStorage.setItem('kojo', JSON.stringify({
-            displayName,
-            isAuthenticated: false,
-        }));
+        window.localStorage.clear();
         this.setState({
-            isAuthenticated: false
+            isAuthenticated: false,
+            redirectToReferrer: false
         });
     }
 

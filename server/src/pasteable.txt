@@ -2,7 +2,7 @@ CREATE TABLE public.login(
  login_id serial PRIMARY KEY,
  username VARCHAR (50) UNIQUE NOT NULL,
  email VARCHAR (355) UNIQUE NOT NULL,
- hash VARCHAR (100) NOT NULL,
+ hash VARCHAR (100) NOT NULL
 );
 
 CREATE TABLE public.user(
