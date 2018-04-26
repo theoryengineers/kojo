@@ -5,9 +5,6 @@ class Register {
     this.db = parent.db;
     this.parent = parent;
   }
-  testRegisterMethod = () => {
-    console.log('testRegisterMethod from Log');
-  }
   handleRegister = (bcrypt) => (req, res) => {
     const { email, username, name, password } = req.body;
 
@@ -20,35 +17,45 @@ class Register {
     const hash = bcrypt.hashSync(password)
 
     this.db.transaction(trx => {
-      trx('login').insert({
+      trx('login').insert({ //add to login table
         hash,
         email,
         username,
       }, 'email')
         .then(([loginEmail]) => {
-          console.log('email',loginEmail );
-          return trx('user')
+          return trx('user') //add to user table
+          .insert({
+            email: loginEmail,
+            name,
+            username,
+            created_on: new Date().toLocaleString('en-US', { timeZone: 'UTC' })
+          }, '*')
+          .then(([userRes]) => { 
+            const { user_id, created_on } = userRes;
+            return trx('project') //add to project table
             .insert({
-              email: loginEmail,
-              name,
-              username,
-              created_on: new Date().toLocaleString('en-US', { timeZone: 'UTC' })
-            }, '*')
-            .then(([user]) => {
-              // console.log(user);
-              res.json(user);
-              const { user_id, created_on } = user;
-              return trx('project')
-                .insert({
-                  user_id,
-                  project_name: 'initial project',
-                  created_on,
-                })
-            })
-        })
+              user_id,
+              project_name: 'initial project',
+              created_on,
+            },'*')
+            .then( ([projectRes]) => {
+              const {project_id, created_on} = projectRes;
+              return trx('backlog') //add to backlog table
+              .insert({
+                project_id,
+                title: "Initial Backlog",
+                is_sprint: false,
+                last_updated: created_on
+              },'*')
+              .then( ([backlogRes]) => {
+                res.json(Object.assign(userRes, {project: projectRes}, {backlog: backlogRes}))
+              })
+            }) // End backlog
+          }) // End project
+        }) // End user
         .then(trx.commit)
         .catch(trx.rollback);
-    })
+    }) // login
     .catch(err => res.status(400).json({
       message: 'unable to register',
       err

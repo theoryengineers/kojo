@@ -35,8 +35,10 @@ CREATE TABLE public.task(
 CREATE TABLE public.backlog(
  backlog_id serial PRIMARY KEY,
  project_id INTEGER REFERENCES public.project(project_id),
+ title VARCHAR(355),
+ is_sprint BOOLEAN,
  last_updated TIMESTAMP,
- is_sprint BOOLEAN
+ created_on TIMESTAMP NOT NULL
 );
 
 CREATE TABLE public.backlog_task(
@@ -44,12 +46,13 @@ CREATE TABLE public.backlog_task(
  backlog_id INTEGER REFERENCES public.backlog(backlog_id),
  task_id INTEGER REFERENCES public.task(task_id),
  title VARCHAR(355),
- progress VARCHAR(100)
+ progress VARCHAR(100),
+ last_updated TIMESTAMP
 );
 
 CREATE TABLE public.assignment(
  assignment_id serial PRIMARY KEY,
  user_id INTEGER REFERENCES public.user(user_id),
- task_id INTEGER REFERENCES public.task(task_id),
+ backlog_task_id INTEGER REFERENCES public.backlog_task(backlog_task_id),
  description VARCHAR(355)
 );

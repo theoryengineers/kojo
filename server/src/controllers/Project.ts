@@ -25,20 +25,34 @@ class Project {
   }
   handleAddProject = (req, res) => {
     const {userId} = req.params;
-    const {project_name} = req.body;
-    this.db('project')
-      .insert({
-        user_id: userId,
-        project_name,
-        created_on: new Date().toLocaleString('en-US', { timeZone: 'UTC' }),
-      },'*')
-      .then( ([projectRes]) => {
-          res.json(projectRes)
-      })
-      .catch(err => res.status(400).json({
-        message: 'unable to add project',
-        err
-      }))
+    const { project_name } = req.body;
+    this.db.transaction(trx => {
+      trx('project')
+        .insert({
+          user_id: userId,
+          project_name,
+          created_on: new Date().toLocaleString('en-US', { timeZone: 'UTC' }),
+        },'*')
+        .then( ([projectRes]) => {
+          const {project_id, created_on} = projectRes;
+          return trx('backlog')
+          .insert({
+            project_id,
+            title: "Initial Backlog",
+            is_sprint: false,
+            last_updated: created_on
+          },'*')
+          .then( ([backlogRes]) => {
+            res.json(Object.assign(projectRes, {backlog: backlogRes}))
+          })
+        })
+        .then(trx.commit)
+        .catch(trx.rollback);
+    })
+    .catch(err => res.status(400).json({
+      message: 'unable to add project',
+      err
+    }))
   }
   handleUpdateProject = (req, res) => {
     const {projectId} = req.params;

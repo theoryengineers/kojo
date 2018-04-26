@@ -41,8 +41,8 @@ app.use('/welcome', (req, res) => {
 app.post('/v1/register', register.handleRegister(bcrypt));
 app.post('/v1/login', login.handleLogin(bcrypt));
 
-app.get('/v1/users', user.getAllUsers);
-app.get('/v1/users/:userId', user.getUser);
+app.get('/v1/users', user.handleGetAllUsers);
+app.get('/v1/users/:userId', user.handleGetUser);
 app.put('/v1/users/:userId', user.handleUpdateUser);
 
 app.get('/v1/projects', project.getAllProjects);
@@ -51,9 +51,13 @@ app.post('/v1/projects/:userId', project.handleAddProject);
 app.put('/v1/projects/:projectId', project.handleUpdateProject);
 app.delete('/v1/projects/:projectId', project.handleDeleteProject);
 // -- not done
-app.post('/v1/backlog/:projectId', backlog.handleAddBacklog);
+app.post('/v1/backlog/:projectId', backlog.handleAddSprintBacklog);
 app.put('/v1/backlog/:backlogId', backlog.handleUpdateBacklog);
-app.delete('/v1/backlog/:backlogId', backlog.handleDeleteBacklog);
+app.delete('/v1/backlog/:backlogId', backlog.handleDeleteSprintBacklog);
+// app.post('/v1/backlog/:projectId', backlog.handleAddBacklog);
+// app.put('/v1/backlog/:backlogId', backlog.handleUpdateBacklog);
+// app.delete('/v1/backlog/:backlogId', backlog.handleDeleteBacklog);
+
 // --
 app.post('/v1/tasks', task.handleAddTask);
 app.put('/v1/tasks/:taskId', task.handleUpdateTask);

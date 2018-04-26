@@ -5,10 +5,7 @@ class User {
       this.db = parent.db;
       this.parent = parent;
   }
-  testUsersMethod = () => {
-    console.log('testUsersMethod from Log');
-  }
-  getAllUsers = (req, res) => {
+  handleGetAllUsers = (req, res) => {
     this.db('user')
       .select('*')
       .then(users => {
@@ -17,9 +14,8 @@ class User {
       })
       .catch(err => res.status(400).json('unable to get users'))
   }
-  getUser = (req, res) => {
+  handleGetUser = (req, res) => {
     const {userId} = req.params;
-    console.log('userId', userId);
     this.db('user')
       .select('*')
       .where('user_id', userId)

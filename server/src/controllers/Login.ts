@@ -5,9 +5,6 @@ class Login {
     this.db = parent.db;
     this.parent = parent;
   }
-  testLoginsMethod = () => {
-    console.log('testLoginsMethod from Log');
-  }
   handleLogin = (bcrypt) => (req, res) => {
     const { usernameOrEmail, password } = req.body;
 
