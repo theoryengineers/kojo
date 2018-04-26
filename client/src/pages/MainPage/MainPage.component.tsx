@@ -26,25 +26,25 @@ interface MainPageProps extends
 
 const MainPage: React.SFC<MainPageProps> = (props) => (
     <div className="main">
-        <Route path="/main">
+        <Route path="/">
             <Navbar />
         </Route>
         <div>
-            <Route path="/main">
+            <Route path="/">
                 <TopBar {...props} />
             </Route>
             <Switch>
-                <Route path="/main/board">
+                <Route path="/board">
                     <Content
                         {...props}
                     />
                 </Route>
-                <Route path="/main/memberslist">
+                <Route path="/memberslist">
                     <MembersList
                         {...props}
                     />
                 </Route>
-                <Route path="/main/projects">
+                <Route path="/projects">
                     <Projects
                         {...props}
                     />

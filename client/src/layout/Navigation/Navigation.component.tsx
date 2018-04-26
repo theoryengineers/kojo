@@ -5,7 +5,7 @@ export default () => (
     <div className="navbar">
         <div>
             <ul>
-                <NavLink to="/main/board" exact={true} className="link" activeClassName="active">
+                <NavLink to="/board" className="link" activeClassName="active">
                     <li>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +25,7 @@ export default () => (
                         </svg>
                     </li>
                 </NavLink>
-                <NavLink to="/main/projects" className="link" activeClassName="active">
+                <NavLink to="/projects" className="link" activeClassName="active">
                     <li>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +45,7 @@ export default () => (
                         </svg>
                     </li>
                 </NavLink>
-                <NavLink to="/main/profile" className="link" activeClassName="active">
+                <NavLink to="/profile" className="link" activeClassName="active">
                     <li>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -66,7 +66,7 @@ export default () => (
 
                     </li>
                 </NavLink>
-                <NavLink to="/main/memberslist" className="link" activeClassName="active">
+                <NavLink to="/memberslist" className="link" activeClassName="active">
                     <li>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -111,7 +111,7 @@ export default () => (
         </div>
         <div>
             <ul>
-                <NavLink to="/main/admin" className="link" activeClassName="active">
+                <NavLink to="/admin" className="link" activeClassName="active">
                     <li>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
