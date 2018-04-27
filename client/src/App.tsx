@@ -9,12 +9,19 @@ import { Cards, Database, ResponseObject, ResObjProjectsById } from 'app_modules
 const initialState = {
     isAuthenticated: false,
     redirectToReferrer: false,
+
+    // IDs
     userid: 0,
+    projectid: 0,
+
+    // Form Shit
     name: '',
     displayName: '',
     email: '',
     password: '',
     remember: '',
+
+    // Database
     boardlist: [],
     memberslist: [],
     cards: [],
@@ -37,8 +44,20 @@ export class App extends React.Component<{}, State> {
             <Router>
                 <Switch>
                     <Route
+                        path="/auth"
+                        render={(props) => (
+                            <LoginPage
+                                {...props}
+                                handleLogin={this.handleLogin}
+                                handleRegister={this.handleRegister}
+                                handleLoginFieldChange={this.handleLoginFieldChange}
+                                redirectToReferrer={this.state.redirectToReferrer}
+                            />
+                        )}
+                    />
+                    <Route
                         path="/"
-                        exact={true}
+                        exact={false}
                         render={(props) =>
                             this.state.isAuthenticated
                                 ? (
@@ -69,19 +88,6 @@ export class App extends React.Component<{}, State> {
                                 )
                         }
                     />
-
-                    <Route
-                        path="/auth"
-                        render={(props) => (
-                            <LoginPage
-                                {...props}
-                                handleLogin={this.handleLogin}
-                                handleRegister={this.handleRegister}
-                                handleLoginFieldChange={this.handleLoginFieldChange}
-                                redirectToReferrer={this.state.redirectToReferrer}
-                            />
-                        )}
-                    />
                 </Switch>
             </Router>
         );
@@ -101,7 +107,7 @@ export class App extends React.Component<{}, State> {
                 if (this.state.remember) {
                     window.localStorage.setItem('kojo', JSON.stringify({
                         displayName: res.username,
-                        userid: res.user_account_id,
+                        userid: res.user_id,
                         isAuthenticated: true,
                     }));
                 }
@@ -110,9 +116,13 @@ export class App extends React.Component<{}, State> {
                     email: '',
                     password: '',
                     displayName: res.username,
-                    userid: res.user_account_id,
+                    userid: res.user_id,
                     isAuthenticated: true,
                     redirectToReferrer: true
+                    // tslint:disable-next-line:align
+                }, () => {
+                    this.handleGetDatabase();
+                    this.handleProjectsById();
                 });
             }
         });
@@ -126,7 +136,7 @@ export class App extends React.Component<{}, State> {
                 this.setState({
                     email: '',
                     password: '',
-                    userid: res.user_account_id,
+                    userid: res.user_id,
                     isAuthenticated: true,
                     redirectToReferrer: true
                 });

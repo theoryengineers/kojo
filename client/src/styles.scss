@@ -20,7 +20,6 @@
 // 4. Layout-related sections
 @import
   'layout/Navigation/navigation',
-  'layout/Content/content',
   'layout/TopBarNavigation/topbarnav',
   'layout/DragAndDrop/draganddrop';
   
@@ -36,7 +35,9 @@
 @import
   'pages/MainPage/main',
   'pages/MembersList/memberslist',
+  'pages/Content/content',
   'pages/ProjectsPage/projectspage';
+  
   // 'pages/Login/login';
 
 // 7. Themes

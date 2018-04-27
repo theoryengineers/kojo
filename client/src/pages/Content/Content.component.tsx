@@ -14,7 +14,7 @@ const initialState = {
         description: '',
         column: '',
         assignment: [0],
-        board: 0
+        boardid: 0
     },
     cardIndex: 0
 };

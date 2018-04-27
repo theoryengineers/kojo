@@ -53,13 +53,13 @@ class AddNewCard extends React.Component<Props, State> {
                     <button
                         onClick={() => {
                             this.props.handleAddCard({
-                                id: 1,
+                                id: 1, 
                                 title: this.state.title,
                                 category: this.state.category,
                                 description: this.state.description,
                                 column: 'Backlog',
                                 assignment: this.state.assignment,
-                                board: 1
+                            boardid: 1
                             });
                             this.props.handleModal('CLOSED');
                         }}
