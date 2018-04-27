@@ -1,1 +1,1 @@
-export { default } from './memberslist.component';
+export { default } from './MembersList.component';
