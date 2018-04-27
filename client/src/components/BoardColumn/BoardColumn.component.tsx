@@ -4,12 +4,13 @@ import { DragDropCards } from 'app_modules/types';
 interface BoardColumnProps extends DragDropCards {
     header: string;
     backgroundColor: string;
+    display: boolean;
     leftButton?: JSX.Element;
     rightButton?: JSX.Element;
 }
 
 const BoardColumn: React.SFC<BoardColumnProps> = (props) => (
-    <div className="column">
+    <div className={'column ' + (!props.display ? 'column-hide' : '')}>
         <div className="column__header" style={{ backgroundColor: props.backgroundColor }}>
             <div className="column__header__alignment">{props.leftButton}</div>
             <div className="column__header__alignment">{props.header}</div>
@@ -46,7 +47,7 @@ const onDrop = (e: React.DragEvent<HTMLElement>, props: BoardColumnProps): void 
         let newCardIndex = 0;
 
         if (e.currentTarget.children !== null) {
-            newCardIndex = e.currentTarget.children[0].children.length;
+            newCardIndex = e.currentTarget.children[0].children.length + 1;
         }
 
         props.handleDragDropCard(oldCardIndex, newCardIndex, column, action);

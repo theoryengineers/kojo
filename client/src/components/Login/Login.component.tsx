@@ -1,6 +1,8 @@
+/// <reference path="Login.d.ts"/>
 import * as React from 'react';
 import { Link, Route, Redirect, } from 'react-router-dom';
 import { PageProps } from 'app_modules/types';
+import * as logo from 'app_modules/images/logo.svg';
 
 interface Props extends PageProps {
     handleLogin: (e: React.MouseEvent<HTMLElement>) => void;
@@ -19,10 +21,9 @@ const Login: React.SFC<Props> = (props) => {
     return (
         <div className="login">
             <div className="login__header">
-                Kojo Kanban
-                {
-                    // replace with Avatar later
-                }
+                <div className="login__header__logo">
+                    <img src={logo} />
+                </div>
             </div>
             <div>
                 <Route
@@ -91,7 +92,7 @@ const Login: React.SFC<Props> = (props) => {
                                     name="remember"
                                     readOnly={true}
                                 />
-                                Stay Logged In
+                                Stay Logged
                             </label>
                         </div>
                     )}
