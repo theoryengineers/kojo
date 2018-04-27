@@ -15,11 +15,15 @@ interface MainPageProps extends
     ModalProps,
     DragDropCards,
     DisplayName {
+    // ID
     userid: number;
+    projectid: number;
+    // Database
     cards: Array<Cards>;
     boardlist: Array<Boards>;
     memberslist: Array<Memberslist>;
     projectslist: Array<ResObjProjectsById>;
+    // Handlers
     handleLogOut: () => void;
     handleProjectsById: () => void;
 }
@@ -34,7 +38,7 @@ const MainPage: React.SFC<MainPageProps> = (props) => (
                 <TopBar {...props} />
             </Route>
             <Switch>
-                <Route path="/board">
+                <Route exact={true} path="/">
                     <Content
                         {...props}
                     />

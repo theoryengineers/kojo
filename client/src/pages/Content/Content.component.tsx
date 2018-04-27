@@ -52,7 +52,7 @@ export default class Content extends React.Component<Props, State> {
                                         key={i}
                                         index={i}
                                         card={card}
-                                        colorCode={'red'}
+                                        colorCode={'#CC0000'}
                                         handleEditCard={this.handleEditCard}
                                     />
                                 </DragAndDrop>;
@@ -63,7 +63,7 @@ export default class Content extends React.Component<Props, State> {
                     </Column>
                     <Column
                         header={'In Progress'}
-                        backgroundColor={'blue'}
+                        backgroundColor={'royalblue'}
                         handleDragDropCard={handleDragDropCard}
                     >
                         {cards.map((card, i) => {
@@ -73,7 +73,7 @@ export default class Content extends React.Component<Props, State> {
                                         key={i}
                                         index={i}
                                         card={card}
-                                        colorCode={'red'}
+                                        colorCode={'#CC0000'}
                                         handleEditCard={this.handleEditCard}
                                     />
                                 </DragAndDrop>;
@@ -82,7 +82,11 @@ export default class Content extends React.Component<Props, State> {
                             }
                         })}
                     </Column>
-                    <Column header={'Testing'} backgroundColor={'red'} handleDragDropCard={handleDragDropCard}>
+                    <Column
+                        header={'Testing'}
+                        backgroundColor={'#B20000'}
+                        handleDragDropCard={handleDragDropCard}
+                    >
                         {cards.map((card, i) => {
                             if (card.column === 'Testing') {
                                 return <DragAndDrop key={i} handleDragDropCard={handleDragDropCard}>
@@ -90,7 +94,7 @@ export default class Content extends React.Component<Props, State> {
                                         key={i}
                                         index={i}
                                         card={card}
-                                        colorCode={'red'}
+                                        colorCode={'#CC0000'}
                                         handleEditCard={this.handleEditCard}
                                     />
                                 </DragAndDrop>;
@@ -99,7 +103,11 @@ export default class Content extends React.Component<Props, State> {
                             }
                         })}
                     </Column>
-                    <Column header={'Complete'} backgroundColor={'green'} handleDragDropCard={handleDragDropCard}>
+                    <Column
+                        header={'Complete'}
+                        backgroundColor={'forestgreen'}
+                        handleDragDropCard={handleDragDropCard}
+                    >
                         {cards.map((card, i) => {
                             if (card.column === 'Complete') {
                                 return <DragAndDrop key={i} handleDragDropCard={handleDragDropCard}>
@@ -107,7 +115,7 @@ export default class Content extends React.Component<Props, State> {
                                         key={i}
                                         index={i}
                                         card={card}
-                                        colorCode={'red'}
+                                        colorCode={'#CC0000'}
                                         handleEditCard={this.handleEditCard}
                                     />
                                 </DragAndDrop>;

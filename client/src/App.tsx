@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import LoginPage from 'app_modules/pages/LoginPage';
 import MainPage from 'app_modules/pages/MainPage';
 import OurApi from 'app_modules/api/OurApi';
-import { Cards, Database, ResponseObject, ResObjProjectsById } from 'app_modules/types';
+import { Cards, Database, ResObjLogin, ResObjProjectsById } from 'app_modules/types';
 
 const initialState = {
     isAuthenticated: false,
@@ -44,7 +44,7 @@ export class App extends React.Component<{}, State> {
             <Router>
                 <Switch>
                     <Route
-                        path="/auth"
+                        path="/(login|register)"
                         render={(props) => (
                             <LoginPage
                                 {...props}
@@ -62,7 +62,10 @@ export class App extends React.Component<{}, State> {
                             this.state.isAuthenticated
                                 ? (
                                     <MainPage
+                                        // IDs
                                         userid={this.state.userid}
+                                        projectid={this.state.projectid}
+                                        // Database
                                         cards={this.state.cards}
                                         memberslist={this.state.memberslist}
                                         boardlist={this.state.boardlist}
@@ -81,7 +84,7 @@ export class App extends React.Component<{}, State> {
                                 ) : (
                                     <Redirect
                                         to={{
-                                            pathname: '/auth/login',
+                                            pathname: '/login',
                                             state: { from: props.location }
                                         }}
                                     />
@@ -100,7 +103,7 @@ export class App extends React.Component<{}, State> {
     }
 
     private handleLogin = (event: React.MouseEvent<HTMLElement>): void => {
-        OurApi.authenticate(this.state.email, this.state.password, (res: ResponseObject): void => {
+        OurApi.authenticate(this.state.email, this.state.password, (res: ResObjLogin): void => {
             console.log(res);
             if (res.name) {
                 // Naive example for development purposes
@@ -130,7 +133,7 @@ export class App extends React.Component<{}, State> {
 
     private handleRegister = (event: React.MouseEvent<HTMLElement>): void => {
         const { name, displayName, email, password } = this.state;
-        OurApi.register(name, displayName, email, password, (res: ResponseObject): void => {
+        OurApi.register(name, displayName, email, password, (res: ResObjLogin): void => {
             console.log(res);
             if (res.name) {
                 this.setState({
@@ -202,13 +205,16 @@ export class App extends React.Component<{}, State> {
         action: string // the action to place card above or below the drop target card
     ): void => {
         const { cards } = this.state;
-        const newCardObj = { ...cards[oldCardIndex] as Cards, column: cardColumn };
+        const newCardObj = {
+            ...cards[oldCardIndex] as Cards,
+            column: cardColumn
+        };
 
         // If dropping into column directly, set drop card index to +1 value 
         // after the last item of the specific column
         switch (action) {
             case 'DROP_COLUMN':
-                dropCardIndex = dropCardIndex + (cards as Array<Cards>).findIndex(obj => obj.column === cardColumn);
+                dropCardIndex = (cards as Array<Cards>).findIndex(obj => obj.column === cardColumn) + dropCardIndex;
                 break;
             case 'DROP_DOWN':
                 dropCardIndex++;
@@ -217,22 +223,19 @@ export class App extends React.Component<{}, State> {
         }
 
         // Insert new Card object into Array
-        const newCardsArr =
-            cards
-                .slice(0, dropCardIndex)
-                .concat(
-                    ([newCardObj] as Array<never>),
-                    cards.slice(dropCardIndex, cards.length)
-                );
+        const newCardsArr = [
+            ...cards.slice(0, dropCardIndex),
+            newCardObj,
+            ...cards.slice(dropCardIndex, cards.length)
+        ];
+        console.log(newCardsArr, newCardsArr.length);
 
         // Delete old Card object from Array
         const deleteIndex = newCardsArr.findIndex(obj => obj === cards[oldCardIndex]);
-        const newCardsArr2 =
-            newCardsArr
-                .slice(0, deleteIndex)
-                .concat(
-                    newCardsArr.slice(deleteIndex + 1, newCardsArr.length)
-                );
+        const newCardsArr2 = [
+            ...newCardsArr.slice(0, deleteIndex),
+            ...newCardsArr.slice(deleteIndex + 1, newCardsArr.length)
+        ];
 
         this.setState(updateAction('cards', newCardsArr2));
     }

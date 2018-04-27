@@ -27,7 +27,7 @@ export interface Database {
     }[];
 }
 
-export interface ResponseObject {
+export interface ResObjLogin {
     created_on: Date;
     email: string;
     name: string;

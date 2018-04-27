@@ -33,7 +33,7 @@ const BoardColumn: React.SFC<BoardColumnProps> = (props) => (
                 e.currentTarget.style.backgroundColor = 'lightgray';
             }}
         >
-            {props.children}
+            <div className="column__content__container">{props.children}</div>
         </div>
     </div >
 );
@@ -46,7 +46,7 @@ const onDrop = (e: React.DragEvent<HTMLElement>, props: BoardColumnProps): void 
         let newCardIndex = 0;
 
         if (e.currentTarget.children !== null) {
-            newCardIndex = e.currentTarget.children.length;
+            newCardIndex = e.currentTarget.children[0].children.length;
         }
 
         props.handleDragDropCard(oldCardIndex, newCardIndex, column, action);

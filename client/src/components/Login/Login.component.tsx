@@ -26,7 +26,7 @@ const Login: React.SFC<Props> = (props) => {
             </div>
             <div>
                 <Route
-                    path="/auth/register"
+                    path="/register"
                     render={() => (
                         <>
                             <input
@@ -65,7 +65,7 @@ const Login: React.SFC<Props> = (props) => {
                 />
 
                 <Route
-                    path="/auth/register"
+                    path="/register"
                     render={() => (
                         <button
                             className="login__button"
@@ -75,7 +75,7 @@ const Login: React.SFC<Props> = (props) => {
                         </button>)}
                 />
                 <Route
-                    path="/auth/login"
+                    path="/login"
                     render={() => (
                         <div>
                             <button
@@ -99,7 +99,7 @@ const Login: React.SFC<Props> = (props) => {
             </div>
 
             <Route
-                path="/auth/register"
+                path="/register"
                 render={() => (
                     <div className="login__footer">
                         <span className="psw">
@@ -109,7 +109,7 @@ const Login: React.SFC<Props> = (props) => {
                 )}
             />
             <Route
-                path="/auth/login"
+                path="/login"
                 render={() => (
                     <div className="login__footer">
                         <span className="psw">Forgot <a href="">password</a>?</span><br />
