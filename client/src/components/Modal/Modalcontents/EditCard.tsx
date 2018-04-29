@@ -36,6 +36,8 @@ class EditCard extends React.Component<Props, State> {
     render() {
         return (
             <div className="modal__form">
+                <div className="modal__title">EDIT TASK</div>
+                <label>Title</label>
                 <input
                     className="input-field"
                     onChange={this.handleFieldInput}
@@ -43,6 +45,7 @@ class EditCard extends React.Component<Props, State> {
                     value={this.state.title}
                     name="title"
                 />
+                <label>Category</label>
                 <input
                     className="input-field"
                     onChange={this.handleFieldInput}
@@ -50,6 +53,7 @@ class EditCard extends React.Component<Props, State> {
                     value={this.state.category}
                     name="category"
                 />
+                <label>Description</label>
                 <textarea
                     className="input-field"
                     onChange={this.handleFieldInput}
@@ -57,6 +61,7 @@ class EditCard extends React.Component<Props, State> {
                     value={this.state.description}
                     name="description"
                 />
+                <label>Assignment</label>
                 <input
                     className="input-field"
                     onChange={this.handleFieldInput}
@@ -64,7 +69,7 @@ class EditCard extends React.Component<Props, State> {
                     value="Bob"
                     name="assignment"
                 />
-                <div>
+                <div className="modal__buttons">
                     <button
                         onClick={() => {
                             this.props.handleSaveCard(
@@ -75,9 +80,9 @@ class EditCard extends React.Component<Props, State> {
                                     description: this.state.description,
                                     column: 'Backlog',
                                     assignment: this.state.assignment,
-                                    board: 1
-                                
-                                }, 
+                                    boardid: 1
+
+                                },
                                 this.state.cardIndex
                             );
                             this.props.handleModal('CLOSED');

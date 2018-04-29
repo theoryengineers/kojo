@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ModalConductor from './modal.conductor';
+import ModalConductor from './Modal.conductor';
 import { PageProps, ModalProps, Cards } from 'app_modules/types';
 
 interface Props extends PageProps, ModalProps {

@@ -1,6 +1,8 @@
+/// <reference path="Login.d.ts"/>
 import * as React from 'react';
 import { Link, Route, Redirect, } from 'react-router-dom';
 import { PageProps } from 'app_modules/types';
+import * as logo from 'app_modules/images/logo.svg';
 
 interface Props extends PageProps {
     handleLogin: (e: React.MouseEvent<HTMLElement>) => void;
@@ -19,14 +21,13 @@ const Login: React.SFC<Props> = (props) => {
     return (
         <div className="login">
             <div className="login__header">
-                Kojo Kanban
-                {
-                    // replace with Avatar later
-                }
+                <div className="login__header__logo">
+                    <img src={logo} />
+                </div>
             </div>
             <div>
                 <Route
-                    path="/auth/register"
+                    path="/register"
                     render={() => (
                         <>
                             <input
@@ -65,7 +66,7 @@ const Login: React.SFC<Props> = (props) => {
                 />
 
                 <Route
-                    path="/auth/register"
+                    path="/register"
                     render={() => (
                         <button
                             className="login__button"
@@ -75,7 +76,7 @@ const Login: React.SFC<Props> = (props) => {
                         </button>)}
                 />
                 <Route
-                    path="/auth/login"
+                    path="/login"
                     render={() => (
                         <div>
                             <button
@@ -91,7 +92,7 @@ const Login: React.SFC<Props> = (props) => {
                                     name="remember"
                                     readOnly={true}
                                 />
-                                Stay Logged In
+                                Stay Logged
                             </label>
                         </div>
                     )}
@@ -99,7 +100,7 @@ const Login: React.SFC<Props> = (props) => {
             </div>
 
             <Route
-                path="/auth/register"
+                path="/register"
                 render={() => (
                     <div className="login__footer">
                         <span className="psw">
@@ -109,7 +110,7 @@ const Login: React.SFC<Props> = (props) => {
                 )}
             />
             <Route
-                path="/auth/login"
+                path="/login"
                 render={() => (
                     <div className="login__footer">
                         <span className="psw">Forgot <a href="">password</a>?</span><br />

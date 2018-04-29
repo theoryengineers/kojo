@@ -1,6 +1,6 @@
 import * as React from 'react';
-import ModalAddNewCard from './modalcontents/addnewcard';
-import ModalEditCard from './modalcontents/editcard';
+import ModalAddNewCard from './Modalcontents/AddNewCard';
+import ModalEditCard from './Modalcontents/EditCard';
 import { ModalProps, Cards } from 'app_modules/types';
 
 interface Props extends ModalProps {

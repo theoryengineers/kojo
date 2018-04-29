@@ -1,7 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-
 const dev = {
     devtool: 'inline-source-map',
     performance: {
@@ -9,7 +8,7 @@ const dev = {
     },
     mode: 'development',
     devServer: {
-        contentBase: false,  
+        contentBase: false,
         publicPath: "/",
         historyApiFallback: true,
         // https: true,  // Turn back on for production testing
@@ -29,8 +28,8 @@ const config = {
                 test: /\.tsx?$/,
                 use: 'ts-loader',
                 exclude: /node_modules/
-            }, 
-            {    
+            },
+            {
                 test: /\.(sass|scss)$/,
                 use: [{
                     loader: "style-loader" // creates style nodes from JS strings
@@ -38,12 +37,16 @@ const config = {
                     loader: "css-loader" // translates CSS into CommonJS
                 }, {
                     loader: "sass-loader" // compiles Sass to CSS
-                }] 
+                }]
+            },
+            {
+                test: /\.(svg|jpg)$/,
+                use: 'file-loader'
             }
         ]
     },
     resolve: {
-        extensions: [ '.tsx', '.ts', '.js' ],
+        extensions: [ '.tsx', '.ts', '.js', '.svg', '.jpg' ],
         alias: {
             // THIS APP'S CUSTOM PACKAGES:
            'app_modules': path.resolve(__dirname, 'src'),

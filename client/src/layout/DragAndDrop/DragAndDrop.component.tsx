@@ -81,8 +81,9 @@ class DragAndDrop extends React.Component<Props, State> {
 
                             // Grab the Column id - i.e., "In Progress", "Testing"
                             let column: string = '';
-                            if (e.currentTarget.parentElement !== null) {
-                                column = e.currentTarget.parentElement.id;
+                            if (e.currentTarget.parentElement !== null
+                                && e.currentTarget.parentElement.parentElement !== null) {
+                                column = e.currentTarget.parentElement.parentElement.id;
                             }
 
                             // Grab Bounding values of the Card being hovered over.

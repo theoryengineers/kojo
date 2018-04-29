@@ -5,7 +5,7 @@ export default () => (
     <div className="navbar">
         <div>
             <ul>
-                <NavLink to="/board" className="link" activeClassName="active">
+                <NavLink to="/" exact={true} className="link" activeClassName="active">
                     <li>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"

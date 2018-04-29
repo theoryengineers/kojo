@@ -1,5 +1,5 @@
 .card {
-    background: seashell;
+    background: linear-gradient(#FFF, #E5E5E5);
     padding: 10px;
     font-family: "Arial";
     box-shadow: 0px 0px 10px #444;
@@ -7,7 +7,11 @@
     
     &__header {
       display: grid;
-      grid-template-columns: 9fr 1fr;
+      grid-template-columns: auto max-content;
+      div {
+        display: flex;
+        align-items: center;
+      }
     }
     &__title {
       font-weight: bold;
@@ -22,6 +26,6 @@
       font-size: 0.8em;
     }
     &__assignment {
-      padding: 10px;
+      padding: 7px 7px 0px 7px;
     }
 }

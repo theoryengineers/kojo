@@ -27,16 +27,16 @@ export interface Database {
     }[];
 }
 
-export interface ResponseObject {
+export interface ResObjLogin {
     created_on: Date;
     email: string;
     name: string;
-    user_account_id: number;
+    user_id: number;
     username: string;
 }
 
 export interface ResObjProjectsById {
-    user_account_id: number;
+    user_id: number;
     project_name: string;
     created_on: Date;
     email: string;
@@ -66,7 +66,7 @@ export interface Cards {
     description: string;
     column: string;
     assignment: Array<number>;
-    board: number;
+    boardid: number;
 }
 
 export interface ModalProps {

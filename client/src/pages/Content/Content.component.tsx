@@ -14,9 +14,16 @@ const initialState = {
         description: '',
         column: '',
         assignment: [0],
-        board: 0
+        boardid: 0
     },
-    cardIndex: 0
+    cardIndex: 0,
+    columnDisplay: {
+        backlog: true,
+        inProgress: true,
+        testing: true,
+        complete: true
+    },
+    columnCount: 4
 };
 
 interface Props extends ModalProps, DragDropCards, DisplayName {
@@ -28,7 +35,7 @@ type State = Readonly<typeof initialState>;
 export default class Content extends React.Component<Props, State> {
     readonly state: State = initialState;
     render() {
-        const { currentModal } = this.state;
+        const { currentModal, columnDisplay } = this.state;
         const {
             cards,
             handleAddCard,
@@ -38,12 +45,75 @@ export default class Content extends React.Component<Props, State> {
 
         return (
             <div>
-                <div className="content">
+                <div className="content-bar">
+                    <label
+                        className={
+                            columnDisplay.backlog
+                                ? 'on'
+                                : 'off'
+                        }
+                    >
+                        <input
+                            name="backlog"
+                            type="checkbox"
+                            checked={this.state.columnDisplay.backlog}
+                            onChange={this.handleColumnDisplay}
+                        />
+                        Backlog
+                    </label>
+                    <label
+                        className={
+                            columnDisplay.inProgress
+                                ? 'on'
+                                : 'off'
+                        }
+                    >
+                        <input
+                            name="inProgress"
+                            type="checkbox"
+                            checked={this.state.columnDisplay.inProgress}
+                            onChange={this.handleColumnDisplay}
+                        />
+                        In Progress
+                    </label>
+                    <label
+                        className={
+                            columnDisplay.testing
+                                ? 'on'
+                                : 'off'
+                        }
+                    >
+                        <input
+                            name="testing"
+                            type="checkbox"
+                            checked={this.state.columnDisplay.testing}
+                            onChange={this.handleColumnDisplay}
+                        />
+                        Testing
+                    </label>
+                    <label
+                        className={
+                            columnDisplay.complete
+                                ? 'on'
+                                : 'off'
+                        }
+                    >
+                        <input
+                            name="complete"
+                            type="checkbox"
+                            checked={this.state.columnDisplay.complete}
+                            onChange={this.handleColumnDisplay}
+                        />
+                        Complete
+                    </label>
+                </div>
+                <div className="content" style={{ gridTemplateColumns: 'repeat(' + this.state.columnCount + ', 1fr)' }}>
                     <Column
                         header={'Backlog'}
                         backgroundColor={'gray'}
                         rightButton={<button onClick={() => this.handleModal('ADD_NEW_CARD')}>+</button>}
                         handleDragDropCard={handleDragDropCard}
+                        display={this.state.columnDisplay.backlog}
                     >
                         {cards.map((card, i) => {
                             if (card.column === 'Backlog') {
@@ -52,7 +122,7 @@ export default class Content extends React.Component<Props, State> {
                                         key={i}
                                         index={i}
                                         card={card}
-                                        colorCode={'red'}
+                                        colorCode={'#CC0000'}
                                         handleEditCard={this.handleEditCard}
                                     />
                                 </DragAndDrop>;
@@ -63,8 +133,9 @@ export default class Content extends React.Component<Props, State> {
                     </Column>
                     <Column
                         header={'In Progress'}
-                        backgroundColor={'blue'}
+                        backgroundColor={'royalblue'}
                         handleDragDropCard={handleDragDropCard}
+                        display={this.state.columnDisplay.inProgress}
                     >
                         {cards.map((card, i) => {
                             if (card.column === 'In Progress') {
@@ -73,7 +144,7 @@ export default class Content extends React.Component<Props, State> {
                                         key={i}
                                         index={i}
                                         card={card}
-                                        colorCode={'red'}
+                                        colorCode={'#CC0000'}
                                         handleEditCard={this.handleEditCard}
                                     />
                                 </DragAndDrop>;
@@ -82,7 +153,12 @@ export default class Content extends React.Component<Props, State> {
                             }
                         })}
                     </Column>
-                    <Column header={'Testing'} backgroundColor={'red'} handleDragDropCard={handleDragDropCard}>
+                    <Column
+                        header={'Testing'}
+                        backgroundColor={'#B20000'}
+                        handleDragDropCard={handleDragDropCard}
+                        display={this.state.columnDisplay.testing}
+                    >
                         {cards.map((card, i) => {
                             if (card.column === 'Testing') {
                                 return <DragAndDrop key={i} handleDragDropCard={handleDragDropCard}>
@@ -90,7 +166,7 @@ export default class Content extends React.Component<Props, State> {
                                         key={i}
                                         index={i}
                                         card={card}
-                                        colorCode={'red'}
+                                        colorCode={'#CC0000'}
                                         handleEditCard={this.handleEditCard}
                                     />
                                 </DragAndDrop>;
@@ -99,7 +175,12 @@ export default class Content extends React.Component<Props, State> {
                             }
                         })}
                     </Column>
-                    <Column header={'Complete'} backgroundColor={'green'} handleDragDropCard={handleDragDropCard}>
+                    <Column
+                        header={'Complete'}
+                        backgroundColor={'forestgreen'}
+                        handleDragDropCard={handleDragDropCard}
+                        display={this.state.columnDisplay.complete}
+                    >
                         {cards.map((card, i) => {
                             if (card.column === 'Complete') {
                                 return <DragAndDrop key={i} handleDragDropCard={handleDragDropCard}>
@@ -107,7 +188,7 @@ export default class Content extends React.Component<Props, State> {
                                         key={i}
                                         index={i}
                                         card={card}
-                                        colorCode={'red'}
+                                        colorCode={'#CC0000'}
                                         handleEditCard={this.handleEditCard}
                                     />
                                 </DragAndDrop>;
@@ -142,5 +223,15 @@ export default class Content extends React.Component<Props, State> {
             cardIndex: index
             // tslint:disable-next-line:align
         }, () => console.log(this.state.card));
+    }
+
+    private handleColumnDisplay = (e: React.FormEvent<HTMLInputElement>): void => {
+        this.setState({
+            columnDisplay: {
+                ...this.state.columnDisplay,
+                [e.currentTarget.name]: e.currentTarget.checked
+            },
+            columnCount: (e.currentTarget.checked ? this.state.columnCount + 1 : this.state.columnCount - 1)
+        });
     }
 }
