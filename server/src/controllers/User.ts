@@ -8,9 +8,8 @@ class User {
   handleGetAllUsers = (req, res) => {
     this.db('user')
       .select('*')
-      .then(users => {
-          console.log(users)
-          res.json(users);
+      .then(userRes => {
+          res.json(userRes);
       })
       .catch(err => res.status(400).json('unable to get users'))
   }
@@ -19,9 +18,8 @@ class User {
     this.db('user')
       .select('*')
       .where('user_id', userId)
-      .then(user => {
-          console.log(user)
-          res.json(user);
+      .then(userRes => {
+          res.json(userRes);
       })
       .catch(err => res.status(400).json('unable to get user'))
   }

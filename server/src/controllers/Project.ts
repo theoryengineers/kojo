@@ -5,24 +5,6 @@ class Project {
     this.db = parent.db;
     this.parent = parent;
   }
-  getAllProjects = (req, res) => {
-    this.db('project')
-      .then(projects => {
-          res.json(projects);
-      })
-      .catch(err => res.status(400).json('unable to get projects'))
-  }
-  getProject = (req, res) => {
-    const {userId} = req.params;
-    this.db('project')
-      .select('*')
-      .innerJoin('user', 'project.user_id', 'user.user_id')
-      .where('project.user_id', userId)
-      .then(project => {
-          res.json(project);
-      })
-      .catch(err => res.status(400).json('unable to get project'))
-  }
   handleAddProject = (req, res) => {
     const {userId} = req.params;
     const { project_name } = req.body;
@@ -38,9 +20,9 @@ class Project {
           return trx('backlog')
           .insert({
             project_id,
-            title: "Initial Backlog",
+            title: `${project_name} Backlog`,
             is_sprint: false,
-            last_updated: created_on
+            created_on
           },'*')
           .then( ([backlogRes]) => {
             res.json(Object.assign(projectRes, {backlog: backlogRes}))
@@ -53,6 +35,46 @@ class Project {
       message: 'unable to add project',
       err
     }))
+  }
+  handleGetAllProjectsByUserId = (req, res) => {
+    const {userId} = req.params;
+    this.db('project')
+      .select('*')
+      .innerJoin('user', 'project.user_id', 'user.user_id')
+      .where('project.user_id', userId)
+      .then(projectRes => {
+          res.json(projectRes);
+      })
+      .catch(err => res.status(400).json('unable to get projects for user'))
+  }
+  handleGetProjectById = (req, res) => {
+    const {projectId} = req.params;
+    this.db('project')
+      .select('*')
+      // .innerJoin('user', 'project.user_id', 'user.user_id')
+      .where('project.project_id', projectId)
+      .then(projectRes => {
+          res.json(projectRes);
+      })
+      .catch(err => res.status(400).json('unable to get project for user'))
+  }
+  handleGetAllProjects = (req, res) => {
+    this.db('project')
+      .then(projectRes => {
+          res.json(projectRes);
+      })
+      .catch(err => res.status(400).json('unable to get all projects'))
+  }
+  getProject = (req, res) => {
+    const {userId} = req.params;
+    this.db('project')
+      .select('*')
+      .innerJoin('user', 'project.user_id', 'user.user_id')
+      .where('project.user_id', userId)
+      .then(project => {
+          res.json(project);
+      })
+      .catch(err => res.status(400).json('unable to get project'))
   }
   handleUpdateProject = (req, res) => {
     const {projectId} = req.params;
