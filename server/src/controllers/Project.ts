@@ -65,17 +65,17 @@ class Project {
       })
       .catch(err => res.status(400).json('unable to get all projects'))
   }
-  getProject = (req, res) => {
-    const {userId} = req.params;
-    this.db('project')
-      .select('*')
-      .innerJoin('user', 'project.user_id', 'user.user_id')
-      .where('project.user_id', userId)
-      .then(project => {
-          res.json(project);
-      })
-      .catch(err => res.status(400).json('unable to get project'))
-  }
+  // getProject = (req, res) => {
+  //   const {userId} = req.params;
+  //   this.db('project')
+  //     .select('*')
+  //     .innerJoin('user', 'project.user_id', 'user.user_id')
+  //     .where('project.user_id', userId)
+  //     .then(project => {
+  //         res.json(project);
+  //     })
+  //     .catch(err => res.status(400).json('unable to get project'))
+  // }
   handleUpdateProject = (req, res) => {
     const {projectId} = req.params;
     const {project_name} = req.body;

@@ -46,6 +46,7 @@ CREATE TABLE public.backlog_task(
  backlog_id INTEGER REFERENCES public.backlog(backlog_id),
  task_id INTEGER REFERENCES public.task(task_id),
  title VARCHAR(355),
+ category VARCHAR(355),
  order_index INTEGER,
  progress VARCHAR(100),
  last_updated TIMESTAMP

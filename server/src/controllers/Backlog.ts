@@ -5,8 +5,22 @@ class Backlog {
       this.db = parent.db;
       this.parent = parent;
   }
+  handleGetAllSprintsByProjectId = (req, res) => {
+    const {projectId: project_id} = req.params;
+    this.db('backlog')
+    .select('*')
+    .where({
+      project_id,
+      is_sprint: true
+    })
+    .then( sprintsRes => {
+      res.json(sprintsRes);
+    })
+    .catch(err => res.status(400).json('unable to get tasks'))
+  }
   handleAddSprintBacklog = (req, res) => {
-    const {project_id, title} = req.body;
+    const {projectId: project_id} = req.params;
+    const {title} = req.body;
     this.db('backlog')
       .insert({
         project_id,

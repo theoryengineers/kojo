@@ -6,7 +6,6 @@ import * as cors from 'cors';
 import * as knex from 'knex';
 import Controllers from './controllers';
 
-
 const port = process.env.PORT || 1337;
 
 const db = knex({
@@ -47,19 +46,19 @@ app.get('/v1/users', user.handleGetAllUsers);
 app.get('/v1/users/:userId', user.handleGetUser);
 app.put('/v1/users/:userId', user.handleUpdateUser);
 
-app.post('/v1/projects/:projectId/backlogs', backlog.handleAddSprintBacklog);
+app.post('/v1/projects/:projectId/sprints', backlog.handleAddSprintBacklog);
 app.post('/v1/projects/:projectId/tasks', task.handleAddTask);
 app.get('/v1/projects', project.handleGetAllProjects);
 app.get('/v1/projects/:projectId', project.handleGetProjectById);
+app.get('/v1/projects/:projectId/sprints', backlog.handleGetAllSprintsByProjectId);
+app.get('/v1/projects/:projectId/tasks', task.handleGetAllTasksByProjectId);
 app.put('/v1/projects/:projectId', project.handleUpdateProject);
 app.delete('/v1/projects/:projectId', project.handleDeleteProject);
-// -- not done
 
-app.post('/v1/backlog/:projectId', backlog.handleAddSprintBacklog);
+app.get('/v1/backlog/:backlogId/tasks', task.handleGetAllTasksBacklogId);
 app.put('/v1/backlog/:backlogId', backlog.handleUpdateBacklog);
 app.delete('/v1/backlog/:backlogId', backlog.handleDeleteSprintBacklog);
 
-// --
 app.post('/v1/tasks', task.handleAddTask);
 app.put('/v1/tasks/:taskId', task.handleUpdateTask);
 app.delete('/v1/tasks/:taskId', task.handleDeleteTask);
