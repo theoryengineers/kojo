@@ -1,0 +1,39 @@
+version: '3.5'
+
+services:
+
+  client-app:
+    container_name: client-app
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    volumes:
+      - './client:/usr/src/app' # Points to the react folder for hot reload
+      - '/usr/src/app/node_modules'
+    ports:
+      - '3000:5000'
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+  
+  # nginx:
+  #   image: nginx
+  #   container_name: nginx
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - "/etc/nginx/conf.d"
+  #     - "/etc/nginx/vhost.d"
+  #     - "/usr/share/nginx/html"
+
+  #  server:
+  #   restart: always
+  #   image: server
+  #   build: ./server
+  #   container_name: server
+  #   # environment:
+  #   #   - VIRTUAL_HOST=sampleapi.example.com
+  #   #   - VIRTUAL_NETWORK=nginx-proxy
+  #   #   - VIRTUAL_PORT=3000
+  #   #   - LETSENCRYPT_HOST=sampleapi.example.com
+  #   #   - LETSENCRYPT_EMAIL=email@example.com
