@@ -7,6 +7,17 @@
   position: relative;
   border: 13px solid darkred;
   border-radius: 10px;
+  &__status {
+    font-size: 0.8em;
+    text-align: center;
+    padding-bottom: 10px;
+    &__success {
+      color: green;
+    }
+    &__fail {
+      color: red;
+    }
+  }
   &__input-field {
     background-color: #F8F8F8;
     border: 1px solid #DADADA;

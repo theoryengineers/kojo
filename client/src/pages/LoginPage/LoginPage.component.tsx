@@ -7,6 +7,7 @@ interface LoginPageProps extends PageProps {
     handleRegister: (e: React.MouseEvent<HTMLElement>) => void;
     handleLoginFieldChange: (e: React.FormEvent<HTMLInputElement>) => void;
     redirectToReferrer: boolean;
+    loginStatus: string;
 }
 
 const LoginPage: React.SFC<LoginPageProps> = (props) => (

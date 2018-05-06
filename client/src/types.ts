@@ -28,11 +28,11 @@ export interface Database {
 }
 
 export interface ResObjLogin {
-    created_on: Date;
-    email: string;
-    name: string;
     user_id: number;
-    username: string;
+    displayname: string;
+    email: string;
+    lname: string;
+    fname: string;
 }
 
 export interface ResObjProjectsById {

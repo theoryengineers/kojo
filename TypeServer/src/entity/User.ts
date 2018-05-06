@@ -2,10 +2,10 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from "typeorm";
 import { Auth } from './Auth'
 
 @Entity()
-export class Users {
+export class User {
 
     @PrimaryGeneratedColumn()
-    id: number;
+    user_id: number;
 
     @Column()
     fname: string;
@@ -13,12 +13,16 @@ export class Users {
     @Column()
     lname: string;
 
-    @Column({ type: 'varchar', length: 50, unique: true })
+    @Column({ type: 'varchar', length: 25, unique: true })
     displayname: string;
 
     @Column({ type: 'varchar', length: 50, unique: true })
     email: string;
 
+    @Column()
+    joined: string;
+
     @OneToOne(type => Auth, auth => auth.users, { cascade: true })
     auth: Auth;
+
 }

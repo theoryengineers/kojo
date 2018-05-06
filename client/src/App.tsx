@@ -9,14 +9,16 @@ import { Cards, Database, ResObjLogin, ResObjProjectsById } from 'app_modules/ty
 const initialState = {
     isAuthenticated: false,
     redirectToReferrer: false,
+    loginStatus: '',
 
     // IDs
     userid: 0,
     projectid: 0,
 
     // Form Shit
-    name: '',
-    displayName: '',
+    fname: '',
+    lname: '',
+    displayname: '',
     email: '',
     password: '',
     remember: '',
@@ -52,6 +54,7 @@ export class App extends React.Component<{}, State> {
                                 handleRegister={this.handleRegister}
                                 handleLoginFieldChange={this.handleLoginFieldChange}
                                 redirectToReferrer={this.state.redirectToReferrer}
+                                loginStatus={this.state.loginStatus}
                             />
                         )}
                     />
@@ -70,7 +73,7 @@ export class App extends React.Component<{}, State> {
                                         memberslist={this.state.memberslist}
                                         boardlist={this.state.boardlist}
                                         projectslist={this.state.projectslist}
-                                        displayName={this.state.displayName}
+                                        displayName={this.state.displayname}
                                         {...props}
                                         // Handlers
                                         handleAddCard={this.handleAddCard}
@@ -104,40 +107,48 @@ export class App extends React.Component<{}, State> {
 
     private handleLogin = (event: React.MouseEvent<HTMLElement>): void => {
         OurApi.authenticate(this.state.email, this.state.password, (res: ResObjLogin): void => {
-            console.log(res);
-            if (res.name) {
+            console.log('Response: ', res);
+            if (res.displayname) {
                 // Naive example for development purposes
                 if (this.state.remember) {
                     window.localStorage.setItem('kojo', JSON.stringify({
-                        displayName: res.username,
+                        displayName: res.displayname,
                         userid: res.user_id,
                         isAuthenticated: true,
                     }));
                 }
 
-                this.setState({
-                    email: '',
-                    password: '',
-                    displayName: res.username,
-                    userid: res.user_id,
-                    isAuthenticated: true,
-                    redirectToReferrer: true
-                    // tslint:disable-next-line:align
-                }, () => {
-                    this.handleGetDatabase();
-                    this.handleProjectsById();
+                this.setState(updateAction('loginStatus', 'Success'), () => {
+                    setTimeout(() => {
+                        this.setState({
+                            email: '',
+                            password: '',
+                            displayname: res.displayname,
+                            userid: res.user_id,
+                            isAuthenticated: true,
+                            redirectToReferrer: true
+                            // tslint:disable-next-line:align
+                        }, () => {
+                            this.handleGetDatabase();
+                            this.handleProjectsById();
+                        });
+                        // tslint:disable-next-line:align
+                    }, 500);
+
                 });
+
+            } else {
+                this.setState(updateAction('loginStatus', res.toString()));
             }
         });
     }
 
     private handleRegister = (event: React.MouseEvent<HTMLElement>): void => {
-        const { name, displayName, email, password } = this.state;
-        OurApi.register(name, displayName, email, password, (res: ResObjLogin): void => {
+        const { fname, lname, displayname, email, password } = this.state;
+        OurApi.register(fname, lname, displayname, email, password, (res: ResObjLogin): void => {
             console.log(res);
-            if (res.name) {
+            if (res.displayname) {
                 this.setState({
-                    email: '',
                     password: '',
                     userid: res.user_id,
                     isAuthenticated: true,

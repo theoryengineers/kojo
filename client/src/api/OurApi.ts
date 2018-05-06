@@ -13,11 +13,11 @@ class Api {
         //     this.isAuthenticated = true;
         //     cb(User[0].displayName);
         // }
-        fetch('http://localhost:1337/v1/login', {
+        fetch('http://localhost:5500/api/v1/login', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                usernameOrEmail: email,
+                email: email,
                 password: password
             })
         })
@@ -26,13 +26,20 @@ class Api {
             .catch(console.log);  // Make error handler
     }
 
-    register(name: string, username: string, email: string, password: string, cb: (res: ResObjLogin) => void) {
-        fetch('http://localhost:1337/v1/register', {
+    register(
+        fname: string,
+        lname: string,
+        displayname: string,
+        email: string,
+        password: string,
+        cb: (res: ResObjLogin) => void) {
+        fetch('http://localhost:5500/api/v1/register', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                name: name,
-                username: username,
+                fname: fname,
+                lname: lname,
+                displayname: displayname,
                 email: email,
                 password: password
             })
@@ -43,7 +50,7 @@ class Api {
     }
 
     getProjectsById(userid: number, cb: (res: Array<ResObjProjectsById>) => void) {
-        fetch('http://localhost:1337/v1/projects/' + userid, {
+        fetch('http://localhost:1337/api/v1/projects/' + userid, {
             method: 'get',
             headers: { 'Content-Type': 'application/json' }
         })

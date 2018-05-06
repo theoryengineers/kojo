@@ -4,6 +4,7 @@
     "description": "Awesome project developed with TypeORM.",
     "devDependencies": {
         "@types/bcrypt": "^2.0.0",
+        "@types/cors": "^2.8.4",
         "@types/node": "^8.0.29",
         "nodemon": "^1.17.4",
         "ts-node": "3.3.0",
@@ -12,6 +13,7 @@
     "dependencies": {
         "bcrypt": "^2.0.1",
         "body-parser": "^1.18.1",
+        "cors": "^2.8.4",
         "express": "^4.15.4",
         "pg": "^7.3.0",
         "reflect-metadata": "^0.1.10",

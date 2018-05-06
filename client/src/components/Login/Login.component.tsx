@@ -9,6 +9,7 @@ interface Props extends PageProps {
     handleRegister: (e: React.MouseEvent<HTMLElement>) => void;
     redirectToReferrer: boolean;
     handleLoginFieldChange: (e: React.FormEvent<HTMLInputElement>) => void;
+    loginStatus: string;
 }
 
 const Login: React.SFC<Props> = (props) => {
@@ -34,16 +35,24 @@ const Login: React.SFC<Props> = (props) => {
                                 className="login__input-field"
                                 onChange={props.handleLoginFieldChange}
                                 type="text"
-                                placeholder="Name"
-                                name="name"
+                                placeholder="First Name"
+                                name="fname"
                                 required={true}
                             />
                             <input
                                 className="login__input-field"
                                 onChange={props.handleLoginFieldChange}
                                 type="text"
-                                placeholder="Username"
-                                name="displayName"
+                                placeholder="Last Name"
+                                name="lname"
+                                required={true}
+                            />
+                            <input
+                                className="login__input-field"
+                                onChange={props.handleLoginFieldChange}
+                                type="text"
+                                placeholder="Display Name"
+                                name="displayname"
                                 required={true}
                             />
                         </>)}
@@ -79,6 +88,16 @@ const Login: React.SFC<Props> = (props) => {
                     path="/login"
                     render={() => (
                         <div>
+                            <div
+                                className={'login__status ' +
+                                    (props.loginStatus === 'Success'
+                                        ? 'login__status__success'
+                                        : 'login__status__fail'
+                                    )
+                                }
+                            >
+                                {props.loginStatus}
+                            </div>
                             <button
                                 className="login__button"
                                 onClick={props.handleLogin}
