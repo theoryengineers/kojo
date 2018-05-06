@@ -13,7 +13,7 @@ class Api {
         //     this.isAuthenticated = true;
         //     cb(User[0].displayName);
         // }
-        fetch('http://localhost:1338/v1/login', {
+        fetch('http://localhost:1337/v1/login', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -27,7 +27,7 @@ class Api {
     }
 
     register(name: string, username: string, email: string, password: string, cb: (res: ResObjLogin) => void) {
-        fetch('http://localhost:1338/v1/register', {
+        fetch('http://localhost:1337/v1/register', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -43,7 +43,7 @@ class Api {
     }
 
     getProjectsById(userid: number, cb: (res: Array<ResObjProjectsById>) => void) {
-        fetch('http://localhost:1338/v1/projects/' + userid, {
+        fetch('http://localhost:1337/v1/projects/' + userid, {
             method: 'get',
             headers: { 'Content-Type': 'application/json' }
         })

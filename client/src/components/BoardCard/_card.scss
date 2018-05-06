@@ -1,31 +1,62 @@
 .card {
-    background: linear-gradient(#FFF, #E5E5E5);
-    padding: 10px;
     font-family: "Arial";
-    box-shadow: 0px 0px 10px #444;
     user-select: none;
+    display: grid;
     
-    &__header {
-      display: grid;
-      grid-template-columns: auto max-content;
-      div {
-        display: flex;
-        align-items: center;
-      }
+    &__main {
+        background: linear-gradient(#FFF, #E5E5E5);
+        padding: 10px;
+        box-shadow: 0px 0px 10px #444;
+        z-index: 1;
+
+        &__header {
+            display: grid;
+            grid-template-columns: auto max-content;
+            div {
+                display: flex;
+                align-items: center;
+            }
+        }
+        &__title {
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        &__category {
+            font-style: italic;
+            font-size: 0.7em;
+            padding-bottom: 0.6em;
+        }
+        &__description { 
+            font-size: 0.8em;
+        }
+        &__assignment {
+            padding: 7px 7px 0px 7px;
+        }
     }
-    &__title {
-      font-weight: bold;
-      font-size: 0.9em;
+    &__main:hover {
+        outline: 2px solid skyblue;
     }
-    &__category {
-      font-style: italic;
-      font-size: 0.7em;
-      padding-bottom: 0.6em;
+
+    &__comments {
+        width: calc(100% - 30px);
+        padding: 10px;
+        font-size: 0.77em;
+        background: linear-gradient(lighten(#FEFF9C, 10%), #FEFF9C);
+        justify-self: flex-end;
+        display: grid;
+        grid-row-gap: 7px;
+        box-shadow: 0px 0px 5px #444;
+
+        &__input {
+            display: grid;
+            grid-template-columns: auto max-content;
+            input {
+                font-size: 1em;
+            }
+        }
     }
-    &__description { 
-      font-size: 0.8em;
-    }
-    &__assignment {
-      padding: 7px 7px 0px 7px;
-    }
+}
+
+.card:focus {
+    outline: none;
 }

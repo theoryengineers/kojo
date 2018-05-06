@@ -1,10 +1,10 @@
 import "reflect-metadata";
-import {createConnection} from "typeorm";
+import { createConnection } from "typeorm";
 import * as express from "express";
 import * as bodyParser from "body-parser";
-import {Request, Response} from "express";
-import {Routes} from "./routes";
-import {User} from "./entity/User";
+import { Request, Response } from "express";
+import { Routes } from "./routes";
+import { Users } from "./entity/Users";
 
 createConnection().then(async connection => {
 
@@ -29,19 +29,20 @@ createConnection().then(async connection => {
     // ...
 
     // start express server
-    app.listen(8080);
+    app.listen(5500);
 
     // insert new users for test
-    await connection.manager.save(connection.manager.create(User, {
-        firstName: "Timber",
-        lastName: "Saw",
-        age: 27
-    }));
-    await connection.manager.save(connection.manager.create(User, {
-        firstName: "Phantom",
-        lastName: "Assassin",
-        age: 24
-    }));
+
+    let newUser = new Users;
+
+    newUser.fname = 'Timber';
+    newUser.lname = 'Saw';
+    newUser.displayname = 'Timer';
+    newUser.email = 'bacon@gmail.com';
+
+    let usersRespository = connection.getRepository(Users)
+
+    await usersRespository.save(newUser);
 
     console.log("Express server has started on port 8080. Open http://localhost:8080/users to see results");
 

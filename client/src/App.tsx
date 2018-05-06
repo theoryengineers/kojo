@@ -228,7 +228,6 @@ export class App extends React.Component<{}, State> {
             newCardObj,
             ...cards.slice(dropCardIndex, cards.length)
         ];
-        console.log(newCardsArr, newCardsArr.length);
 
         // Delete old Card object from Array
         const deleteIndex = newCardsArr.findIndex(obj => obj === cards[oldCardIndex]);
@@ -248,11 +247,11 @@ export const updateAction = (
 ): ((state: State) => void) =>
     (prevState: State) => ({ [state]: value });
 
-export const updateDatabase = (object: Database): ((state: State) => void) =>
+export const updateDatabase = (obj: Database): ((state: State) => void) =>
     (prevState: State) => ({
-        boardlist: object.boards,
-        memberslist: object.users,
-        cards: object.cards
+        boardlist: obj.boards,
+        memberslist: obj.users,
+        cards: obj.cards
     });
 
 export default App;

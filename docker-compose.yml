@@ -4,21 +4,32 @@ version: '3'
 # docker-compose down -- NOTE MUST BE IN DIRECTORY OF docker-compose.yaml
 volumes:
   volume:
+  test:
 services:
   # mongo:
   #   image: 'mongo:3.4.1'
   #   ports:
   #     - '27017:27017'
-  pgdb:
+  # pgdb:
+  #   image: postgres
+  #   environment:
+  #     POSTGRES_USER: root
+  #     POSTGRES_PASSWORD: password
+  #     POSTGRES_DB: kojo
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - volume
+  test:
     image: postgres
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: kojo
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: test
     ports:
       - "5432:5432"
     volumes:
-      - volume
+      - test
   # mysql-dev:
   #   image: mysql:8.0.2
   #   environment:

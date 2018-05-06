@@ -8,13 +8,26 @@ import Controllers from './controllers';
 
 const port = process.env.PORT || 1337;
 
+const cmdFlags = process.argv.slice(2);
+let serverConfig = {
+    user: '',
+    host: '',
+    password: '',
+    database: ''
+}
+
+if (cmdFlags.indexOf('-u') > -1) { serverConfig.user = cmdFlags[cmdFlags.indexOf('-u') + 1] }
+if (cmdFlags.indexOf('-h') > -1) { serverConfig.host = cmdFlags[cmdFlags.indexOf('-h') + 1] }
+if (cmdFlags.indexOf('-p') > -1) { serverConfig.password = cmdFlags[cmdFlags.indexOf('-p') + 1] }
+if (cmdFlags.indexOf('-d') > -1) { serverConfig.database = cmdFlags[cmdFlags.indexOf('-d') + 1] }
+
 const db = knex({
     client: 'pg',
     connection: {
-        host: process.env.DB_HOST || '127.0.0.1',
-        user: process.env.DB_USER || 'root',
-        password: process.env.DB_PASS || 'password',
-        database: 'kojo'
+        host: process.env.DB_HOST || serverConfig.host || '127.0.0.1',
+        user: process.env.DB_USER || serverConfig.user || 'root',
+        password: process.env.DB_PASS || serverConfig.password || 'password',
+        database: serverConfig.database || 'kojo'
     }
 });
 
@@ -79,3 +92,4 @@ app.listen(port, () => console.log('Listening at port', port));
     /sprits
     /tasks
 */
+
