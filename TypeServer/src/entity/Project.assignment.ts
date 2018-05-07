@@ -7,13 +7,12 @@ export class Assignment {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(type => Project, project => project.assignment)
-    project: Project;
-
     @Column()
     user_id: number;
 
     @Column()
     user_role: string;
 
+    @ManyToOne(type => Project, project => project.assignment, { onDelete: 'CASCADE' })
+    project: Project;
 }

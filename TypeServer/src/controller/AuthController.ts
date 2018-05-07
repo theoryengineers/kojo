@@ -1,8 +1,10 @@
-import { getRepository, Repository } from "typeorm";
+import { getConnection, getRepository, Repository } from "typeorm";
 import { NextFunction, Request, Response } from "express";
 import * as bcrypt from 'bcrypt';
 import { Auth } from "../entity/Auth";
 import { User } from "../entity/User";
+import { Project } from "../entity/Project";
+import { Assignment } from "../entity/Project.assignment";
 
 interface RegisterReq {
     fname: string;
@@ -16,6 +18,7 @@ export class AuthController {
 
     private authRepository: Repository<Auth> = getRepository(Auth);
     private userRepository: Repository<User> = getRepository(User);
+    private projectRepository: Repository<Project> = getRepository(Project);
 
     async all(req: Request, res: Response, next: NextFunction) {
         return this.authRepository.find();
@@ -51,6 +54,10 @@ export class AuthController {
             email
         }: RegisterReq = req.body;
 
+        const queryRunner = getConnection().createQueryRunner();
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
+
         try {
             // New user entry
             let newUser = new User;
@@ -68,9 +75,31 @@ export class AuthController {
             // Establish one-to-one table relation
             newUser.auth = newAuth;
 
-            await this.userRepository.save(newUser)
-                .then(() => res.status(200).json(newUser));
+            // Save New User
+            await queryRunner.manager.save(newUser)
+
+            // Create "Initial Project" for new user
+            // let findUser: User = await queryRunner.manager.findOne(User, newUser)
+            newUser.auth = undefined;
+
+            let newAssignment = new Assignment;
+            newAssignment.user_id = newUser.user_id;
+            newAssignment.user_role = "Lead";
+
+            let newProject = new Project;
+            newProject.project_name = "Initial Project";
+            newProject.created_on = new Date().toLocaleString('en-US', { timeZone: 'UTC' });
+
+            // One-to-one Project - Assignment relation
+            newProject.assignment = [newAssignment];
+
+            // Save New Project
+            await queryRunner.manager.save(newProject);
+
+            await queryRunner.commitTransaction();
+            res.status(200).json([newUser, newProject]);
         } catch (err) {
+            await queryRunner.rollbackTransaction();
             console.log("ERROR: ", err);
             res.status(400).json(err);
         }

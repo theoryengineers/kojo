@@ -28,17 +28,17 @@ export const Routes = [
         action: "all"
     }, {
         method: "get",
-        route: api + "/users/:id",
+        route: api + "/user/:userId",
         controller: UserController,
         action: "one"
     }, {
         method: "post",
-        route: api + "/users",
+        route: api + "/user",
         controller: UserController,
         action: "add"
     }, {
         method: "delete",
-        route: api + "/users",
+        route: api + "/user/:userId",
         controller: UserController,
         action: "remove"
     },
@@ -51,17 +51,17 @@ export const Routes = [
         action: "add"
     }, {
         method: "put",
-        route: api + "/project",
+        route: api + "/project/:projectId",
         controller: ProjectController,
         action: "save"
     }, {
         method: "delete",
-        route: api + "/project",
+        route: api + "/project/:projectId",
         controller: ProjectController,
         action: "remove"
     }, {
         method: "get",
-        route: api + "/project",
+        route: api + "/project/:projectId",
         controller: ProjectController,
         action: "one"
     }, {
@@ -69,19 +69,27 @@ export const Routes = [
         route: api + "/projects",
         controller: ProjectController,
         action: "all"
+    }, {
+        method: "get",
+        route: api + "/projects/user/:userId",
+        controller: ProjectController,
+        action: "allByUserId"
     },
-
     // PROJECT ASSIGNMENTS
     {
         method: "post",
-        route: api + "/project/:projectid/assign",
+        route: api + "/project/:projectId/assign",
         controller: ProjectAssignmentController,
         action: "add"
-    },
-    {
+    }, {
         method: "delete",
-        route: api + "/project/:projectid/assign",
+        route: api + "/project/:projectId/assign",
         controller: ProjectAssignmentController,
         action: "remove"
+    }, {
+        method: "get",
+        route: api + "/project/:projectId/assign",
+        controller: ProjectAssignmentController,
+        action: "allByProjectId"
     }
 ];

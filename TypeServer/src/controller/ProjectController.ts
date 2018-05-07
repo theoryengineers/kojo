@@ -1,4 +1,4 @@
-import { getRepository } from "typeorm";
+import { createQueryBuilder, getConnection, getRepository, Any, Repository } from "typeorm";
 import { NextFunction, Request, Response } from "express";
 import { Project } from "../entity/Project";
 import { Assignment } from "../entity/Project.assignment";
@@ -10,24 +10,82 @@ interface ProjectAddRes {
 
 export class ProjectController {
 
-    private projectRepository = getRepository(Project);
-    private assignmentRepository = getRepository(Assignment);
+    private projectRepository: Repository<Project> = getRepository(Project);
+    private assignmentRepository: Repository<Assignment> = getRepository(Assignment);
 
     async all(req: Request, res: Response, next: NextFunction) {
-        return this.projectRepository.find();
+        const { projectId } = req.params;
+        try {
+            await this.projectRepository
+                .createQueryBuilder("project")
+                .select()
+                .leftJoinAndSelect("project.assignment", "assignment")
+                .getMany()
+                .then(allProjectsList => res.status(200).json(allProjectsList))
+                .catch(err => res.status(400).json(err))
+
+        } catch (err) {
+            res.status(400).json(err);
+        }
+    }
+
+    async allByUserId(req: Request, res: Response, next: NextFunction) {
+        const { userId } = req.params;
+        try {
+            // Experimenting with QueryBuilder
+            await this.projectRepository
+                .createQueryBuilder("project")
+                .select()
+                .leftJoinAndSelect("project.assignment", "assignment")
+                .where("assignment.user_id = :id", { id: userId })
+                .getMany()
+                .then(projectsList => res.status(200).json(projectsList))
+                .catch(err => res.status(400).json(err));
+
+            // OLD CODE
+            // const userIdList: Assignment[] = await this.assignmentRepository.find({
+            //     relations: ['project'],
+            //     where: {
+            //         user_id: userId
+            //     }
+            // });
+
+            // const projectsList: Project[] = await this.projectRepository.find({
+            //     relations: ['assignment'],
+            //     where: {
+            //         project_id: Any(userIdList.map(x => x.project.project_id))
+            //     }
+            // })
+
+        } catch (err) {
+            res.status(400).json(err);
+        }
     }
 
     async one(req: Request, res: Response, next: NextFunction) {
-        return this.projectRepository.findOne(req.params.id);
+        const { projectId } = req.params;
+        try {
+            await this.projectRepository
+                .createQueryBuilder("project")
+                .select()
+                .leftJoinAndSelect("project.assignment", "assignment")
+                .where("project_id = :id", { id: projectId })
+                .getOne()
+                .then(project => res.status(200).json(project))
+                .catch(err => res.status(400).json(err));
+
+        } catch (err) {
+            res.status(400).json(err);
+        }
     }
 
     async add(req: Request, res: Response, next: NextFunction) {
-        try {
-            const {
-                projectName, // New project name
-                userId // User ID of the project creator
-            }: ProjectAddRes = req.body;
+        const {
+            projectName, // New project name
+            userId // User ID of the project creator
+        }: ProjectAddRes = req.body;
 
+        try {
             let newProject = new Project;
             newProject.project_name = projectName;
             newProject.created_on = new Date().toLocaleString('en-US', { timeZone: 'UTC' });
@@ -46,21 +104,46 @@ export class ProjectController {
     }
 
     async save(req: Request, res: Response, next: NextFunction) {
+        const { projectName } = req.body;
+        const { projectId } = req.params;
+
         try {
-            const { projectId, projectName } = req.body;
+            await this.projectRepository
+                .createQueryBuilder()
+                .update(Project)
+                .set({
+                    project_name: projectName
+                })
+                .where({
+                    project_id: projectId
+                })
+                .execute()
+                .then(x => res.status(200).json('Project update success'))
+                .catch(err => res.status(400).json(err))
 
-            let project = await this.projectRepository.findOne({ project_id: projectId });
-            project.project_name = projectName;
-
-            await this.projectRepository.save(project)
-                .then(() => res.status(200).json('Success'));
         } catch (err) {
-
+            res.status(400).json(err);
         }
     }
 
     async remove(req: Request, res: Response, next: NextFunction) {
-        await this.projectRepository.remove(req.params.id);
+        const { projectId } = req.params;
+
+        try {
+            await this.projectRepository
+                .createQueryBuilder()
+                .delete()
+                .from(Project)
+                .where({
+                    project_id: projectId
+                })
+                .execute()
+                .then(() => res.status(200).json("Project deleted"))
+                .catch(err => res.status(400).json(err));
+
+        } catch (err) {
+            res.status(400).json(err);
+        }
     }
 
 }

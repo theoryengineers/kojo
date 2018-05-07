@@ -1,4 +1,4 @@
-import { getRepository, Any } from "typeorm";
+import { getRepository, Any, getConnection } from "typeorm";
 import { NextFunction, Request, Response } from "express";
 import { Project } from "../entity/Project";
 import { Assignment } from "../entity/Project.assignment";
@@ -7,6 +7,24 @@ export class ProjectAssignmentController {
 
     private projectRepository = getRepository(Project);
     private assignmentRepository = getRepository(Assignment);
+
+    async allByProjectId(req: Request, res: Response, next: NextFunction) {
+        const { projectId } = req.params;
+        try {
+            await this.assignmentRepository
+                .createQueryBuilder()
+                .select()
+                .where({
+                    project: { project_id: projectId }
+                })
+                .getMany()
+                .then(x => res.status(200).json(x))
+                .catch(err => res.status(400).json(err));
+
+        } catch (err) {
+            res.status(400).json(err);
+        }
+    }
 
     async all(req: Request, res: Response, next: NextFunction) {
         return this.projectRepository.find();
@@ -19,32 +37,45 @@ export class ProjectAssignmentController {
     async add(req: Request, res: Response, next: NextFunction) {
         try {
             const { newUsers } = req.body; // Array of user assignments
-            const { projectid } = req.params; // Project ID
+            const { projectId } = req.params; // Project ID
 
-            let project = await this.projectRepository
-                .findOne({ project_id: projectid }, { relations: ['assignment'] });
+            let newAssignment: Assignment[] = newUsers.map((x, i) => {
+                return {
+                    user_id: x.user_id,
+                    user_role: x.user_role,
+                    project: { project_id: projectId }
+                };
+            });
 
-            project.assignment = [...project.assignment, ...newUsers];
+            await getConnection()
+                .createQueryBuilder()
+                .insert()
+                .into(Assignment)
+                .values(newAssignment)
+                .execute()
+                .catch(err => console.log(err))
 
-            await this.projectRepository.save(project)
-                .then(() => res.status(200).json('User(s) assigned successfully'));
+            res.status(200).json('User(s) assigned successfully');
         } catch (err) {
             res.status(400).json(err);
         }
     }
 
     async remove(req: Request, res: Response, next: NextFunction) {
+        const { delUsers } = req.body; // Array of user assignments
+        const { projectId } = req.params;
+
         try {
-            const { delUsers } = req.body; // Array of user assignments
-
-            const deletion = await this.assignmentRepository.find({
-                select: ["id"],
-                where: {
+            await getConnection()
+                .createQueryBuilder()
+                .delete()
+                .from(Assignment)
+                .where({
+                    project: { project_id: projectId },
                     user_id: Any(delUsers)
-                }
-            });
+                })
+                .execute();
 
-            await this.assignmentRepository.delete(deletion.map(x => x.id));
             res.status(200).json("Assignments deleted");
         } catch (err) {
             res.status(400).json(err);
