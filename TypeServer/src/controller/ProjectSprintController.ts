@@ -29,6 +29,7 @@ export class ProjectSprintController {
                 .execute()
                 .then(response => res.status(200).json(newSprint))
                 .catch(err => res.status(400).json(err));
+
         } catch (err) {
 
         }

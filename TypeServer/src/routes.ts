@@ -4,6 +4,7 @@ import { ProjectController } from "./controller/ProjectController";
 import { Project } from "./entity/Project";
 import { ProjectAssignmentController } from "./controller/ProjectAssignmentController";
 import { ProjectSprintController } from "./controller/ProjectSprintController";
+import { StoryController } from "./controller/StoryController";
 
 const api = '/api/v1';
 
@@ -121,5 +122,38 @@ export const Routes = [
         route: api + "/project/:projectId/sprints",
         controller: ProjectSprintController,
         action: "allByProjectId"
+    },
+
+    // STORY/TASK
+    {
+        method: "post",
+        route: api + "/project/:projectId/story",
+        controller: StoryController,
+        action: "add"
+    }, {
+        method: "put",
+        route: api + "/project/:projectId/sprint/:sprintId/story/:storyId",
+        controller: StoryController,
+        action: "save"
+    }, {
+        method: "delete",
+        route: api + "/project/:projectId/story/:storyId",
+        controller: StoryController,
+        action: "remove",
+    }, {
+        method: "get",
+        route: api + "/project/:projectId/story/:storyId",
+        controller: StoryController,
+        action: "one"
+    }, {
+        method: "get",
+        route: api + "/project/:projectId/stories",
+        controller: StoryController,
+        action: "allByProjectId"
+    }, {
+        method: "get",
+        route: api + "/project/:projectId/sprint/:sprintId/stories",
+        controller: StoryController,
+        action: "AllBySprintId"
     }
 ];

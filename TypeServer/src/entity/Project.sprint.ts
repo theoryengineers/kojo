@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { Project } from './Project';
+import { Story } from "./Story";
 
 @Entity()
 export class Sprint {
@@ -15,4 +16,7 @@ export class Sprint {
 
     @ManyToOne(type => Project, project => project.sprint, { onDelete: 'CASCADE' })
     project: Project;
+
+    @OneToMany(type => Story, story => story.sprint, { cascade: true })
+    story: Story[];
 }
