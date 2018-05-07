@@ -2,17 +2,17 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "t
 import { Project } from './Project';
 
 @Entity()
-export class Assignment {
+export class Sprint {
 
     @PrimaryGeneratedColumn()
-    assignment_id: number;
+    sprint_id: number;
 
     @Column()
-    user_id: number;
+    sprint_name: string;
 
     @Column()
-    user_role: string;
+    sprint_description: string;
 
-    @ManyToOne(type => Project, project => project.assignment, { onDelete: 'CASCADE' })
+    @ManyToOne(type => Project, project => project.sprint, { onDelete: 'CASCADE' })
     project: Project;
 }

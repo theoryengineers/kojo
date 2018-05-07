@@ -35,10 +35,10 @@ export class ProjectAssignmentController {
     }
 
     async add(req: Request, res: Response, next: NextFunction) {
-        try {
-            const { newUsers } = req.body; // Array of user assignments
-            const { projectId } = req.params; // Project ID
+        const { newUsers } = req.body; // Array of user assignments
+        const { projectId } = req.params; // Project ID
 
+        try {
             let newAssignment: Assignment[] = newUsers.map((x, i) => {
                 return {
                     user_id: x.user_id,

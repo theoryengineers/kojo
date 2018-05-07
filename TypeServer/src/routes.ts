@@ -3,6 +3,7 @@ import { AuthController } from "./controller/AuthController";
 import { ProjectController } from "./controller/ProjectController";
 import { Project } from "./entity/Project";
 import { ProjectAssignmentController } from "./controller/ProjectAssignmentController";
+import { ProjectSprintController } from "./controller/ProjectSprintController";
 
 const api = '/api/v1';
 
@@ -20,7 +21,7 @@ export const Routes = [
         action: 'one'
     },
 
-    // USERS
+    // USER
     {
         method: "get",
         route: api + "/users",
@@ -43,7 +44,7 @@ export const Routes = [
         action: "remove"
     },
 
-    // PROJECTS
+    // PROJECT
     {
         method: "post",
         route: api + "/project",
@@ -75,7 +76,8 @@ export const Routes = [
         controller: ProjectController,
         action: "allByUserId"
     },
-    // PROJECT ASSIGNMENTS
+
+    // PROJECT ASSIGNMENT
     {
         method: "post",
         route: api + "/project/:projectId/assign",
@@ -90,6 +92,34 @@ export const Routes = [
         method: "get",
         route: api + "/project/:projectId/assign",
         controller: ProjectAssignmentController,
+        action: "allByProjectId"
+    },
+
+    // PROJECT SPRINT
+    {
+        method: "post",
+        route: api + "/project/:projectId/sprint",
+        controller: ProjectSprintController,
+        action: "add"
+    }, {
+        method: "put",
+        route: api + "/project/:projectId/sprint/:sprintId",
+        controller: ProjectSprintController,
+        action: "save"
+    }, {
+        method: "delete",
+        route: api + "/project/:projectId/sprint/:sprintId",
+        controller: ProjectSprintController,
+        action: "remove",
+    }, {
+        method: "get",
+        route: api + "/project/:projectId/sprint/:sprintId",
+        controller: ProjectSprintController,
+        action: "one"
+    }, {
+        method: "get",
+        route: api + "/project/:projectId/sprints",
+        controller: ProjectSprintController,
         action: "allByProjectId"
     }
 ];
