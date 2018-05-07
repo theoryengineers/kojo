@@ -30,7 +30,7 @@ export class StoryController {
                 where: {
                     project_id: projectId
                 }
-            })
+            });
 
             await this.storyRepository
                 .createQueryBuilder()
@@ -67,7 +67,7 @@ export class StoryController {
                 })
                 .execute()
                 .then(x => res.status(200).json("Story Updated"))
-                .catch(err => res.status(400).json(err))
+                .catch(err => res.status(400).json(err));
 
         } catch (err) {
             res.status(400).json(err)
@@ -88,7 +88,7 @@ export class StoryController {
                 })
                 .execute()
                 .then(x => res.status(200).json("Story Deleted"))
-                .catch(err => res.status(400).json(err))
+                .catch(err => res.status(400).json(err));
 
         } catch (err) {
             res.status(400).json(err)
@@ -108,7 +108,7 @@ export class StoryController {
                 })
                 .getOne()
                 .then(x => res.status(200).json(x))
-                .catch(err => res.status(400).json(err))
+                .catch(err => res.status(400).json(err));
 
         } catch (err) {
             res.status(400).json(err)
@@ -127,7 +127,7 @@ export class StoryController {
                 })
                 .getMany()
                 .then(x => res.status(200).json(x))
-                .catch(err => res.status(400).json(err))
+                .catch(err => res.status(400).json(err));
 
         } catch (err) {
             res.status(400).json(err)
@@ -147,7 +147,7 @@ export class StoryController {
                 })
                 .getMany()
                 .then(x => res.status(200).json(x))
-                .catch(err => res.status(400).json(err))
+                .catch(err => res.status(400).json(err));
 
         } catch (err) {
             res.status(400).json(err)
