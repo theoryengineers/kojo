@@ -32,16 +32,16 @@ export class StoryController {
                 }
             });
 
-            await this.storyRepository
+            const response = await this.storyRepository
                 .createQueryBuilder()
                 .insert()
                 .into(Story)
                 .values(newStory)
-                .execute()
-                .then(() => res.status(200).json(newStory))
-                .catch(err => res.status(400).json(err))
+                .execute();
 
+            res.status(200).json(response);
         } catch (err) {
+            console.log(err);
             res.status(400).json(err);
         }
     }
@@ -51,7 +51,7 @@ export class StoryController {
         const { storyFromClient }: StoryFromClient = req.body;
 
         try {
-            await this.storyRepository
+            const response = await this.storyRepository
                 .createQueryBuilder()
                 .update(Story)
                 .set({
@@ -65,11 +65,10 @@ export class StoryController {
                     project: { project_id: projectId },
                     story_id: storyId
                 })
-                .execute()
-                .then(x => res.status(200).json("Story Updated"))
-                .catch(err => res.status(400).json(err));
-
+                .execute();
+            res.status(200).json(response);
         } catch (err) {
+            console.log(err);
             res.status(400).json(err)
         }
     }
@@ -78,7 +77,7 @@ export class StoryController {
         const { projectId, storyId } = req.params;
 
         try {
-            await this.storyRepository
+            const response = await this.storyRepository
                 .createQueryBuilder()
                 .delete()
                 .from(Story)
@@ -86,11 +85,10 @@ export class StoryController {
                     story_id: storyId,
                     project: { project_id: projectId }
                 })
-                .execute()
-                .then(x => res.status(200).json("Story Deleted"))
-                .catch(err => res.status(400).json(err));
-
+                .execute();
+            res.status(200).json(response);
         } catch (err) {
+            console.log(err);
             res.status(400).json(err)
         }
     }
@@ -99,18 +97,17 @@ export class StoryController {
         const { projectId, storyId } = req.params;
 
         try {
-            await this.storyRepository
+            const response = await this.storyRepository
                 .createQueryBuilder()
                 .select()
                 .where({
                     story_id: storyId,
                     project: { project_id: projectId }
                 })
-                .getOne()
-                .then(x => res.status(200).json(x))
-                .catch(err => res.status(400).json(err));
-
+                .getOne();
+            res.status(200).json(response);
         } catch (err) {
+            console.log(err);
             res.status(400).json(err)
         }
     }
@@ -119,17 +116,16 @@ export class StoryController {
         const { projectId } = req.params;
 
         try {
-            await this.storyRepository
+            const response = await this.storyRepository
                 .createQueryBuilder()
                 .select()
                 .where({
                     project: { project_id: projectId }
                 })
-                .getMany()
-                .then(x => res.status(200).json(x))
-                .catch(err => res.status(400).json(err));
-
+                .getMany();
+            res.status(200).json(response);
         } catch (err) {
+            console.log(err);
             res.status(400).json(err)
         }
     }
@@ -138,18 +134,17 @@ export class StoryController {
         const { projectId, sprintId } = req.params;
 
         try {
-            await this.storyRepository
+            const response = await this.storyRepository
                 .createQueryBuilder()
                 .select()
                 .where({
                     sprint: { sprint_id: sprintId },
                     project: { project_id: projectId }
                 })
-                .getMany()
-                .then(x => res.status(200).json(x))
-                .catch(err => res.status(400).json(err));
-
+                .getMany();
+            res.status(200).json(response);
         } catch (err) {
+            console.log(err);
             res.status(400).json(err)
         }
     }

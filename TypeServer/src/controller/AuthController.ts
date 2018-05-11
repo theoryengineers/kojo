@@ -40,6 +40,7 @@ export class AuthController {
                 res.status(401).json('User and Password Mismatch');
             }
         } catch (err) {
+            console.log(err);
             res.status(401).json('User does not exist');
         }
     }
@@ -81,7 +82,7 @@ export class AuthController {
             newUser.auth = undefined;
 
             let newAssignment = new Assignment;
-            newAssignment.user_id = newUser.user_id;
+            newAssignment.user.user_id = newUser.user_id;
             newAssignment.user_role = "Lead";
 
             let newProject = new Project;

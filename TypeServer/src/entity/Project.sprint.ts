@@ -1,8 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany, PrimaryColumn } from "typeorm";
 import { Project } from './Project';
 import { Story } from "./Story";
 
-@Entity()
+@Entity({ orderBy: { project: 'ASC' } })
 export class Sprint {
 
     @PrimaryGeneratedColumn()
@@ -19,4 +19,5 @@ export class Sprint {
 
     @OneToMany(type => Story, story => story.sprint, { cascade: true })
     story: Story[];
+
 }

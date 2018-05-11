@@ -11,17 +11,16 @@ export class ProjectAssignmentController {
     async allByProjectId(req: Request, res: Response, next: NextFunction) {
         const { projectId } = req.params;
         try {
-            await this.assignmentRepository
+            const response = await this.assignmentRepository
                 .createQueryBuilder()
                 .select()
                 .where({
                     project: { project_id: projectId }
                 })
                 .getMany()
-                .then(x => res.status(200).json(x))
-                .catch(err => res.status(400).json(err));
-
+            res.status(200).json(response)
         } catch (err) {
+            console.log(err);
             res.status(400).json(err);
         }
     }
@@ -46,17 +45,15 @@ export class ProjectAssignmentController {
                     project: { project_id: projectId }
                 };
             });
-
             await getConnection()
                 .createQueryBuilder()
                 .insert()
                 .into(Assignment)
                 .values(newAssignment)
                 .execute()
-                .catch(err => console.log(err))
-
-            res.status(200).json('User(s) assigned successfully');
+            res.status(200).json(newAssignment);
         } catch (err) {
+            console.log(err);
             res.status(400).json(err);
         }
     }
@@ -75,9 +72,9 @@ export class ProjectAssignmentController {
                     user_id: Any(delUsers)
                 })
                 .execute();
-
             res.status(200).json("Assignments deleted");
         } catch (err) {
+            console.log(err);
             res.status(400).json(err);
         }
     }

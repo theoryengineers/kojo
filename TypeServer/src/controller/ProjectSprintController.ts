@@ -21,17 +21,17 @@ export class ProjectSprintController {
                 }
             })
 
-            await this.sprintRepository
+            const response = await this.sprintRepository
                 .createQueryBuilder()
                 .insert()
                 .into(Sprint)
                 .values(newSprint)
                 .execute()
-                .then(response => res.status(200).json(newSprint))
-                .catch(err => res.status(400).json(err));
 
+            res.status(200).json(response);
         } catch (err) {
-
+            console.log(err);
+            res.status(400).json(err);
         }
     }
 
@@ -40,7 +40,7 @@ export class ProjectSprintController {
         const { sprintName, sprintDescription } = req.body;
 
         try {
-            await this.sprintRepository
+            const response = await this.sprintRepository
                 .createQueryBuilder()
                 .update(Sprint)
                 .set({
@@ -51,11 +51,11 @@ export class ProjectSprintController {
                     sprint_id: sprintId,
                     project: { project_id: projectId }
                 })
-                .execute()
-                .then(x => res.status(200).json("Sprint Updated"))
-                .catch(err => res.status(400).json(err))
+                .execute();
 
+            res.status(200).json(response);
         } catch (err) {
+            console.log(err);
             res.status(400).json(err)
         }
     }
@@ -64,7 +64,7 @@ export class ProjectSprintController {
         const { projectId, sprintId } = req.params;
 
         try {
-            await this.sprintRepository
+            const response = await this.sprintRepository
                 .createQueryBuilder()
                 .delete()
                 .from(Sprint)
@@ -73,10 +73,9 @@ export class ProjectSprintController {
                     project: { project_id: projectId }
                 })
                 .execute()
-                .then(() => res.status(200).json("Sprint Deleted"))
-                .catch(err => res.status(400).json(err))
-
+            res.status(200).json(response);
         } catch (err) {
+            console.log(err);
             res.status(400).json(err);
         }
     }
@@ -85,7 +84,7 @@ export class ProjectSprintController {
         const { projectId, sprintId } = req.params;
 
         try {
-            await this.sprintRepository
+            const response = await this.sprintRepository
                 .createQueryBuilder()
                 .select()
                 .where({
@@ -93,10 +92,9 @@ export class ProjectSprintController {
                     project: { project_id: projectId }
                 })
                 .getOne()
-                .then(sprint => res.status(200).json(sprint))
-                .catch(err => res.status(400).json(err))
-
+            res.status(200).json(response);
         } catch (err) {
+            console.log(err);
             res.status(400).json(err);
         }
     }
@@ -105,17 +103,16 @@ export class ProjectSprintController {
         const { projectId } = req.params;
 
         try {
-            await this.sprintRepository
+            const response = await this.sprintRepository
                 .createQueryBuilder()
                 .select()
                 .where({
                     project: { project_id: projectId }
                 })
                 .getMany()
-                .then(sprints => res.status(200).json(sprints))
-                .catch(err => res.status(400).json(err))
-
+            res.status(200).json(response);
         } catch (err) {
+            console.log(err);
             res.status(400).json(err);
         }
     }

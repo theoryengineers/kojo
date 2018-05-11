@@ -6,20 +6,40 @@ export class UserController {
 
     private userRepository = getRepository(User);
 
-    async all(request: Request, response: Response, next: NextFunction) {
-        return this.userRepository.find();
+    async all(req: Request, res: Response, next: NextFunction) {
+        try {
+            const response = await this.userRepository
+                .createQueryBuilder("user")
+                .select()
+                .getMany();
+            res.status(200).json(response);
+        } catch (err) {
+            console.log(err);
+            res.status(400).json(err);
+        }
     }
 
-    async one(request: Request, response: Response, next: NextFunction) {
-        return this.userRepository.findOne(request.params.id);
+    async one(req: Request, res: Response, next: NextFunction) {
+        const { userId } = req.params;
+        try {
+            const response = await this.userRepository
+                .createQueryBuilder()
+                .select()
+                .where({ user_id: userId })
+                .getOne()
+            res.status(200).json(response);
+        } catch (err) {
+            console.log(err);
+            res.status(400).json(err);
+        }
     }
 
-    async save(request: Request, response: Response, next: NextFunction) {
-        return this.userRepository.save(request.body);
+    async save(req: Request, res: Response, next: NextFunction) {
+        return this.userRepository.save(req.body);
     }
 
-    async remove(request: Request, response: Response, next: NextFunction) {
-        await this.userRepository.remove(request.params.id);
+    async remove(req: Request, res: Response, next: NextFunction) {
+        await this.userRepository.remove(req.params.id);
     }
 
 }

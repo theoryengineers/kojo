@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, PrimaryColumn } from "typeorm";
 import { User } from './User';
 
-@Entity()
+@Entity({ orderBy: { user: 'ASC' } })
 export class Auth {
 
     @OneToOne(type => User, users => users.auth, { primary: true })

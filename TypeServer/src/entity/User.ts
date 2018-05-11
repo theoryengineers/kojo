@@ -1,7 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany } from "typeorm";
 import { Auth } from './Auth'
+import { Assignment } from "./Project.assignment";
+import { Story } from "./Story";
 
-@Entity()
+@Entity({ orderBy: { user_id: 'ASC' } })
 export class User {
 
     @PrimaryGeneratedColumn()
@@ -24,5 +26,11 @@ export class User {
 
     @OneToOne(type => Auth, auth => auth.user, { cascade: true })
     auth: Auth;
+
+    @OneToMany(type => Assignment, assignment => assignment.user, { cascade: true })
+    assignment: Assignment;
+
+    @OneToMany(type => Story, story => story.user, { cascade: true })
+    story: Story;
 
 }
