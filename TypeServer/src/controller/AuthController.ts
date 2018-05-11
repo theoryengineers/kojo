@@ -27,14 +27,13 @@ export class AuthController {
     async one(req: Request, res: Response, next: NextFunction) {
         try {
             // Find auth entry based on res.body.email
-            const auth: Auth = await this.authRepository.findOne({ email: req.body.email });
-
+            const auth: Auth = await this.authRepository.findOne({ user: { email: req.body.email } })
             // Does Password match?
             const isValid: boolean = await compareHash(req.body.password, auth.hash);
 
             if (isValid) {
                 // Response OK
-                const user: User = await this.userRepository.findOne({ user_id: auth.user_id });
+                const user: User = await this.userRepository.findOne({ user_id: auth.user.user_id });
                 res.status(200).json(user);
             } else {
                 // Response ERR
@@ -69,7 +68,6 @@ export class AuthController {
 
             // New auth entry
             let newAuth = new Auth;
-            newAuth.email = email;
             newAuth.hash = await hashPass(password);
 
             // Establish one-to-one table relation
@@ -111,8 +109,8 @@ export class AuthController {
 
 }
 
-export async function hashPass(password): Promise<string> {
-    return await new Promise<string>((resolve, reject) => {
+export function hashPass(password: string): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
         bcrypt.hash(password, 10, (err, hash) => {
             if (err) {
                 reject(err);
@@ -123,8 +121,8 @@ export async function hashPass(password): Promise<string> {
     })
 };
 
-export async function compareHash(reqPass: string, hash: string): Promise<boolean> {
-    return await new Promise<boolean>((resolve, reject) => {
+export function compareHash(reqPass: string, hash: string): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
         bcrypt.compare(reqPass, hash, (err, res) => {
             if (err) {
                 reject(err);

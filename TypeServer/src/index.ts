@@ -54,12 +54,11 @@ async function newUser(connection: Connection) {
     newUser.joined = new Date().toLocaleString('en-US', { timeZone: 'UTC' });
 
     let newAuth = new Auth;
-    newAuth.email = 'simon.cowell@gmail.com';
     newAuth.hash = await hashPass('bacon');
 
     newUser.auth = newAuth;
 
-    let userRepository: Repository<User> = connection.getRepository(User);
+    const userRepository: Repository<User> = connection.getRepository(User);
 
     await userRepository.save(newUser);
 }

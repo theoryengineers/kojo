@@ -1,18 +1,16 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, PrimaryColumn } from "typeorm";
 import { Project } from './Project';
 
 @Entity()
 export class Assignment {
 
-    @PrimaryGeneratedColumn()
-    assignment_id: number;
+    @ManyToOne(type => Project, project => project.assignment, { primary: true, onDelete: 'CASCADE' })
+    project: Project;
 
-    @Column()
+    @PrimaryColumn()
     user_id: number;
 
     @Column()
     user_role: string;
 
-    @ManyToOne(type => Project, project => project.assignment, { onDelete: 'CASCADE' })
-    project: Project;
 }
