@@ -48,7 +48,7 @@ export const Routes = [
     // PROJECT
     {
         method: "post",
-        route: api + "/project",
+        route: api + "/project/user/:userId",
         controller: ProjectController,
         action: "add"
     }, {

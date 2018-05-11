@@ -75,10 +75,8 @@ export class ProjectController {
     }
 
     async add(req: Request, res: Response, next: NextFunction) {
-        const {
-            projectName, // New project name
-            userId // User ID of the project creator
-        }: ProjectAddRes = req.body;
+        const { projectName } = req.body;
+        const { userId } = req.params;
 
         try {
             let newProject = new Project;
@@ -92,7 +90,7 @@ export class ProjectController {
             newProject.assignment = [newAssignment];
 
             await this.projectRepository.save(newProject)
-            res.status(200).json('Success');
+            res.status(200).json(newProject);
         } catch (err) {
             console.log(err);
             res.status(400).json(err);

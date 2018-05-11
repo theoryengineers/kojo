@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, PrimaryC
 import { Project } from './Project';
 import { User } from "./User";
 
-@Entity({ orderBy: { project: 'ASC' } })
+@Entity()
 export class Assignment {
 
     @ManyToOne(type => Project, project => project.assignment, { primary: true, onDelete: 'CASCADE' })

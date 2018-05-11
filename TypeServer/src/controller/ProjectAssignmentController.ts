@@ -40,7 +40,7 @@ export class ProjectAssignmentController {
         try {
             let newAssignment: Assignment[] = newUsers.map((x, i) => {
                 return {
-                    user_id: x.user_id,
+                    user: { user_id: x.user_id },
                     user_role: x.user_role,
                     project: { project_id: projectId }
                 };

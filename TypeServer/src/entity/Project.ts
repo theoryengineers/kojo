@@ -3,7 +3,7 @@ import { Assignment } from './Project.assignment';
 import { Sprint } from './Project.sprint';
 import { Story } from "./Story";
 
-@Entity({ orderBy: { project_id: 'ASC' } })
+@Entity()
 export class Project {
 
     @PrimaryGeneratedColumn()

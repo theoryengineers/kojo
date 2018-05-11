@@ -3,7 +3,7 @@ import { Project } from "./Project";
 import { Sprint } from "./Project.sprint";
 import { User } from "./User";
 
-@Entity({ orderBy: { project: 'ASC' } })
+@Entity()
 export class Story {
 
     @ManyToOne(type => Project, project => project.story, { primary: true, onDelete: 'CASCADE' })

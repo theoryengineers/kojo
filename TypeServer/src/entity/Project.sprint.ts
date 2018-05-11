@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMan
 import { Project } from './Project';
 import { Story } from "./Story";
 
-@Entity({ orderBy: { project: 'ASC' } })
+@Entity()
 export class Sprint {
 
     @PrimaryGeneratedColumn()

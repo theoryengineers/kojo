@@ -25,11 +25,20 @@ export class AuthController {
     }
 
     async one(req: Request, res: Response, next: NextFunction) {
+        const { email, password } = req.body;
+        console.log(email);
         try {
             // Find auth entry based on res.body.email
-            const auth: Auth = await this.authRepository.findOne({ user: { email: req.body.email } })
+            const auth: Auth = await this.authRepository
+                .createQueryBuilder("auth")
+                .select()
+                .leftJoinAndSelect("auth.user", "user")
+                .where({
+                    user: await this.userRepository.findOne({ email: email })
+                })
+                .getOne()
             // Does Password match?
-            const isValid: boolean = await compareHash(req.body.password, auth.hash);
+            const isValid: boolean = await compareHash(password, auth.hash);
 
             if (isValid) {
                 // Response OK
@@ -78,11 +87,10 @@ export class AuthController {
             await queryRunner.manager.save(newUser)
 
             // Create "Initial Project" for new user
-            // let findUser: User = await queryRunner.manager.findOne(User, newUser)
-            newUser.auth = undefined;
+            // const findUser: User = await queryRunner.manager.findOne(User, newUser)
 
             let newAssignment = new Assignment;
-            newAssignment.user.user_id = newUser.user_id;
+            newAssignment.user = newUser;
             newAssignment.user_role = "Lead";
 
             let newProject = new Project;
@@ -96,6 +104,7 @@ export class AuthController {
             await queryRunner.manager.save(newProject);
 
             await queryRunner.commitTransaction();
+            newUser.auth = undefined;
             res.status(200).json([newUser, newProject]);
         } catch (err) {
             await queryRunner.rollbackTransaction();

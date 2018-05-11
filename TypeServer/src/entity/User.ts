@@ -3,7 +3,7 @@ import { Auth } from './Auth'
 import { Assignment } from "./Project.assignment";
 import { Story } from "./Story";
 
-@Entity({ orderBy: { user_id: 'ASC' } })
+@Entity()
 export class User {
 
     @PrimaryGeneratedColumn()
