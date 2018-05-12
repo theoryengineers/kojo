@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 
 import LoginPage from 'app_modules/pages/LoginPage';
 import MainPage from 'app_modules/pages/MainPage';
-import OurApi from 'app_modules/api/OurApi';
+import * as Api from 'app_modules/api/OurApi';
 import { Cards, Database, ResObjLogin, ResObjProjectsById } from 'app_modules/types';
 
 const initialState = {
@@ -38,7 +38,6 @@ export class App extends React.Component<{}, State> {
         if (retrievedObject) {
             this.setState(JSON.parse(retrievedObject), () => this.handleProjectsById());
         }
-        this.handleGetDatabase();
     }
     readonly state: State = initialState;
     render() {
@@ -100,13 +99,13 @@ export class App extends React.Component<{}, State> {
     }
 
     private handleProjectsById = (): void => {
-        OurApi.getProjectsById(this.state.userid, (res: Array<ResObjProjectsById>): void => {
+        Api.Project.getProjectById(this.state.userid, (res: Array<ResObjProjectsById>): void => {
             this.setState(updateAction('projectslist', res), () => console.log(res));
         });
     }
 
     private handleLogin = (event: React.MouseEvent<HTMLElement>): void => {
-        OurApi.authenticate(this.state.email, this.state.password, (res: ResObjLogin): void => {
+        Api.Auth.authenticate(this.state.email, this.state.password, (res: ResObjLogin): void => {
             console.log('Response: ', res);
             if (res.displayname) {
                 // Naive example for development purposes
@@ -129,7 +128,6 @@ export class App extends React.Component<{}, State> {
                             redirectToReferrer: true
                             // tslint:disable-next-line:align
                         }, () => {
-                            this.handleGetDatabase();
                             this.handleProjectsById();
                         });
                         // tslint:disable-next-line:align
@@ -145,7 +143,7 @@ export class App extends React.Component<{}, State> {
 
     private handleRegister = (event: React.MouseEvent<HTMLElement>): void => {
         const { fname, lname, displayname, email, password } = this.state;
-        OurApi.register(fname, lname, displayname, email, password, (res: ResObjLogin): void => {
+        Api.Auth.register(fname, lname, displayname, email, password, (res: ResObjLogin): void => {
             console.log(res);
             if (res.displayname) {
                 this.setState({
@@ -169,30 +167,6 @@ export class App extends React.Component<{}, State> {
             isAuthenticated: false,
             redirectToReferrer: false
         });
-    }
-
-    private handleGetDatabase = (): void => {
-        const db = OurApi.getDatabase();
-
-        const boardlist = db.boards;
-        const memberslist = db.users;
-        const cards = db.cards.sort((a, b) => {
-            if (a.column > b.column) {
-                return 1;
-            } else if (a.column < b.column) {
-                return -1;
-            } else {
-                return 0;
-            }
-        });
-
-        this.setState(updateDatabase(
-            {
-                boards: boardlist,
-                cards: cards,
-                users: memberslist
-            }
-        ));
     }
 
     private handleAddCard = (cardObj: Cards): void => {

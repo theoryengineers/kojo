@@ -131,6 +131,16 @@ export const Routes = [
         controller: StoryController,
         action: "add"
     }, {
+        method: "post",
+        route: api + "/project/:projectId/sprint/:sprintId/story",
+        controller: StoryController,
+        action: "add"
+    }, {
+        method: "put",
+        route: api + "/project/:projectId/story/:storyId",
+        controller: StoryController,
+        action: "save"
+    }, {
         method: "put",
         route: api + "/project/:projectId/sprint/:sprintId/story/:storyId",
         controller: StoryController,

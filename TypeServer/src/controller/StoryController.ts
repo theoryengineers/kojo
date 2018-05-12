@@ -2,6 +2,7 @@ import { getRepository, Any, getConnection, Repository } from "typeorm";
 import { NextFunction, Request, Response } from "express";
 import { Story } from "../entity/Story";
 import { Project } from "../entity/Project";
+import { Sprint } from "../entity/Project.sprint";
 
 interface StoryFromClient {
     storyFromClient: {
@@ -14,10 +15,11 @@ interface StoryFromClient {
 
 export class StoryController {
     private storyRepository: Repository<Story> = getRepository(Story);
+    private sprintRepository: Repository<Sprint> = getRepository(Sprint);
     private projectRepository: Repository<Project> = getRepository(Project);
 
     async add(req: Request, res: Response, next: NextFunction) {
-        const { projectId } = req.params;
+        const { projectId, sprintId } = req.params;
         const { storyFromClient }: StoryFromClient = req.body;
 
         try {
@@ -31,6 +33,13 @@ export class StoryController {
                     project_id: projectId
                 }
             });
+            if (sprintId) {
+                newStory.sprint = await this.sprintRepository.findOne({
+                    where: {
+                        project_id: projectId
+                    }
+                })
+            }
 
             const response = await this.storyRepository
                 .createQueryBuilder()
