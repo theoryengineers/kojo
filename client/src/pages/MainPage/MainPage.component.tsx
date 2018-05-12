@@ -25,7 +25,6 @@ interface MainPageProps extends
     projectslist: Array<ResObjProjectsById>;
     // Handlers
     handleLogOut: () => void;
-    handleProjectsById: () => void;
 }
 
 const MainPage: React.SFC<MainPageProps> = (props) => (

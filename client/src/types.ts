@@ -70,12 +70,11 @@ export interface Cards {
 }
 
 export interface ModalProps {
-    handleAddCard: (newCardObj: Cards) => void;
-    handleSaveCard: (newCardObj: Cards, cardIndex: number) => void;
+
 }
 
 export interface GetCards {
-    handleGetCards: () => void;
+
 }
 
 export interface DragDropCards {

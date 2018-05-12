@@ -6,7 +6,6 @@ const initialState = {
 };
 
 interface Props {
-    handleProjectsById: () => void;
     projectslist: Array<ResObjProjectsById>;
 }
 
@@ -14,10 +13,6 @@ type State = Readonly<typeof initialState>;
 
 export default class ProjectsPage extends React.Component<Props, State> {
     readonly state: State = initialState;
-
-    componentDidMount() {
-        this.props.handleProjectsById();
-    }
 
     render() {
         const { projectslist } = this.props;

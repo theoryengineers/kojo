@@ -19,7 +19,7 @@ export class Auth {
                     password: password
                 })
             });
-            const resObj: ResObjLogin = await response.json();
+            const resObj = await response.json();
             cb(resObj);
         } catch (err) {
             console.log(err);
@@ -46,7 +46,7 @@ export class Auth {
                     password: password
                 })
             });
-            const resObj: ResObjLogin = await response.json();
+            const resObj = await response.json();
             cb(resObj);
         } catch (err) {
             console.log(err);
@@ -60,7 +60,7 @@ export class Auth {
 
 export class User {
     public static async getAllUsers(
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/users`, {
@@ -76,7 +76,7 @@ export class User {
 
     public static async getUserById(
         userid: number,
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/user/${userid}`, {
@@ -92,7 +92,7 @@ export class User {
 
     public static async removeUserById(
         userid: number,
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/user/${userid}`, {
@@ -111,7 +111,7 @@ export class Project {
     public static async addProject(
         userid: number,
         projectName: string,
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/project/user/${userid}`, {
@@ -121,16 +121,17 @@ export class Project {
                     projectName
                 })
             });
-            const resOb = await response.json();
-            cb(resOb);
+            const resObj = await response.json();
+            cb(resObj);
         } catch (err) {
             console.log(err);
         }
     }
+
     public static async editProject(
         projectid: number,
         projectName: string,
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/project/${projectid}`, {
@@ -140,27 +141,29 @@ export class Project {
                     projectName
                 })
             });
-            const resOb = await response.json();
-            cb(resOb);
+            const resObj = await response.json();
+            cb(resObj);
         } catch (err) {
             console.log(err);
         }
     }
+
     public static async deleteProject(
         projectid: number,
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/project/${projectid}`, {
                 method: 'delete',
                 headers: { 'Content-Type': 'application/json' }
             });
-            const resOb = await response.json();
-            cb(resOb);
+            const resObj = await response.json();
+            cb(resObj);
         } catch (err) {
             console.log(err);
         }
     }
+
     public static async getProjectById(
         projectid: number,
         cb: (res: Array<ResObjProjectsById>) => void
@@ -170,38 +173,39 @@ export class Project {
                 method: 'get',
                 headers: { 'Content-Type': 'application/json' }
             });
-            const resOb = await response.json();
-            cb(resOb);
+            const resObj = await response.json();
+            cb(resObj);
         } catch (err) {
             console.log(err);
         }
     }
 
     public static async getAllProjects(
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/projects`, {
                 method: 'get',
                 headers: { 'Content-Type': 'application/json' }
             });
-            const resOb = await response.json();
-            cb(resOb);
+            const resObj = await response.json();
+            cb(resObj);
         } catch (err) {
             console.log(err);
         }
     }
+
     public static async getAllProjectsByUserId(
         userid: number,
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/projects/user/${userid}`, {
                 method: 'get',
                 headers: { 'Content-Type': 'application/json' }
             });
-            const resOb = await response.json();
-            cb(resOb);
+            const resObj = await response.json();
+            cb(resObj);
         } catch (err) {
             console.log(err);
         }
@@ -212,7 +216,7 @@ export class ProjectAssignment {
     public static async addAssignUser(
         projectid: number,
         newUsers: Array<number>,
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/project/${projectid}/assign`, {
@@ -232,7 +236,7 @@ export class ProjectAssignment {
     public static async removeAssignUser(
         projectid: number,
         delUsers: Array<number>,
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/project/${projectid}/assign`, {
@@ -248,7 +252,7 @@ export class ProjectAssignment {
 
     public static async getAllAssignUsers(
         projectid: number,
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/project/${projectid}/assign`, {
@@ -268,7 +272,7 @@ export class ProjectSprint {
         projectid: number,
         sprintName: string,
         sprintDescription: string,
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/project/${projectid}/sprint`, {
@@ -291,7 +295,7 @@ export class ProjectSprint {
         sprintid: number,
         sprintName: string,
         sprintDescription: string,
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/project/${projectid}/sprint/${sprintid}`, {
@@ -312,9 +316,7 @@ export class ProjectSprint {
     public static async deleteSprint(
         projectid: number,
         sprintid: number,
-        sprintName: string,
-        sprintDescription: string,
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/project/${projectid}/sprint/${sprintid}`, {
@@ -331,7 +333,7 @@ export class ProjectSprint {
     public static async getSprintById(
         projectid: number,
         sprintid: number,
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/project/${projectid}/sprint/${sprintid}`, {
@@ -347,7 +349,7 @@ export class ProjectSprint {
 
     public static async getSprintByProjectId(
         projectid: number,
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/project/${projectid}/sprint`, {
@@ -366,7 +368,7 @@ export class Story {
     public static async addStory(
         projectid: number,
         storyFromClient: {},
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/project/${projectid}/story`, {
@@ -387,7 +389,7 @@ export class Story {
         projectid: number,
         sprintid: number,
         storyFromClient: {},
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/project/${projectid}/sprint/${sprintid}/story`, {
@@ -408,7 +410,7 @@ export class Story {
         projectid: number,
         storyid: number,
         storyFromClient: {},
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/project/${projectid}/story/${storyid}`, {
@@ -430,7 +432,7 @@ export class Story {
         sprintid: number,
         storyid: number,
         storyFromClient: {},
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/project/${projectid}/sprint/${sprintid}/story`, {
@@ -450,7 +452,7 @@ export class Story {
     public static async deleteStory(
         projectid: number,
         storyid: number,
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/project/${projectid}/story/${storyid}`, {
@@ -467,7 +469,7 @@ export class Story {
     public static async getStory(
         projectid: number,
         storyid: number,
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/project/${projectid}/story/${storyid}`, {
@@ -483,7 +485,7 @@ export class Story {
 
     public static async getAllStoriesByProjectId(
         projectid: number,
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/project/${projectid}/stories`, {
@@ -500,7 +502,7 @@ export class Story {
     public static async getAllStoriesBySprintId(
         projectid: number,
         sprintid: number,
-        cb: (res: any) => void
+        cb: (res: {}) => void
     ) {
         try {
             const response = await fetch(`${rootUrl}/project/${projectid}/sprint/${sprintid}/stories`, {
