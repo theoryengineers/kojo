@@ -14,7 +14,8 @@ Input|Description
 `password`|Password
 `email`|Email
 
-#### Expected Ouput
+#### Expected Output
+```
 [
     {
         "fname": "Bacon",
@@ -43,6 +44,7 @@ Input|Description
         "project_id": 1
     }
 ]
+```
 
 ## Login
 
@@ -56,6 +58,7 @@ Input|Description
 `password`|Password
 
 #### Expected Output
+```
 {
     "user_id": 2,
     "fname": "Bacon",
@@ -64,6 +67,7 @@ Input|Description
     "email": "Bacon@gmail.com",
     "joined": "5/11/2018, 7:42:36 PM"
 }
+```
 
 # USER
 ## Get All Users
@@ -73,6 +77,7 @@ Input|Description
 > **Route**: /api/v1/users
 
 #### Expected Output
+```
 [
     {
         "user_id": 1,
@@ -91,7 +96,7 @@ Input|Description
         "joined": "5/11/2018, 7:42:36 PM"
     }
 ]
-
+```
 
 ## Get User By ID
 
@@ -100,6 +105,7 @@ Input|Description
 > **Route**: /api/v1/user/:userid
 
 #### Expected Output
+```
 {
     "user_id": 2,
     "fname": "Bacon",
@@ -108,6 +114,8 @@ Input|Description
     "email": "Bacon@gmail.com",
     "joined": "5/11/2018, 7:42:36 PM"
 }
+```
+
 ## Remove User By ID
 
 > **Method**: DELETE
@@ -126,6 +134,7 @@ Input|Description
 `projectName`|Project Name
 
 #### Expected Output
+```
 {
     "project_name": "New Project",
     "created_on": "5/11/2018, 7:54:32 PM",
@@ -144,6 +153,7 @@ Input|Description
     ],
     "project_id": 1
 }
+```
 
 ## Edit Project By ID
 
@@ -156,10 +166,12 @@ Input|Description
 `projectName`|Project Name
 
 #### Expected Output
+```
 {
     "generatedMaps": [],
     "raw": []
 }
+```
 
 ## Delete Project By ID
 
@@ -174,6 +186,7 @@ Input|Description
 > **Route**: /api/v1/project/:projectid
 
 #### Expected Output
+```
 {
     "project_id": 1,
     "project_name": "New Edit Project",
@@ -194,6 +207,7 @@ Input|Description
     "sprint": [],
     "story": []
 }
+```
 
 ## Get All Projects
 
@@ -202,7 +216,7 @@ Input|Description
 > **Route**: /api/v1/projects
 
 #### Expected Output
-
+```
 [
     {
         "project_id": 1,
@@ -285,6 +299,7 @@ Input|Description
         "story": []
     }
 ]
+```
 
 ## Get All Projects By User ID
 
@@ -293,6 +308,7 @@ Input|Description
 > **Route**: /api/v1/projects/user/:userid
 
 #### Expected Output
+```
 [
     {
         "project_id": 5,
@@ -335,6 +351,7 @@ Input|Description
         "story": []
     }
 ]
+```
 
 # PROJECT ASSIGNMENT
 ## Assign User(s) ID to Project ID
