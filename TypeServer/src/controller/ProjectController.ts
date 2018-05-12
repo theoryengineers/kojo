@@ -55,10 +55,9 @@ export class ProjectController {
 
     async one(req: Request, res: Response, next: NextFunction) {
         const { projectId } = req.params;
-        let project = new Project;
 
         try {
-            const project = await this.projectRepository
+            const project: Project = await this.projectRepository
                 .createQueryBuilder("project")
                 .select()
                 .leftJoinAndSelect("project.assignment", "assignment")

@@ -1,20 +1,20 @@
 # AUTHORIZATION
 ## Register
 
+
 > **Method**: POST
 
 > **Route**: /api/v1/register
 
-|Input|Description|
-|-|
-|`fname`|First name|
-|`lname`|Last name|
-|`displayname`|Display Name|
-|`password`|Password|
-|`email`|Email|
+Input|Description
+-----|-----------
+`fname`|First name
+`lname`|Last name
+`displayname`|Display Name
+`password`|Password
+`email`|Email
 
 #### Expected Ouput
-```
 [
     {
         "fname": "Bacon",
@@ -43,20 +43,19 @@
         "project_id": 1
     }
 ]
-```
 
 ## Login
-```
-Method: POST
-Route: /api/v1/login
-```
-|Input|Description|
-|-|
-|`email`|Email|
-|`password`|Password|
+
+> **Method**: POST
+
+> **Route**: /api/v1/login
+
+Input|Description
+-----|-----------
+`email`|Email
+`password`|Password
 
 #### Expected Output
-```
 {
     "user_id": 2,
     "fname": "Bacon",
@@ -65,16 +64,15 @@ Route: /api/v1/login
     "email": "Bacon@gmail.com",
     "joined": "5/11/2018, 7:42:36 PM"
 }
-```
 
 # USER
 ## Get All Users
-```
-Method: GET
-Route: /api/v1/users
-```
+
+> **Method**: GET
+
+> **Route**: /api/v1/users
+
 #### Expected Output
-```
 [
     {
         "user_id": 1,
@@ -93,16 +91,15 @@ Route: /api/v1/users
         "joined": "5/11/2018, 7:42:36 PM"
     }
 ]
-```
 
 
 ## Get User By ID
-```
-Method: GET
-Route: /api/v1/user/:userid
-```
+
+> **Method**: GET
+
+> **Route**: /api/v1/user/:userid
+
 #### Expected Output
-```
 {
     "user_id": 2,
     "fname": "Bacon",
@@ -111,24 +108,24 @@ Route: /api/v1/user/:userid
     "email": "Bacon@gmail.com",
     "joined": "5/11/2018, 7:42:36 PM"
 }
-```
 ## Remove User By ID
-```
-Method: DELETE
-Route: /api/v1/user/:userid
-```
+
+> **Method**: DELETE
+
+> **Route**: /api/v1/user/:userid
+
 # PROJECT
 ## Add New Project
-```
-Method: POST
-Route: /api/v1/project/user/:userid
-```
-|Input|Description|
-|-|
-|`projectName`|Project Name|
+
+> **Method**: POST
+
+> **Route**: /api/v1/project/user/:userid
+
+Input|Description
+-----|-----------
+`projectName`|Project Name
 
 #### Expected Output
-```
 {
     "project_name": "New Project",
     "created_on": "5/11/2018, 7:54:32 PM",
@@ -147,37 +144,36 @@ Route: /api/v1/project/user/:userid
     ],
     "project_id": 1
 }
-```
 
 ## Edit Project By ID
-```
-Method: PUT
-Route: /api/v1/project/:projectid
-```
-|Input|Description|
-|-|
-|`projectName`|Project Name|
+
+> **Method**: PUT
+
+> **Route**: /api/v1/project/:projectid
+
+Input|Description
+-----|-----------
+`projectName`|Project Name
 
 #### Expected Output
-```
 {
     "generatedMaps": [],
     "raw": []
 }
-```
 
 ## Delete Project By ID
-```
-Method: DELETE
-Route: /api/v1/project/:projectid
-```
+
+> **Method**: DELETE
+
+> **Route**: /api/v1/project/:projectid
+
 ## Get Project By ID
-```
-Method: GET
-Route: /api/v1/project/:projectid
-```
+
+> **Method**: GET
+
+> **Route**: /api/v1/project/:projectid
+
 #### Expected Output
-```
 {
     "project_id": 1,
     "project_name": "New Edit Project",
@@ -198,17 +194,15 @@ Route: /api/v1/project/:projectid
     "sprint": [],
     "story": []
 }
-```
 
 ## Get All Projects
-```
-Method: GET
-Route: /api/v1/projects
-```
+
+> **Method**: GET
+
+> **Route**: /api/v1/projects
 
 #### Expected Output
 
-```
 [
     {
         "project_id": 1,
@@ -291,16 +285,14 @@ Route: /api/v1/projects
         "story": []
     }
 ]
-```
 
 ## Get All Projects By User ID
-```
-Method: GET
-Route: /api/v1/projects/user/:userid
-```
+
+> **Method**: GET
+
+> **Route**: /api/v1/projects/user/:userid
 
 #### Expected Output
-```
 [
     {
         "project_id": 5,
@@ -343,107 +335,119 @@ Route: /api/v1/projects/user/:userid
         "story": []
     }
 ]
-```
 
 # PROJECT ASSIGNMENT
 ## Assign User(s) ID to Project ID
-```
-Method: POST
-Route: /api/v1/project/:projectid/assign
-```
-|Input|Description|
-|-|
-|`newUsers[]`|Array of new users by ID|
+
+> **Method**: POST
+
+> **Route**: /api/v1/project/:projectid/assign
+
+Input|Description
+-----|-----------
+`newUsers[]`|Array of new users by ID
 
 ## Remove User(s) ID from Project ID
-```
-Method: DELETE
-Route: /api/v1/project/:projectid/assign
-```
-|Input|Description|
-|-|
-|`delUsers[]`|Array of deleting users by ID|
+
+> **Method**: DELETE
+
+> **Route**: /api/v1/project/:projectid/assign
+
+Input|Description
+-----|-----------
+`delUsers[]`|Array of deleting users by ID
 ## Get All Assignments by Project ID
-```
-Method: GET
-Route: /api/v1/project/:projectid/assign
-```
+
+> **Method**: GET
+
+> **Route**: /api/v1/project/:projectid/assign
+
 
 # PROJECT SPRINT
 ## Add Sprint By Project ID
-```
-Method: POST
-Route: /api/v1/project/:projectid/sprint
-```
-|Input|Description|
-|-|
-|`sprintName`|Sprint Name|
-|`sprintDescription`|Sprint Description|
+
+> **Method**: POST
+
+> **Route**: /api/v1/project/:projectid/sprint
+
+Input|Description
+-----|-----------
+`sprintName`|Sprint Name
+`sprintDescription`|Sprint Description
 ## Edit Sprint By Project and Sprint ID
-```
-Method: PUT
-Route: /api/v1/project/:projectid/sprint/:sprintid
-```
-|Input|Description|
-|-|
-|`sprintName`|Sprint Name|
-|`sprintDescription`|Sprint Description|
+
+> **Method**: PUT
+
+> **Route**: /api/v1/project/:projectid/sprint/:sprintid
+
+Input|Description
+-----|-----------
+`sprintName`|Sprint Name
+`sprintDescription`|Sprint Description
 ## Delete Sprint By Project and Sprint ID
-```
-Method: DELETE
-Route: /api/v1/project/:projectid/sprint/:sprintid
-```
+
+> **Method**: DELETE
+
+> **Route**: /api/v1/project/:projectid/sprint/:sprintid
+
 ## Get Sprint By Project and Sprint ID
-```
-Method: GET
-Route: /api/v1/project/:projectid/sprint/:sprintid
-```
+
+> **Method**: GET
+
+> **Route**: /api/v1/project/:projectid/sprint/:sprintid
+
 ## Get All Sprints By Project ID
-```
-Method: GET
-Route: /api/v1/project/:projectid/sprints
-```
+
+> **Method**: GET
+
+> **Route**: /api/v1/project/:projectid/sprints
+
 
 # STORY/TASK
 ## Add Story By Project ID
-```
-Method: POST
-Route: /api/v1/project/:projectid/story
-```
-|Input|Description|
-|-|
-|`storyFromClient.storyTitle`|Story Title|
-|`storyFromClient.storyCategory`|Story Category, i.e., "API", "Frontend", "Database"|
-|`storyFromClient.storyDescription`|Story Description|
-|`storyFromClient.storyOrder`|Story Index Order|
+
+> **Method**: POST
+
+> **Route**: /api/v1/project/:projectid/story
+
+Input|Description
+-----|-----------
+`storyFromClient.storyTitle`|Story Title
+`storyFromClient.storyCategory`|Story Category, i.e., "API", "Frontend", "Database"
+`storyFromClient.storyDescription`|Story Description
+`storyFromClient.storyOrder`|Story Index Order
 ## Edit Story By Project, Sprint, and Story ID
-```
-Method: PUT
-Route: /api/v1/project/:projectid/sprint/:sprintid/story/:storyid
-```
-|Input|Description|
-|-|
-|`storyFromClient.storyTitle`|Story Title|
-|`storyFromClient.storyCategory`|Story Category, i.e., "API", "Frontend", "Database"|
-|`storyFromClient.storyDescription`|Story Description|
-|`storyFromClient.storyOrder`|Story Index Order|
+
+> **Method**: PUT
+
+> **Route**: /api/v1/project/:projectid/sprint/:sprintid/story/:storyid
+
+Input|Description
+-----|-----------
+`storyFromClient.storyTitle`|Story Title
+`storyFromClient.storyCategory`|Story Category, i.e., "API", "Frontend", "Database"
+`storyFromClient.storyDescription`|Story Description
+`storyFromClient.storyOrder`|Story Index Order
 ## Delete Story By Project and Story ID
-```
-Method: DELETE
-Route: /api/v1/project/:projectid/story/:storyid
-```
+
+> **Method**: DELETE
+
+> **Route**: /api/v1/project/:projectid/story/:storyid
+
 ## Get Story By Project and Story ID
-```
-Method: GET
-Route: /api/v1/project/:projectid/story/:storyid
-```
+
+> **Method**: GET
+
+> **Route**: /api/v1/project/:projectid/story/:storyid
+
 ## Get All Stories By Project ID
-```
-Method: GET
-Route: /api/v1/project/:projectid/stories
-```
+
+> **Method**: GET
+
+> **Route**: /api/v1/project/:projectid/stories
+
 ## Get All Stories By Project and Sprint ID
-```
-Method: GET
-Route: /api/v1/project/:projectid/sprint/:sprintid/stories
-```
+
+> **Method**: GET
+
+> **Route**: /api/v1/project/:projectid/sprint/:sprintid/stories
