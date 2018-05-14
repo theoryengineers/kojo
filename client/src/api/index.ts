@@ -1,1 +1,1 @@
-export { default } from './OurApi';
+export * from './OurApi';

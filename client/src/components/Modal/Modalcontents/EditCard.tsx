@@ -6,7 +6,6 @@ interface Props {
     cardIndex: number;
     card: Cards;
     handleModal: (selection: string) => void;
-    handleSaveCard: (newCardObj: Cards, cardIndex: number) => void;
 }
 
 const initialState = {
@@ -72,19 +71,19 @@ class EditCard extends React.Component<Props, State> {
                 <div className="modal__buttons">
                     <button
                         onClick={() => {
-                            this.props.handleSaveCard(
-                                {
-                                    id: 1,
-                                    title: this.state.title,
-                                    category: this.state.category,
-                                    description: this.state.description,
-                                    column: 'Backlog',
-                                    assignment: this.state.assignment,
-                                    boardid: 1
+                            // this.props.handleSaveCard(
+                            //     {
+                            //         id: 1,
+                            //         title: this.state.title,
+                            //         category: this.state.category,
+                            //         description: this.state.description,
+                            //         column: 'Backlog',
+                            //         assignment: this.state.assignment,
+                            //         boardid: 1
 
-                                },
-                                this.state.cardIndex
-                            );
+                            //     },
+                            //     this.state.cardIndex
+                            // );
                             this.props.handleModal('CLOSED');
                         }}
                     >

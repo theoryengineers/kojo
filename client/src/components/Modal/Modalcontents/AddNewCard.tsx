@@ -1,10 +1,8 @@
 import * as React from 'react';
-import { Cards } from 'app_modules/types';
 import { updateAction } from 'app_modules/App';
 
 interface Props {
     handleModal: (selection: string) => void;
-    handleAddCard: (newCardObj: Cards) => void;
 }
 
 const initialState = {
@@ -57,15 +55,15 @@ class AddNewCard extends React.Component<Props, State> {
                 <div className="modal__buttons">
                     <button
                         onClick={() => {
-                            this.props.handleAddCard({
-                                id: 1,
-                                title: this.state.title,
-                                category: this.state.category,
-                                description: this.state.description,
-                                column: 'Backlog',
-                                assignment: this.state.assignment,
-                                boardid: 1
-                            });
+                            // this.props.handleAddCard({
+                            //     id: 1,
+                            //     title: this.state.title,
+                            //     category: this.state.category,
+                            //     description: this.state.description,
+                            //     column: 'Backlog',
+                            //     assignment: this.state.assignment,
+                            //     boardid: 1
+                            // });
                             this.props.handleModal('CLOSED');
                         }}
                     >

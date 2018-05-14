@@ -3,7 +3,7 @@ import Column from 'app_modules/components/BoardColumn';
 import Card from 'app_modules/components/BoardCard';
 import Modal from 'app_modules/components/Modal';
 import DragAndDrop from 'app_modules/layout/DragAndDrop';
-import { Cards, ModalProps, DragDropCards, DisplayName } from 'app_modules/types';
+import { Cards, DragDropCards, DisplayName } from 'app_modules/types';
 
 const initialState = {
     currentModal: '',
@@ -26,7 +26,7 @@ const initialState = {
     columnCount: 4
 };
 
-interface Props extends ModalProps, DragDropCards, DisplayName {
+interface Props extends DragDropCards, DisplayName {
     cards: Array<Cards>;
 }
 
@@ -38,8 +38,6 @@ export default class Content extends React.Component<Props, State> {
         const { currentModal, columnDisplay } = this.state;
         const {
             cards,
-            handleAddCard,
-            handleSaveCard,
             handleDragDropCard
         } = this.props;
 
@@ -201,8 +199,6 @@ export default class Content extends React.Component<Props, State> {
                 <Modal
                     currentModal={currentModal}
                     handleModal={this.handleModal}
-                    handleAddCard={handleAddCard}
-                    handleSaveCard={handleSaveCard}
                     card={this.state.card}
                     cardIndex={this.state.cardIndex}
                 />

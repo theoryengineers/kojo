@@ -93,25 +93,23 @@ export class App extends React.Component<{}, State> {
                                         // Handlers
                                         handleDragDropCard={this.handleDragDropCard}
                                         handleLogOut={this.handleLogOut}
-                                        handleGetAllUsers={this.handleGetAllUsers}
-                                        handleGetUserById={this.handleGetUserById}
-                                        handleRemoveUserById={this.handleRemoveUserById}
-                                        handleAddProject={this.handleAddProject}
-                                        handleEditProject={this.handleEditProject}
-                                        handleDeleteProject={this.handleDeleteProject}
-                                        handleGetProjectById={this.handleGetProjectById}
-                                        handleGetAllProjects={this.handleGetAllProjects}
-                                        handleGetAllProjectsByUserId={this.handleGetAllProjectsByUserId}
-                                        handleAddProjectAssignment={this.handleAddProjectAssignment}
-                                        handleRemoveProjectAssignment={this.handleRemoveProjectAssignment}
-                                        handleGetAllProjectAssignment={this.handleGetAllProjectAssignment}
-                                        handleAddSprint={this.handleAddSprint}
-                                        handleEditSprint={this.handleEditSprint}
-                                        handleDeleteSprint={this.handleDeleteSprint}
-                                        handleGetSprintById={this.handleGetSprintById}
-                                        handleGetSprintByProjectId={this.handleGetSprintByProjectId}
-
-
+                                    // handleGetAllUsers={this.handleGetAllUsers}
+                                    // handleGetUserById={this.handleGetUserById}
+                                    // handleRemoveUserById={this.handleRemoveUserById}
+                                    // handleAddProject={this.handleAddProject}
+                                    // handleEditProject={this.handleEditProject}
+                                    // handleDeleteProject={this.handleDeleteProject}
+                                    // handleGetProjectById={this.handleGetProjectById}
+                                    // handleGetAllProjects={this.handleGetAllProjects}
+                                    // handleGetAllProjectsByUserId={this.handleGetAllProjectsByUserId}
+                                    // handleAddProjectAssignment={this.handleAddProjectAssignment}
+                                    // handleRemoveProjectAssignment={this.handleRemoveProjectAssignment}
+                                    // handleGetAllProjectAssignment={this.handleGetAllProjectAssignment}
+                                    // handleAddSprint={this.handleAddSprint}
+                                    // handleEditSprint={this.handleEditSprint}
+                                    // handleDeleteSprint={this.handleDeleteSprint}
+                                    // handleGetSprintById={this.handleGetSprintById}
+                                    // handleGetSprintByProjectId={this.handleGetSprintByProjectId}
 
                                     // handleSomething={this.handleSomething}
                                     />
@@ -244,7 +242,7 @@ export class App extends React.Component<{}, State> {
             redirectToReferrer: false
         });
     }
-
+    /*
     // USER
 
     private handleGetAllUsers = (): void => {
@@ -458,6 +456,7 @@ export class App extends React.Component<{}, State> {
             console.log(res);
         });
     }
+    */
 }
 
 export const updateAction = (
