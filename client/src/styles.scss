@@ -1,5 +1,14 @@
 @charset 'UTF-8';
 
+// Components
+@import
+//   'components/BoardColumn/column',
+//   'components/BoardCard/card',
+  'components/Login/login';
+//   'components/Modal/modal';
+
+@import
+  'routes/splash';
 // // 1. Configuration and helpers
 // // @import
 // //   'abstracts/variables',
@@ -10,36 +19,36 @@
 // // @import
 // //   'vendor/normalize';
 
-// 3. Base stuff
-@import
-  'base/base';
-  // 'base/fonts',
-  // 'base/typography',
-  // 'base/helpers';
+// // 3. Base stuff
+// @import
+//   'base/base';
+//   // 'base/fonts',
+//   // 'base/typography',
+//   // 'base/helpers';
 
-// 4. Layout-related sections
-@import
-  'layout/Navigation/navigation',
-  'layout/TopBarNavigation/topbarnav',
-  'layout/DragAndDrop/draganddrop';
+// // 4. Layout-related sections
+// @import
+//   'layout/Navigation/navigation',
+//   'layout/TopBarNavigation/topbarnav',
+//   'layout/DragAndDrop/draganddrop';
   
 
-// 5. Components
-@import
-  'components/BoardColumn/column',
-  'components/BoardCard/card',
-  'components/login/login',
-  'components/modal/modal';
+// // 5. Components
+// @import
+//   'components/BoardColumn/column',
+//   'components/BoardCard/card',
+//   'components/Login/login',
+//   'components/Modal/modal';
 
-// 6. Page-specific styles
-@import
-  'pages/MainPage/main',
-  'pages/MembersList/memberslist',
-  'pages/Content/content',
-  'pages/ProjectsPage/projectspage';
+// // 6. Page-specific styles
+// @import
+//   'pages/MainPage/main',
+//   'pages/MembersList/memberslist',
+//   'pages/Content/content',
+//   'pages/ProjectsPage/projectspage';
   
-  // 'pages/Login/login';
+//   // 'pages/Login/login';
 
-// 7. Themes
-@import
-  'themes/splash';
+// // 7. Themes
+// @import
+//   'themes/splash';
