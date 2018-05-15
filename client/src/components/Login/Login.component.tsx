@@ -17,7 +17,7 @@ export default (props: LoginProps) => {
         return <Redirect to={from} />;
     }
 
-    return (   
+    return (
         <div className="login">
             <div className="login__header">
                 <div className="login__header__logo">

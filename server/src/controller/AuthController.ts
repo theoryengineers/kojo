@@ -42,8 +42,23 @@ export class AuthController {
 
             if (isValid) {
                 // Response OK
-                const user: User = await this.userRepository.findOne({ user_id: auth.user.user_id });
-                res.status(200).json(user);
+                const user: User = await this.userRepository
+                    .createQueryBuilder("user")
+                    .select()
+                    .where({
+                        user_id: auth.user.user_id
+                    })
+                    .getOne();
+                const project: Project[] = await this.projectRepository
+                    .createQueryBuilder("project")
+                    .select()
+                    .leftJoinAndSelect("project.assignment", "assignment")
+                    .leftJoinAndSelect("assignment.user", "user")
+                    .where({
+                        user: user.user_id
+                    })
+                    .getMany();
+                res.status(200).json([user, { project: project }])
             } else {
                 // Response ERR
                 res.status(401).json('User and Password Mismatch');

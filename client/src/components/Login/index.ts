@@ -2,8 +2,8 @@ import { inject } from 'mobx-react';
 import Routes from './Login.component';
 import { Stores, AuthenticationStore } from 'app_modules/stores';
 
-export default inject( ({ AuthenticationStore }: Stores) => {
-    const { 
+export default inject(({ AuthenticationStore }: Stores) => {
+    const {
         redirectToReferrer,
         handleLoginFieldChange,
         loginStatus,
@@ -16,5 +16,5 @@ export default inject( ({ AuthenticationStore }: Stores) => {
         loginStatus,
         handleRegister,
         handleLogin
-    }
+    };
 })(Routes);
