@@ -3,9 +3,14 @@ import * as ReactDOM from 'react-dom';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import './styles.scss';
+// Mobx
+import { Provider } from 'mobx-react';
+import { createStore } from './stores';
 
 ReactDOM.render(
-  <App />,
+  <Provider {...(createStore())}>
+    <App />
+  </Provider>,
   document.getElementById('root') as HTMLElement
 );
 registerServiceWorker();

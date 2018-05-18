@@ -1,9 +1,9 @@
 import * as React from 'react';
 import Column from 'app_modules/components/BoardColumn';
-import Card from 'app_modules/components/BoardCard';
+// import Card from 'app_modules/components/BoardCard';
 import Modal from 'app_modules/components/Modal';
-import DragAndDrop from 'app_modules/layout/DragAndDrop';
-import { Cards, DragDropCards, DisplayName } from 'app_modules/types';
+// import DragAndDrop from 'app_modules/layout/DragAndDrop';
+import { Cards } from 'app_modules/types';
 
 const initialState = {
     currentModal: '',
@@ -26,8 +26,8 @@ const initialState = {
     columnCount: 4
 };
 
-interface Props extends DragDropCards, DisplayName {
-    cards: Array<Cards>;
+interface Props {
+    cards?: Array<Cards>;
 }
 
 type State = Readonly<typeof initialState>;
@@ -37,8 +37,8 @@ export default class Content extends React.Component<Props, State> {
     render() {
         const { currentModal, columnDisplay } = this.state;
         const {
-            cards,
-            handleDragDropCard
+            // cards,
+            // handleDragDropCard
         } = this.props;
 
         return (
@@ -110,10 +110,10 @@ export default class Content extends React.Component<Props, State> {
                         header={'Backlog'}
                         backgroundColor={'gray'}
                         rightButton={<button onClick={() => this.handleModal('ADD_NEW_CARD')}>+</button>}
-                        handleDragDropCard={handleDragDropCard}
+                        // handleDragDropCard={handleDragDropCard}
                         display={this.state.columnDisplay.backlog}
                     >
-                        {cards.map((card, i) => {
+                        {/* {cards!.map((card, i) => {
                             if (card.column === 'Backlog') {
                                 return <DragAndDrop key={i} handleDragDropCard={handleDragDropCard}>
                                     <Card
@@ -127,15 +127,15 @@ export default class Content extends React.Component<Props, State> {
                             } else {
                                 return null;
                             }
-                        })}
+                        })} */}
                     </Column>
                     <Column
                         header={'In Progress'}
                         backgroundColor={'royalblue'}
-                        handleDragDropCard={handleDragDropCard}
+                        // handleDragDropCard={handleDragDropCard}
                         display={this.state.columnDisplay.inProgress}
                     >
-                        {cards.map((card, i) => {
+                        {/* {cards!.map((card, i) => {
                             if (card.column === 'In Progress') {
                                 return <DragAndDrop key={i} handleDragDropCard={handleDragDropCard}>
                                     <Card
@@ -149,15 +149,15 @@ export default class Content extends React.Component<Props, State> {
                             } else {
                                 return null;
                             }
-                        })}
+                        })} */}
                     </Column>
                     <Column
                         header={'Testing'}
                         backgroundColor={'#B20000'}
-                        handleDragDropCard={handleDragDropCard}
+                        // handleDragDropCard={handleDragDropCard}
                         display={this.state.columnDisplay.testing}
                     >
-                        {cards.map((card, i) => {
+                        {/* {cards!.map((card, i) => {
                             if (card.column === 'Testing') {
                                 return <DragAndDrop key={i} handleDragDropCard={handleDragDropCard}>
                                     <Card
@@ -171,15 +171,15 @@ export default class Content extends React.Component<Props, State> {
                             } else {
                                 return null;
                             }
-                        })}
+                        })} */}
                     </Column>
                     <Column
                         header={'Complete'}
                         backgroundColor={'forestgreen'}
-                        handleDragDropCard={handleDragDropCard}
+                        // handleDragDropCard={handleDragDropCard}
                         display={this.state.columnDisplay.complete}
                     >
-                        {cards.map((card, i) => {
+                        {/* {cards!.map((card, i) => {
                             if (card.column === 'Complete') {
                                 return <DragAndDrop key={i} handleDragDropCard={handleDragDropCard}>
                                     <Card
@@ -193,7 +193,7 @@ export default class Content extends React.Component<Props, State> {
                             } else {
                                 return null;
                             }
-                        })}
+                        })} */}
                     </Column>
                 </div>
                 <Modal
@@ -212,14 +212,14 @@ export default class Content extends React.Component<Props, State> {
         });
     }
 
-    private handleEditCard = (selection: string = 'EDIT_CARD', cardObj: Cards, index: number): void => {
-        this.setState({
-            currentModal: selection,
-            card: cardObj,
-            cardIndex: index
-            // tslint:disable-next-line:align
-        }, () => console.log(this.state.card));
-    }
+    // private handleEditCard = (selection: string = 'EDIT_CARD', cardObj: Cards, index: number): void => {
+    //     this.setState({
+    //         currentModal: selection,
+    //         card: cardObj,
+    //         cardIndex: index
+    //         // tslint:disable-next-line:align
+    //     }, () => console.log(this.state.card));
+    // }
 
     private handleColumnDisplay = (e: React.FormEvent<HTMLInputElement>): void => {
         this.setState({

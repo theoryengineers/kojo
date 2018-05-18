@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { updateAction } from 'app_modules/App';
 
 interface Props {
-    handleModal: (selection: string) => void;
+    handleModal?: (selection: string) => void;
 }
 
 const initialState = {
@@ -64,20 +63,20 @@ class AddNewCard extends React.Component<Props, State> {
                             //     assignment: this.state.assignment,
                             //     boardid: 1
                             // });
-                            this.props.handleModal('CLOSED');
+                            this.props.handleModal!('CLOSED');
                         }}
                     >
                         Add
                     </button>
-                    <button onClick={() => this.props.handleModal('CLOSED')}>Cancel</button>
+                    <button onClick={() => this.props.handleModal!('CLOSED')}>Cancel</button>
                 </div>
             </div>
         );
     }
 
     private handleFieldInput = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
-        const { name, value } = event.currentTarget;
-        this.setState(updateAction(name, value));
+        // const { name, value } = event.currentTarget;
+        // this.setState(updateAction(name, value));
     }
 }
 

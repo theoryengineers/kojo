@@ -20,10 +20,8 @@ class DragAndDrop extends React.Component<Props, State> {
                 style={{
                     cursor: 'pointer',
                     // CONVERT THESE TO CLASSES LATER
-                    borderTop: (
-                        this.state.dropAction === 'DROP_UP' ? '50px solid orange' : null),
-                    borderBottom: (
-                        this.state.dropAction === 'DROP_DOWN' ? '50px solid orange' : null),
+                    borderTop: (this.state.dropAction === 'DROP_UP' ? '50px solid orange' : ''),
+                    borderBottom: (this.state.dropAction === 'DROP_DOWN' ? '50px solid orange' : ''),
                 }}
                 draggable={true}
                 onDragStart={(e) => {
@@ -100,7 +98,7 @@ class DragAndDrop extends React.Component<Props, State> {
                                 dropAction = 'DROP_DOWN';
                             }
 
-                            handleDragDropCard(oldCardIndex, dropCardIndex, column, dropAction);
+                            handleDragDropCard!(oldCardIndex, dropCardIndex, column, dropAction);
                             this.setState({ dropAction: '' });
                         }
                     }

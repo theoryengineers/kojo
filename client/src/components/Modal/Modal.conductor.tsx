@@ -4,10 +4,10 @@ import ModalEditCard from './Modalcontents/EditCard';
 import { Cards } from 'app_modules/types';
 
 interface Props {
-    currentModal: string;
-    cardIndex: number;
-    card: Cards;
-    handleModal: (selection: string) => void;
+    currentModal?: string;
+    cardIndex?: number;
+    card?: Cards;
+    handleModal?: (selection: string) => void;
 }
 
 const ModalConductor: React.SFC<Props> = (props) => {

@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { Cards } from 'app_modules/types';
-import { updateAction } from 'app_modules/App';
 
 interface Props {
-    cardIndex: number;
-    card: Cards;
-    handleModal: (selection: string) => void;
+    cardIndex?: number;
+    card?: Cards;
+    handleModal?: (selection: string) => void;
 }
 
 const initialState = {
@@ -22,10 +21,10 @@ class EditCard extends React.Component<Props, State> {
 
     static getDerivedStateFromProps(nextProp: Props, prevState: State) {
         return {
-            title: nextProp.card.title,
-            category: nextProp.card.category,
-            description: nextProp.card.description,
-            assignment: nextProp.card.assignment,
+            title: nextProp.card!.title,
+            category: nextProp.card!.category,
+            description: nextProp.card!.description,
+            assignment: nextProp.card!.assignment,
             cardIndex: nextProp.cardIndex
         };
     }
@@ -84,19 +83,19 @@ class EditCard extends React.Component<Props, State> {
                             //     },
                             //     this.state.cardIndex
                             // );
-                            this.props.handleModal('CLOSED');
+                            this.props.handleModal!('CLOSED');
                         }}
                     >
                         Save
                     </button>
-                    <button onClick={() => this.props.handleModal('CLOSED')}>Cancel</button>
+                    <button onClick={() => this.props.handleModal!('CLOSED')}>Cancel</button>
                 </div>
             </div>
         );
     }
     private handleFieldInput = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
-        const { name, value } = event.currentTarget;
-        this.setState(updateAction(name, value));
+        // const { name, value } = event.currentTarget;
+        // this.setState(updateAction(name, value));
     }
 }
 

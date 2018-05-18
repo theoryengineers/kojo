@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { Memberslist } from 'app_modules/types';
 
 const initialState = {
-
+    userid: 0,
+    userrole: ''
 };
 
 interface Props {
-    memberslist: Array<Memberslist>;
+    handleAddProjAssignButton?: (userid: number, userRole: string) => void;
+    handleAddProjectAssignment?: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 type State = Readonly<typeof initialState>;
@@ -14,30 +15,28 @@ type State = Readonly<typeof initialState>;
 export default class MembersList extends React.Component<Props, State> {
     readonly state: State = initialState;
     render() {
-        const { memberslist } = this.props;
         return (
             <div className="memberslist">
-                <table className="memberslist__table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>User</th>
-                            <th>Email</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            memberslist.map((x, i) => {
-                                return <tr key={i}>
-                                    <td>{i + 1}</td>
-                                    <td>{x.displayName}</td>
-                                    <td>{x.email}</td>
-                                </tr>;
-                            })
-                        }
-                    </tbody>
-                </table>
+                <input name="userid" onChange={this.handleOnFieldChange} placeholder={'userid'} />
+                <input name="userrole" onChange={this.handleOnFieldChange} placeholder={'userrole'} />
+                <button onClick={() => this.handleAddUserAssign()}>Assign User</button>
             </div>
         );
     }
+
+    private handleOnFieldChange = (e: React.FormEvent<HTMLInputElement>): void => {
+        this.setState(update(e.currentTarget.name, e.currentTarget.value));
+    }
+
+    private handleAddUserAssign = () => {
+        this.props.handleAddProjAssignButton!(this.state.userid, this.state.userrole);
+        this.setState(update('userid', ''));
+        this.setState(update('userrole', ''));
+    }
 }
+
+const update = (
+    name: string,
+    value: (string | number)
+): ((state: State) => void) =>
+    (prevState: State) => ({ [name]: value });

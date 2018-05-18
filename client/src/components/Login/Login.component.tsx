@@ -1,15 +1,13 @@
-/// <reference path="Login.d.ts"/>
 import * as React from 'react';
-import { Link, Route, Redirect, } from 'react-router-dom';
-import { PageProps } from 'app_modules/types';
-import * as logo from 'app_modules/images/logo.svg';
+import { Link, Route, Redirect, RouteProps } from 'react-router-dom';
+const logo = require('app_modules/statics/logo.svg');
 
-interface Props extends PageProps {
-    handleLogin: (e: React.MouseEvent<HTMLElement>) => void;
-    handleRegister: (e: React.MouseEvent<HTMLElement>) => void;
-    redirectToReferrer: boolean;
-    handleLoginFieldChange: (e: React.FormEvent<HTMLInputElement>) => void;
-    loginStatus: string;
+interface Props extends RouteProps {
+    handleLogin?: (e: React.MouseEvent<HTMLElement>) => void;
+    handleRegister?: (e: React.MouseEvent<HTMLElement>) => void;
+    redirectToReferrer?: boolean;
+    handleLoginFieldChange?: (e: React.FormEvent<HTMLInputElement>) => void;
+    loginStatus?: string;
 }
 
 const Login: React.SFC<Props> = (props) => {

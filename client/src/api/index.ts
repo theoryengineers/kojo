@@ -1,1 +1,1 @@
-export * from './OurApi';
+export { Api } from './OurApi';

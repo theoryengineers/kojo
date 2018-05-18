@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { DragDropCards } from 'app_modules/types';
 
-interface BoardColumnProps extends DragDropCards {
-    header: string;
-    backgroundColor: string;
-    display: boolean;
+interface BoardColumnProps {
+    header?: string;
+    backgroundColor?: string;
+    display?: boolean;
     leftButton?: JSX.Element;
     rightButton?: JSX.Element;
 }
@@ -41,16 +40,16 @@ const BoardColumn: React.SFC<BoardColumnProps> = (props) => (
 
 const onDrop = (e: React.DragEvent<HTMLElement>, props: BoardColumnProps): void => {
     if (!isNaN(parseInt(e.dataTransfer.getData('text'), 10))) {
-        let oldCardIndex = parseInt(e.dataTransfer.getData('text'), 10);
-        let column = e.currentTarget.id;
-        let action = 'DROP_COLUMN';
-        let newCardIndex = 0;
+        // let oldCardIndex = parseInt(e.dataTransfer.getData('text'), 10);
+        // let column = e.currentTarget.id;
+        // let action = 'DROP_COLUMN';
+        // let newCardIndex = 0;
 
-        if (e.currentTarget.children !== null) {
-            newCardIndex = e.currentTarget.children[0].children.length + 1;
-        }
+        // if (e.currentTarget.children !== null) {
+        //     newCardIndex = e.currentTarget.children[0].children.length + 1;
+        // }
 
-        props.handleDragDropCard(oldCardIndex, newCardIndex, column, action);
+        // props.handleDragDropCard(oldCardIndex, newCardIndex, column, action);
     }
 };
 

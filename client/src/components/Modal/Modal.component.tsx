@@ -3,17 +3,17 @@ import ModalConductor from './Modal.conductor';
 import { PageProps, ModalProps, Cards } from 'app_modules/types';
 
 interface Props extends PageProps, ModalProps {
-    card: Cards;
-    currentModal: string;
-    cardIndex: number;
-    handleModal: (selection: string) => void;
+    card?: Cards;
+    currentModal?: string;
+    cardIndex?: number;
+    handleModal?: (selection: string) => void;
 }
 
 // Modal Wrapper
 const Modal: React.SFC<Props> = (props) => (
     <div
         className={'modal ' + openCloseModal(props)}
-        onClick={() => props.handleModal('CLOSED')}
+        onClick={() => props.handleModal!('CLOSED')}
     >
         <div onClick={(e) => e.stopPropagation()} >
             <ModalConductor {...props} />

@@ -3,22 +3,12 @@ import Login from 'app_modules/components/Login';
 import { PageProps } from 'app_modules/types';
 
 interface LoginPageProps extends PageProps {
-    handleLogin: (e: React.MouseEvent<HTMLElement>) => void;
-    handleRegister: (e: React.MouseEvent<HTMLElement>) => void;
-    handleLoginFieldChange: (e: React.FormEvent<HTMLInputElement>) => void;
-    redirectToReferrer: boolean;
-    loginStatus: string;
+
 }
 
 const LoginPage: React.SFC<LoginPageProps> = (props) => (
     <div className="splash-container">
-        <Login
-            {...props}
-            handleLogin={props.handleLogin}
-            redirectToReferrer={props.redirectToReferrer}
-            handleLoginFieldChange={props.handleLoginFieldChange}
-
-        />
+        <Login />
     </div>
 );
 
