@@ -1,31 +1,50 @@
 import * as React from 'react';
 import { ProjectStore } from 'app_modules/stores/ProjectStore';
+import { observer } from 'mobx-react';
+import DevTools, { configureDevtool } from 'mobx-react-devtools';
+
+configureDevtool({
+    logEnabled: true,
+    updatesEnabled: true,
+    graphEnabled: false
+});
 
 const initialState = {
 
 };
 
+type State = Readonly<typeof initialState>;
+
 interface Props {
     projects?: ProjectStore[];
-    handleAddProject?: (e: React.MouseEvent<HTMLElement>) => void;
+    projectname?: string;
+    handleAddProject?: () => void;
     handleEditProject?: () => void;
+    handleEditProjectButton?: (id: number, name: string) => void;
     handleDeleteProject?: () => void;
     handleGetProjectById?: () => void;
     handleGetAllProjects?: () => void;
     handleGetAllProjectsByUserId?: () => void;
+    handleOnFieldChange?: (e: React.FormEvent<HTMLInputElement>) => void;
 }
 
-type State = Readonly<typeof initialState>;
-
+@observer
 export default class ProjectsPage extends React.Component<Props, State> {
     readonly state: State = initialState;
+
     componentDidMount() {
         this.props.handleGetAllProjectsByUserId!();
     }
+
     render() {
-        console.log(this.props.projects!.forEach(x => x));
         return (
             <div className="projects">
+                <AddProject
+                    handleAddProject={this.props.handleAddProject}
+                    handleEditProject={this.props.handleEditProject}
+                    handleOnFieldChange={this.props.handleOnFieldChange}
+                    projectname={this.props.projectname}
+                />
                 <table>
                     <thead>
                         <tr>
@@ -35,16 +54,65 @@ export default class ProjectsPage extends React.Component<Props, State> {
                     </thead>
                     <tbody className="projects__table">
                         {
-                            this.props.projects!.map((x) => {
-                                return <tr key={x.projectid}>
-                                    <td>{x.projectname}</td>
-                                    <td>{x.createdon}</td>
-                                </tr>;
+                            this.props.projects!.sort((a, b) => a.projectid - b.projectid).map(x => {
+                                return <Rows
+                                    key={x.projectid}
+                                    project={x}
+                                    handleDeleteProject={this.props.handleDeleteProject}
+                                    handleEditProjectButton={this.props.handleEditProjectButton}
+                                />;
                             })
                         }
                     </tbody>
                 </table>
+                <DevTools />
             </div>
+        );
+    }
+}
+
+interface AddProjectProps {
+    handleAddProject?: () => void;
+    handleEditProject?: () => void;
+    handleOnFieldChange?: (e: React.FormEvent<HTMLInputElement>) => void;
+    projectname?: string;
+}
+
+const AddProject = (props: AddProjectProps) => {
+    return (
+        <div>
+            <input
+                name="projectname"
+                onChange={(e) => props.handleOnFieldChange!(e)}
+                value={props.projectname}
+            />
+            <button onClick={() => props.handleAddProject!()}>Add</button>
+            <button onClick={() => props.handleEditProject!()}>Save</button>
+        </div>
+    );
+};
+
+interface RowProps {
+    project?: ProjectStore;
+    handleDeleteProject?: (projectid: number) => void;
+    handleEditProjectButton?: (id: number, name: string) => void;
+}
+
+@observer
+class Rows extends React.Component<RowProps, {}> {
+    render() {
+        const { project, handleDeleteProject, handleEditProjectButton } = this.props;
+        return (
+            <tr>
+                <td>{project!.projectname}</td>
+                <td>{project!.createdon}</td>
+                <td><button onClick={() => handleDeleteProject!(project!.projectid)}>X</button></td>
+                <td><button
+                    onClick={() => handleEditProjectButton!(project!.projectid, project!.projectname)}
+                >
+                    E
+                </button></td>
+            </tr>
         );
     }
 }

@@ -192,7 +192,7 @@ class Project {
                 method: 'get',
                 headers: { 'Content-Type': 'application/json' }
             });
-            return await response.json().then(x => x);
+            return await response.json();
         } catch (err) {
             console.log(err);
         }

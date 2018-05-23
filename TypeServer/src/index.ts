@@ -8,6 +8,8 @@ import { Routes } from "./routes";
 import { User } from "./entity/User";
 import { Auth } from "./entity/Auth";
 import { hashPass } from './controller/AuthController';
+import { Project } from "./entity/Project";
+import { Assignment } from "./entity/Project.assignment";
 
 createConnection().then(async connection => {
 
@@ -61,4 +63,19 @@ async function newUser(connection: Connection) {
     const userRepository: Repository<User> = connection.getRepository(User);
 
     await userRepository.save(newUser);
+
+    
+    let newProject = new Project;
+    newProject.project_name = "New Project";
+    newProject.created_on = new Date().toLocaleString('en-US', { timeZone: 'UTC' });
+
+    let newAssignment = new Assignment;
+    newAssignment.user = await userRepository.findOne({ user_id: newUser.user_id });
+    newAssignment.user_role = "Lead";
+
+    newProject.assignment = [newAssignment];
+
+    const projectRepository = connection.getRepository(Project);
+
+    await projectRepository.save(newProject)
 }

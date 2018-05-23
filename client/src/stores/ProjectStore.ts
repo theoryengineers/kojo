@@ -1,4 +1,4 @@
-import { observable, computed, action } from 'mobx';
+import { observable, computed, action, runInAction } from 'mobx';
 import { RootStore } from './RootStore';
 
 export class ProjectsStore {
@@ -23,27 +23,56 @@ export class ProjectsStore {
         return this.Parent.UserStore;
     }
 
+    @action
+    handleOnFieldChange = (e: React.FormEvent<HTMLInputElement>): void => {
+        const { name, value } = e.currentTarget;
+        this[name] = value;
+
+    }
+
     @action.bound
-    public async handleAddProject(e: React.MouseEvent<HTMLElement>): Promise<void> {
+    public async handleAddProject(): Promise<void> {
         const { projectname } = this;
         const { userid } = this.UserStore;
 
         const res = await this.Api.project.addProject(userid, projectname);
-        console.log(res);
+
+        runInAction(() => {
+            this.projects.push(new ProjectStore(res.project_id, res.project_name, res.created_on));
+        });
+    }
+
+    @action
+    public handleEditProjectButton = (id: number, name: string): void => {
+        this.projectname = name;
+        this.projectid = id;
     }
 
     @action.bound
-    public async handleEditProject(e: React.MouseEvent<HTMLElement>): Promise<void> {
-        const { projectid, projectname } = this;
-        const res = await this.Api.project.editProject(projectid, projectname);
-        console.log(res);
+    public async handleEditProject(): Promise<void> {
+        await this.Api.project.editProject(this.projectid, this.projectname);
+        const editIdx = this.projects.findIndex(project => project.projectid === this.projectid);
+        const newProjArrs = [
+            ...this.projects.slice(0, editIdx),
+            new ProjectStore(this.projectid, this.projectname, this.projects[editIdx].createdon),
+            ...this.projects.slice(editIdx + 1, this.projects.length)
+        ];
+        runInAction(() => {
+            this.projects = newProjArrs;
+        });
     }
 
     @action.bound
-    public async handleDeleteProject(e: React.MouseEvent<HTMLElement>): Promise<void> {
-        const { projectid } = this;
-        const res = await this.Api.project.deleteProject(projectid);
-        console.log(res);
+    public async handleDeleteProject(projectid: number): Promise<void> {
+        await this.Api.project.deleteProject(projectid);
+        const delIdx = this.projects.findIndex(project => project.projectid === projectid);
+        const newProjArrs = [
+            ...this.projects.slice(0, delIdx),
+            ...this.projects.slice(delIdx + 1, this.projects.length)
+        ];
+        runInAction(() =>
+            this.projects = newProjArrs
+        );
     }
 
     @action.bound
@@ -57,6 +86,7 @@ export class ProjectsStore {
     public async handleGetAllProjects(): Promise<void> {
         const res = await this.Api.project.getAllProjects();
         console.log(res);
+        // tslint:disable-next-line:no-any
         this.projects.push(res.map((x: any) => {
             return new ProjectStore(x.project_id, x.project_name, x.created_on);
         }));
@@ -66,9 +96,12 @@ export class ProjectsStore {
     public async handleGetAllProjectsByUserId(): Promise<void> {
         const { userid } = this.UserStore;
         let res = await this.Api.project.getAllProjectsByUserId(userid);
-        this.projects.push(res.map((x: any) => {
-            return new ProjectStore(x.project_id, x.project_name, x.created_on);
-        }));
+        runInAction(() => {
+            // tslint:disable-next-line:no-any
+            this.projects = res.map((x: any) => {
+                return new ProjectStore(x.project_id, x.project_name, x.created_on);
+            });
+        });
     }
 
     // ASSIGNMENT HANDLERS
@@ -110,9 +143,9 @@ export class ProjectsStore {
 }
 
 export class ProjectStore {
-    @observable projectid: number;
-    @observable projectname: string;
-    @observable createdon: string;
+    projectid: number;
+    projectname: string;
+    createdon: string;
 
     constructor(id: number, name: string, createdon: string) {
         this.projectid = id;

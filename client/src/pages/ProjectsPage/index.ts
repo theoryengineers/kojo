@@ -6,8 +6,11 @@ import { Stores, ProjectsStore } from 'app_modules/stores';
 export default inject(({ ProjectStore }: Stores) => {
     const {
         projects,
+        projectname,
+        handleOnFieldChange,
         handleAddProject,
         handleEditProject,
+        handleEditProjectButton,
         handleDeleteProject,
         handleGetProjectById,
         handleGetAllProjects,
@@ -15,8 +18,11 @@ export default inject(({ ProjectStore }: Stores) => {
     } = ProjectStore as ProjectsStore;
     return {
         projects,
+        projectname,
+        handleOnFieldChange,
         handleAddProject,
         handleEditProject,
+        handleEditProjectButton,
         handleDeleteProject,
         handleGetProjectById,
         handleGetAllProjects,
