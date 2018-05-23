@@ -39,7 +39,22 @@ export class UserController {
     }
 
     async remove(req: Request, res: Response, next: NextFunction) {
-        await this.userRepository.remove(req.params.id);
+        const { id } = req.params;
+        try {
+            const response = await this.userRepository
+                .createQueryBuilder()
+                .delete()
+                .from(User)
+                .where({
+                    user_id: id
+                })
+                .execute()
+            res.status(200).json(response)
+        } catch (err) {
+            console.log(err);
+            res.status(400).json(err);
+        }
+        
     }
 
 }
