@@ -80,12 +80,12 @@ describe('OurApi', () => {
             expect(response).toBeDefined();
         });
 
-        it('can edit the project name', async() => {
-            console.log('here is', Project.id);
-            const response = await OurApi.editProject(Project.id, 'newprojectname');
-            console.log(response);
-            expect(response.project_name).toBe('newprojectname');
-        });
+        // it('can edit the project name', async() => {
+        //     console.log('here is', Project.id);
+        //     const response = await OurApi.editProject(Project.id, 'newprojectname');
+        //     console.log(response);
+        //     expect(response.project_name).toBe('newprojectname');
+        // });
 
         it('can get project by id', async() => {
             const response = await OurApi.getProjectById(Project.id);

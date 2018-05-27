@@ -4,7 +4,7 @@ import { User } from './User';
 @Entity()
 export class Auth {
 
-    @OneToOne(type => User, user => user.auth, { primary: true })
+    @OneToOne(type => User, user => user.auth, { primary: true, onDelete: "CASCADE"  })
     @JoinColumn()
     user: User;
 

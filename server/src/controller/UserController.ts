@@ -39,14 +39,15 @@ export class UserController {
     }
 
     async remove(req: Request, res: Response, next: NextFunction) {
-        const { id } = req.params;
+        const { userId } = req.params;
+   
         try {
             const response = await this.userRepository
                 .createQueryBuilder()
                 .delete()
                 .from(User)
                 .where({
-                    user_id: id
+                    user_id: userId
                 })
                 .execute()
             res.status(200).json(response)

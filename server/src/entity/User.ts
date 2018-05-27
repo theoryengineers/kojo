@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany } from "typ
 import { Auth } from './Auth'
 import { Assignment } from "./Project.assignment";
 import { Story } from "./Story";
+import { Project } from "./Project";
 
 @Entity()
 export class User {
@@ -24,13 +25,13 @@ export class User {
     @Column()
     joined: string;
 
-    @OneToOne(type => Auth, auth => auth.user, { cascade: true })
+    @OneToOne(type => Auth, auth => auth.user, { cascade: true, onDelete: "CASCADE"  })
     auth: Auth;
 
-    @OneToMany(type => Assignment, assignment => assignment.user, { cascade: true })
+    @OneToMany(type => Assignment, assignment => assignment.user, { cascade: true, onDelete: "CASCADE"  })
     assignment: Assignment;
 
-    @OneToMany(type => Story, story => story.user, { cascade: true })
+    @OneToMany(type => Story, story => story.user, { cascade: true, onDelete: "CASCADE"  })
     story: Story;
 
 }
