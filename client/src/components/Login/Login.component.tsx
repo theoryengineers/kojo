@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link, Route, Redirect, RouteProps } from 'react-router-dom';
-const logo = require('app_modules/statics/logo.svg');
+const logo = require('app_modules/assets/logo.svg');
 
 interface Props extends RouteProps {
     handleLogin?: (e: React.MouseEvent<HTMLElement>) => void;

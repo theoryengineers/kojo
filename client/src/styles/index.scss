@@ -19,24 +19,24 @@
 
 // 4. Layout-related sections
 @import
-  'layout/Navigation/navigation',
-  'layout/TopBarNavigation/topbarnav',
-  'layout/DragAndDrop/draganddrop';
+  'layout/navigation',
+  'layout/topbarnav',
+  'layout/draganddrop';
   
 
 // 5. Components
 @import
-  'components/BoardColumn/column',
-  'components/BoardCard/card',
-  'components/Login/login',
-  'components/Modal/modal';
+  'components/column',
+  'components/card',
+  'components/login',
+  'components/modal';
 
 // 6. Page-specific styles
 @import
-  'pages/MainPage/main',
-  'pages/MembersList/memberslist',
-  'pages/Content/content',
-  'pages/ProjectsPage/projectspage';
+  'pages/main',
+  'pages/memberslist',
+  'pages/content',
+  'pages/projectspage';
   
   // 'pages/Login/login';
 

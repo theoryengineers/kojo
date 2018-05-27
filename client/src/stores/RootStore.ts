@@ -1,4 +1,4 @@
-import { Api } from 'app_modules/api/';
+import { Api } from 'app_modules/services/OurApi';
 import { UserStore } from './UserStore';
 import { AuthenticationStore } from './AuthenticationStore';
 import { ProjectsStore } from './ProjectStore';

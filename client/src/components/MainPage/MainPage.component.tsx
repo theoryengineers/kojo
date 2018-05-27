@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Navbar from 'app_modules/layout/Navigation';
-import Content from 'app_modules/pages/Content';
-import MembersList from 'app_modules/pages/MembersList';
-import Projects from 'app_modules/pages/ProjectsPage';
-import TopBar from 'app_modules/layout/TopBarNavigation';
+import Navbar from 'app_modules/components/Navigation';
+// import Content from 'app_modules/components/Content';
+import MembersList from 'app_modules/components/MembersList';
+import Projects from 'app_modules/components/ProjectsPage';
+import TopBar from 'app_modules/components/TopBarNavigation';
 
 interface MainPageProps {
 
@@ -20,9 +20,9 @@ const MainPage: React.SFC<MainPageProps> = (props) => (
                 <TopBar />
             </Route>
             <Switch>
-                <Route exact={true} path="/">
-                    <Content />
-                </Route>
+                {/* <Route exact={true} path="/">
+                     <Content /> 
+                </Route> */}
                 <Route path="/memberslist">
                     <MembersList />
                 </Route>

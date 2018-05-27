@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import Column from 'app_modules/components/BoardColumn';
 // import Card from 'app_modules/components/BoardCard';
 import Modal from 'app_modules/components/Modal';
@@ -26,14 +27,26 @@ const initialState = {
     columnCount: 4
 };
 
-interface Props {
+interface MatchParams {
+    projectId: number;
+}
+
+interface Props extends RouteComponentProps<MatchParams> {
     cards?: Array<Cards>;
+    handleGetProjectById?: (projectId: number) => void;
 }
 
 type State = Readonly<typeof initialState>;
 
 export default class Content extends React.Component<Props, State> {
+    constructor(props) {
+        super(props);
+    }
     readonly state: State = initialState;
+    componentDidMount() {
+        console.log(this.props.match.params.projectId);
+        this.props.handleGetProjectById!(this.props.match.params.projectId);
+    }
     render() {
         const { currentModal, columnDisplay } = this.state;
         const {
